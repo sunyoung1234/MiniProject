@@ -9,6 +9,5 @@
 </head>
 <body>
 
-	Mkt의 코드
 </body>
 </html>
