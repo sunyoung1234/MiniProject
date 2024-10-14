@@ -61,15 +61,15 @@
                                 <!-- To make this form functional, sign up at-->
                                 <!-- https://startbootstrap.com/solution/contact-forms-->
                                 <!-- to get an API token!-->
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form id="contactForm" action="${pageContext.request.contextPath }/loginDo" method="POST">
                                     <!-- 아이디 input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputId" type="text" placeholder="아이디"  />
+                                        <input name="memId" class="form-control" id="inputId" type="text" placeholder="아이디"  />
                                         <label for="inputId">아이디</label>
                                     </div>
                                     <!-- 비밀번호 input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputPw" type="password" placeholder="비밀번호" />
+                                        <input name="memPw" class="form-control" id="inputPw" type="password" placeholder="비밀번호" />
                                         <label for="inputPw">비밀번호</label>
                                     </div> 
                                     <!-- Submit Button-->

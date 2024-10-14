@@ -21,4 +21,19 @@
 		        0
 		)	
 	</insert>
+	
+	<select id="loginMember" parameterType="com.team.proj.member.dto.MemberDTO" resultType="com.team.proj.member.dto.MemberDTO">
+		SELECT
+	        mem_id,
+	        mem_pw,
+	        mem_email,
+	        mem_phone,
+	        entp_name,
+	        mem_profile,
+	        mem_level
+	    FROM members
+	    WHERE 1=1
+	      AND MEM_ID = #{memId}
+	      AND MEM_PW = #{memPw}			
+	</select>
 </mapper>

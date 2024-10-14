@@ -4,7 +4,6 @@
 	<insert id="insertAttach" parameterType="com.team.proj.attach.dto.AttachDTO">
 		INSERT INTO attach(
 			atch_no,
-	        atch_parent_no,
 	        atch_file_name,
 	        atch_original_name,
 	        atch_file_size,
@@ -13,7 +12,6 @@
 	        atch_path
 		) VALUES(
 			seq_attach.nextval,
-	        #{atchParentNo},
 	        #{atchFileName},
 	        #{atchOriginalName},
 	        #{atchFileSize},
@@ -26,7 +24,6 @@
 	<select id="getAttachList" parameterType="int" resultType="com.team.proj.attach.dto.AttachDTO">
 		SELECT
 			atch_no,
-	        atch_parent_no,
 	        atch_file_name,
 	        atch_original_name,
 	        atch_file_size,
@@ -34,8 +31,7 @@
 	        atch_content_type,
 	        atch_path
     	FROM ATTACH
-    	WHERE 1=1
-    	  AND ATCH_PARENT_NO = #{boardNo}
+    	
 	    			
 	</select>
 

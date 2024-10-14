@@ -68,53 +68,53 @@
                                 <!-- To make this form functional, sign up at-->
                                 <!-- https://startbootstrap.com/solution/contact-forms-->
                                 <!-- to get an API token!-->
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form id="contactForm" action="${pageContext.request.contextPath }/registDo" method="POST" enctype="multipart/form-data">
                                 
                                 	<!-- profile input-->
                                     <div class="form-floating mb-3">
                                     	<div class="d-flex justify-content-center">
                                     		<img class="prof-img" id="imgBox" src="${pageContext.request.contextPath }/assets/default-prof.jpg">
-	                                        <input class="d-none" id="registProfile" type="file" accept="image/*" onchange = "readImg(this);" />
+	                                        <input name="img" class="form-control d-none" id="registProfile" type="file" accept="image/*" />
                                     	</div>
                                     </div> 
                                 
-                                
+                                 
                                     <!-- id input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
+                                        <input name="id" class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
                                         <label for="registId">아이디</label>
                                         <div class="invalid-feedback" data-sb-feedback="registId:required">아이디를 입력해주세요.</div>
                                     </div>
                                     <!-- pw input--> 
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="registPw" type="password" placeholder="비밀번호(4자리 이상)" data-sb-validations="required" />
+                                        <input name="pw" class="form-control" id="registPw" type="password" placeholder="비밀번호(4자리 이상)" data-sb-validations="required" />
                                         <label for="registPw">비밀번호(4자리 이상)</label>
                                         <div class="invalid-feedback" data-sb-feedback="registPw:required">비밀번호를 입력해주세요.</div>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="registEmail" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <input name="email" class="form-control" id="registEmail" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="email">이메일</label>
                                         <div class="invalid-feedback" data-sb-feedback="registEmail:required">이메일을 입력해주세요.</div>
                                         <div class="invalid-feedback" data-sb-feedback="registEmail:email">유효하지 않은 이메일입니다.</div>
                                     </div>
                                     <!-- Phone number input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="registPhone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                        <input name="phone" class="form-control" id="registPhone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
                                         <label for="registPhone">휴대폰번호</label> 
                                         <div class="invalid-feedback" data-sb-feedback="registPhone:required">휴대폰번호를 입력해주세요</div>
                                     </div>
                                     <!-- entp input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="registEntp" type="text" placeholder="회사명" data-sb-validations="required" />
+                                        <input name="entp" class="form-control" id="registEntp" type="text" placeholder="회사명" data-sb-validations="required" />
                                         <label for="registEntp">회사명</label>
                                         <div class="invalid-feedback" data-sb-feedback="registEntp:required">회사명을 입력해주세요.</div>
                                     </div>
-                                     
-                                    <!-- Submit Button-->
+                                      
+                                    <!-- Submit Button--> 
                                     <div class="d-grid"><button class="btn btn-primary btn-lg mb-2 cur-poi" id="submitButton" type="submit">회원가입</button></div>
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg " id="backBtn">뒤로가기</button></div> 
                                 </form>
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg " id="backBtn">뒤로가기</button></div> 
                             </div>
                         </div>
                     </div>
@@ -155,26 +155,15 @@
         	document.querySelector('.prof-img').addEventListener('click',()=>{
         		document.querySelector('#registProfile').click();
         	})
-	        
-        	function readImg(p_this){
-        		let v_file = p_this.files[0];
-        		
-        		let v_formData = new FormData();
-        		v_formData.append('file', v_file);
-				let v_url = "${pageContext.request.contextPath}/uploadProfile"
-				
-				$.ajax({
-					type: 'POST',
-					url: v_url,
-					data: v_formData,
-					contentType: false,
-					processData: false,
-					success: function(data){
-						console.log(data)
-					}
-				});
-				
-        	} 
+	        document.querySelector('#registProfile').addEventListener('change',()=>{
+	        	v_file = document.querySelector('#registProfile').files[0]
+	        	const reader = new FileReader();
+	        	reader.onload = function(event){
+	        		$('#imgBox').attr('src',event.target.result);
+	        	}
+	        	reader.readAsDataURL(v_file);
+	        })
+        	
         
         </script>
     </body>

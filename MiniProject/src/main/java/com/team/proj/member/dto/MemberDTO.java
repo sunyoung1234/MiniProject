@@ -13,6 +13,20 @@ public class MemberDTO {
 	public MemberDTO() {
 		super();
 	}
+	
+	
+
+	public MemberDTO(String memId, String memPw, String memEmail, String memPhone, String entpName, String memProfile) {
+		super();
+		this.memId = memId;
+		this.memPw = memPw;
+		this.memEmail = memEmail;
+		this.memPhone = memPhone;
+		this.entpName = entpName;
+		this.memProfile = memProfile;
+	}
+
+
 
 	public MemberDTO(String memId, String memPw, String memEmail, String memPhone, String entpName, String memProfile,
 			int memLevel) {

@@ -2,7 +2,6 @@ package com.team.proj.attach.dto;
 
 public class AttachDTO {
 		private int atchNo;
-		private int atchParentNo;
 		private String atchFileName;
 		private String atchOriginalName;
 		private long atchFileSize;
@@ -14,11 +13,10 @@ public class AttachDTO {
 			super();
 		}
 
-		public AttachDTO(int atchNo, int atchParentNo, String atchFileName, String atchOriginalName, long atchFileSize,
+		public AttachDTO(int atchNo, String atchFileName, String atchOriginalName, long atchFileSize,
 				String atchFancySize, String atchContentType, String atchPath) {
 			super();
 			this.atchNo = atchNo;
-			this.atchParentNo = atchParentNo;
 			this.atchFileName = atchFileName;
 			this.atchOriginalName = atchOriginalName;
 			this.atchFileSize = atchFileSize;
@@ -29,9 +27,9 @@ public class AttachDTO {
 
 		@Override
 		public String toString() {
-			return "AttachDTO [atchNo=" + atchNo + ", atchParentNo=" + atchParentNo + ", atchFileName=" + atchFileName
-					+ ", atchOriginalName=" + atchOriginalName + ", atchFileSize=" + atchFileSize + ", atchFancySize="
-					+ atchFancySize + ", atchContentType=" + atchContentType + ", atchPath=" + atchPath + "]";
+			return "AttachDTO [atchNo=" + atchNo + ", atchFileName=" + atchFileName + ", atchOriginalName="
+					+ atchOriginalName + ", atchFileSize=" + atchFileSize + ", atchFancySize=" + atchFancySize
+					+ ", atchContentType=" + atchContentType + ", atchPath=" + atchPath + "]";
 		}
 
 		public int getAtchNo() {
@@ -40,14 +38,6 @@ public class AttachDTO {
 
 		public void setAtchNo(int atchNo) {
 			this.atchNo = atchNo;
-		}
-
-		public int getAtchParentNo() {
-			return atchParentNo;
-		}
-
-		public void setAtchParentNo(int atchParentNo) {
-			this.atchParentNo = atchParentNo;
 		}
 
 		public String getAtchFileName() {
@@ -98,6 +88,7 @@ public class AttachDTO {
 			this.atchPath = atchPath;
 		}
 
+		
 		
 	
 		

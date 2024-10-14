@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team.proj.attach.dto.AttachDTO;
 
 @Component
-public class FileUpload {
+public class FileUpload {	
 	
 	@Value("#{util['file.upload.path']}")
 	private String uploadPath; // C:\\uploads
