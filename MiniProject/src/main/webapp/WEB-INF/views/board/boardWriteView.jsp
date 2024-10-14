@@ -32,6 +32,7 @@
 		.modal-mat-list{
 			width: 50%;
 			height: 100%;
+			overflow: scroll;
 		}
 		
 		.modal-cal-list{
@@ -49,12 +50,10 @@
 		<div class="modal-mat-list">
 			<input type="text" placeholder="제품명 입력">
 			<button id="searchBtn"> 검색 </button>
-			<div>
-			<c:forEach items="${matKeyList }" var="mat">
-				<p> ${mat.materialName }</p>
-			
+			<c:forEach items="${keyMatList }" var="mat">
+				<p> ${mat.materialName}</p>
+				<p> ${mat.materialNo}</p>
 			</c:forEach>
-			</div>
 		</div>
 		<div class="modal-cal-list"></div>
 	</div> 
