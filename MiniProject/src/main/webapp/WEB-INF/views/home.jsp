@@ -8,7 +8,7 @@
 <h1>
 	Hello world!  
 </h1>
-<a href="${pageContext.request.contextPath }/loginView">로그인</a>
+<a href="${pageContext.request.contextPath}/loginView">로그인</a>
 <P>  The time on the server is ${serverTime}. </P>
 </body>  
 </html>
