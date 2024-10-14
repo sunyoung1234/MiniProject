@@ -52,7 +52,7 @@
                         <li class="nav-item"><a class="nav-link font-bold" href="${pageContext.request.contextPath }/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/loginView">로그인</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#">견적 요청</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/boardView">견적 요청</a></li>
                     </ul>
                 </div>
             </div>
