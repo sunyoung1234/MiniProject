@@ -26,6 +26,16 @@
         	.bg-color{
         		background-color: #10bd66;
         	}
+        	
+        	.table-box{
+        		width:1000px;
+        	}
+        	
+        	.chart-box{
+        		width:600px;
+        		height:300px;
+        		border: 1px solid black;
+        	}
         
         </style>
         
@@ -82,8 +92,121 @@
                     
                 </div>
                 
-            </div>
-        </div>
+                <div class="mb-4 ">
+                   	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
+                   	<div>
+                   		<select>
+                   			<option>강원
+                   			<option>경기
+                   			<option>강원
+                   		</select>
+                   		<button>검색</button>
+                   	</div>
+                   	<div class="d-flex justify-content-between">
+                   		<div class="table-box">
+	                   		<table>
+	                   			<colgroup>
+	                   				<col width="11%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   			</colgroup>
+	                   			<thead>
+	                   				<tr>
+	                   					<th>지역</th>
+	                   					<th>가구수</th>
+	                   					<th>참여가구</th>
+	                   					<th>참여율(%)</th>
+	                   				</tr>
+	                   			</thead>
+	                   			<tbody>
+	                   				<c:forEach items="${keyPointList}" var="pointList">
+		                   				<tr>
+		                    				<th>${pointList.pointRegion }</th>
+		                    				<td>${pointList.pointApartmentAll }</td>
+		                    				<td>${pointList.pointApartmentJoin }</td>
+		                    				<td>${pointList.participation } </td>
+		                   				</tr>
+	                   				</c:forEach>
+	                   			</tbody>
+	                   		 </table>
+                   		 </div>
+                   		 <div class="chart-box">
+                   			<canvas id="myChart"></canvas>
+                   		</div>
+                   	</div>
+                   	
+                  </div>
+                  
+                  <div >
+                   	<h3>기초단체별 탄소중립포인트 에너지 참여현황</h3>
+                   	<div class="d-flex justify-content-between">
+                   		<div class="table-box">
+	                   		<table>
+	                   			<colgroup>
+		                   			<col width="11%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   				<col width="11%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   				<col width="13%">
+	                   			</colgroup>
+	                   			<thead>
+	                   				<tr>
+	                   					<th>지역</th>
+	                   					<th>가구수</th>
+	                   					<th>참여가구</th>
+	                   					<th>참여율(%)</th>
+	                   					<th>지역</th>
+	                   					<th>가구수</th>
+	                   					<th>참여가구</th>
+	                   					<th>참여율(%)</th>
+	                   				</tr>
+	                   			</thead>
+	                   			<tbody>
+	                   				<tr>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                   				</tr>
+	                   				<tr>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                   				</tr>
+	                   				<tr>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                    				<th>강원</th>
+	                    				<td>708,894</td>
+	                    				<td>53,458</td>
+	                    				<td>7.54</td>
+	                   				</tr>
+	                   			</tbody>
+	                   		 </table>
+                   		 </div>
+                   		 <div class="chart-box">
+                   			차트
+                   		</div>
+                   </div>
+                   	
+               </div>
+                
+         </div>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -92,5 +215,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="text/javascript">
+        	
+        	let ctx = document.getElementById('myChart')
+        	
+        	new Chart(ctx,{
+        		type:'bar',
+        		data:{
+        			labels:['강원','경기','강원'],
+        			datasets:[{
+        				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
+        				data:[2555,2111,1000]
+        			}]
+        		}
+        	})
+        	
+        
+        
+        </script>
+        
+        
+        
     </body>
 </html>
