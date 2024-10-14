@@ -1,17 +1,24 @@
 package com.team.proj.member.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
+
+import com.team.proj.FileUpload;
+import com.team.proj.attach.service.AttachService;
+import com.team.proj.member.service.MemberService;
 
 @Controller
 public class MemberController {
 	
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	AttachService attachService;
+	
+	@Autowired
+	FileUpload fileUpload;
 	
 	@RequestMapping("/loginView")
 	public String loginView() {
