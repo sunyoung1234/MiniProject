@@ -23,8 +23,14 @@
          .cur-poi{
          	cursor: pointer;
          }
+         .prof-img{
+         	height: 200px;
+         	width: 200px;
+         	border-radius: 150px;
+         	cursor: pointer;
+         }
         </style>
-        
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     </head>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
@@ -50,8 +56,9 @@
                     <div class="bg-light rounded-4 py-5 px-4 px-md-5">
                         <div class="text-center mb-5">
                             <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                            <h1 class="fw-bolder">로그인</h1>
-                        </div> 
+                            <h1 class="fw-bolder">회원가입</h1>
+                            <p class="lead fw-normal text-muted mb-0">Green Solution 회원가입!</p> 
+                        </div>
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
                                 <!-- * * * * * * * * * * * * * * *-->
@@ -61,22 +68,53 @@
                                 <!-- To make this form functional, sign up at-->
                                 <!-- https://startbootstrap.com/solution/contact-forms-->
                                 <!-- to get an API token!-->
-                                <form id="contactForm" action="${pageContext.request.contextPath }/loginDo" method="POST">
-                                    <!-- 아이디 input-->
+                                <form id="contactForm" action="${pageContext.request.contextPath }/registDo" method="POST" enctype="multipart/form-data">
+                                
+                                	<!-- profile input-->
                                     <div class="form-floating mb-3">
-                                        <input name="memId" class="form-control" id="inputId" type="text" placeholder="아이디"  />
-                                        <label for="inputId">아이디</label>
-                                    </div>
-                                    <!-- 비밀번호 input-->
-                                    <div class="form-floating mb-3">
-                                        <input name="memPw" class="form-control" id="inputPw" type="password" placeholder="비밀번호" />
-                                        <label for="inputPw">비밀번호</label>
+                                    	<div class="d-flex justify-content-center">
+                                    		<img class="prof-img" id="imgBox" src="${pageContext.request.contextPath }/assets/default-prof.jpg">
+	                                        <input name="img" class="form-control d-none" id="registProfile" type="file" accept="image/*" />
+                                    	</div>
                                     </div> 
-                                    <!-- Submit Button-->
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg mb-2 cur-poi" id="submitButton" type="submit">로그인</button></div>
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg " id="registBtn">회원가입</button></div>
-                                    <a class="cur-poi" style="color: black;">아이디/비밀번호 찾기</a>  
+                                
+                                 
+                                    <!-- id input-->
+                                    <div class="form-floating mb-3">
+                                        <input name="id" class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
+                                        <label for="registId">아이디</label>
+                                        <div class="invalid-feedback" data-sb-feedback="registId:required">아이디를 입력해주세요.</div>
+                                    </div>
+                                    <!-- pw input--> 
+                                    <div class="form-floating mb-3">
+                                        <input name="pw" class="form-control" id="registPw" type="password" placeholder="비밀번호(4자리 이상)" data-sb-validations="required" />
+                                        <label for="registPw">비밀번호(4자리 이상)</label>
+                                        <div class="invalid-feedback" data-sb-feedback="registPw:required">비밀번호를 입력해주세요.</div>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input name="email" class="form-control" id="registEmail" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <label for="email">이메일</label>
+                                        <div class="invalid-feedback" data-sb-feedback="registEmail:required">이메일을 입력해주세요.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="registEmail:email">유효하지 않은 이메일입니다.</div>
+                                    </div>
+                                    <!-- Phone number input-->
+                                    <div class="form-floating mb-3">
+                                        <input name="phone" class="form-control" id="registPhone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                        <label for="registPhone">휴대폰번호</label> 
+                                        <div class="invalid-feedback" data-sb-feedback="registPhone:required">휴대폰번호를 입력해주세요</div>
+                                    </div>
+                                    <!-- entp input-->
+                                    <div class="form-floating mb-3">
+                                        <input name="entp" class="form-control" id="registEntp" type="text" placeholder="회사명" data-sb-validations="required" />
+                                        <label for="registEntp">회사명</label>
+                                        <div class="invalid-feedback" data-sb-feedback="registEntp:required">회사명을 입력해주세요.</div>
+                                    </div>
+                                      
+                                    <!-- Submit Button--> 
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg mb-2 cur-poi" id="submitButton" type="submit">회원가입</button></div>
                                 </form>
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg " id="backBtn">뒤로가기</button></div> 
                             </div>
                         </div>
                     </div>
@@ -109,13 +147,23 @@
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
         
         <script type="text/javascript">
-        
-            const regist_btn = document.querySelector("#registBtn");
-            regist_btn.addEventListener('click', () => {
-                event.preventDefault();
-                location.href = "${pageContext.request.contextPath}/registView"; 
-            }); 
-	        
+        	document.querySelector('#backBtn').addEventListener('click',()=>{
+        		event.preventDefault();
+        		location.href="${pageContext.request.contextPath}/loginView";
+        	})
+        	
+        	document.querySelector('.prof-img').addEventListener('click',()=>{
+        		document.querySelector('#registProfile').click();
+        	})
+	        document.querySelector('#registProfile').addEventListener('change',()=>{
+	        	v_file = document.querySelector('#registProfile').files[0]
+	        	const reader = new FileReader();
+	        	reader.onload = function(event){
+	        		$('#imgBox').attr('src',event.target.result);
+	        	}
+	        	reader.readAsDataURL(v_file);
+	        })
+        	
         
         </script>
     </body>
