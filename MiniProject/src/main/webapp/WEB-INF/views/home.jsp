@@ -32,7 +32,7 @@
         	}
         	
         	.chart-box{
-        		width:600px;
+        		width:1000px;
         		height:300px;
         		border: 1px solid black;
         	}
@@ -217,18 +217,35 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="text/javascript">
+        
+        	let v_partList = '${keyPartList}'
+        	let v_regionName = '${keyRegionName}'
+        	
+        	console.log(v_partList)
+        	console.log(v_regionName)
         	
         	let ctx = document.getElementById('myChart')
         	
         	new Chart(ctx,{
         		type:'bar',
         		data:{
-        			labels:['강원','경기','강원'],
+        			labels: v_regionName,
         			datasets:[{
         				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
-        				data:[2555,2111,1000]
+        				data:v_partList
         			}]
-        		}
+        		},
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+        				ticks: {
+                            minRotation: 45, // x축 값의 회전 각도를 설정할 수 있어요.
+                            padding: 5, // x축 값의 상하 패딩을 설정할 수 있어요.
+                         }
+                    }
+                }
         	})
         	
         
