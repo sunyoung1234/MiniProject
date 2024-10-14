@@ -27,6 +27,7 @@
         
     </head>
     <body class="d-flex flex-column">
+    
         <main class="flex-shrink-0">
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
