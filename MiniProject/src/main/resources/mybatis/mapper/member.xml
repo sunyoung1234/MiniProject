@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mybatis.mapper.member"></mapper>
+<mapper namespace="com.team.proj.member.dao.IMemberDAO">
+
+	<insert id="registMember" parameterType="com.team.proj.member.dto.MemberDTO">
+		INSERT INTO members(
+		        mem_id,
+		        mem_pw,
+		        mem_email,
+		        mem_phone,
+		        entp_name,
+		        mem_profile,
+		        mem_level
+		) Values(
+		        #{memId},
+		        #{memPw},
+		        #{memEmail},
+		        #{memPhone},
+		        #{entpName},
+		        #{memProfile},
+		        0
+		)	
+	</insert>
+</mapper>

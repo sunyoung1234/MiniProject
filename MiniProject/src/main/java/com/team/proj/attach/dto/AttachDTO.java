@@ -5,7 +5,7 @@ public class AttachDTO {
 		private int atchParentNo;
 		private String atchFileName;
 		private String atchOriginalName;
-		private int atchFileSize;
+		private long atchFileSize;
 		private String atchFancySize;
 		private String atchContentType;
 		private String atchPath;
@@ -14,7 +14,7 @@ public class AttachDTO {
 			super();
 		}
 
-		public AttachDTO(int atchNo, int atchParentNo, String atchFileName, String atchOriginalName, int atchFileSize,
+		public AttachDTO(int atchNo, int atchParentNo, String atchFileName, String atchOriginalName, long atchFileSize,
 				String atchFancySize, String atchContentType, String atchPath) {
 			super();
 			this.atchNo = atchNo;
@@ -66,11 +66,11 @@ public class AttachDTO {
 			this.atchOriginalName = atchOriginalName;
 		}
 
-		public int getAtchFileSize() {
+		public long getAtchFileSize() {
 			return atchFileSize;
 		}
 
-		public void setAtchFileSize(int atchFileSize) {
+		public void setAtchFileSize(long atchFileSize) {
 			this.atchFileSize = atchFileSize;
 		}
 
@@ -97,6 +97,8 @@ public class AttachDTO {
 		public void setAtchPath(String atchPath) {
 			this.atchPath = atchPath;
 		}
+
+		
 	
 		
 }
