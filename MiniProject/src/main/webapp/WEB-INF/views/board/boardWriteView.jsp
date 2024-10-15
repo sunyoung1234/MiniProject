@@ -23,7 +23,7 @@
 			height: 800px; 
 			display: none;
 			justify-content: center;
-			align-content: center; 
+			align-items: center;  
 			position: fixed;
 			top: 50%;
 			left: 50%;
@@ -54,36 +54,94 @@
 			display: flex;
 		}
 		
+		.cal-var{
+			width: 100%;
+			height: 10%;
+			display: flex;
+		}
+		
 		.mat-var-category{
 			width: 15%;
 			height: 100%;
 			display: flex;
 			justify-content: center;
-			align-content: center;
+			align-items: center;
 			top: 5px;
 		}
 		.mat-var-img{
 			width: 20%;
 			height: 100%;
-		} 
+		}
+		.cal-var-img{
+			width: 20%;
+			height: 100%;		
+		}
+		
 		.mat-var-name{
 			width: 40%;
 			height: 100%;
 			display: flex;
 			justify-content: center;
-			align-content: center;
+			align-items: center;
 		}
+		
+		.cal-var-name{
+			width: 40%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;		
+		}
+		
 		.mat-var-co2{
 			width: 20%;
 			height: 100%;
 			display: flex;
 			justify-content: center;
-			align-content: center;		
+			align-items: center;		
+		}
+		
+		.cal-var-co2{
+			width: 20%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;		
 		}
 		
 		.mat-img{
 			width: 100%;
 			height: 100%;
+		}
+		
+		.cal-img{
+			width: 100%;
+			height: 100%;		
+		}
+		
+		.cal-var-input{
+			width: 20%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		/* Chrome, Safari, Edge, Opera */
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+		  -webkit-appearance: none;
+		  margin: 0;
+		}
+		
+		/* Firefox  */
+		input[type='number'] {
+		  -moz-appearance: textfield;
+		}
+		.input-EA{
+			width: 70%;
+			height: 70%;
+			font-size: 17px;
 		}
 	</style>
 	
@@ -112,10 +170,16 @@
 			</div>
 		</div>
 		<div class="modal-cal-list">
-			<div class="cal-var-img">
-				<img alt="cal-img" src="">
+			<div class="cal-var">
+				<div class="cal-var-img">
+					<img alt="cal-img" src="">
+				</div>
+				<div class="cal-var-name"></div>
+				<div class="cal-var-co2"></div>
+				<div class="cal-var-input">
+					<input class="input-EA" type="number" name="name" pattern="[0-9]" >
+				</div>
 			</div>
-			<div class=""></div>
 		</div>
 	</div> 
 	
@@ -127,10 +191,20 @@
 		})
 		
 		v_modalCalList = document.getElementsByClassName('modal-cal-list')[0];
-		v_matVar = document.getElementsByClassName('mat-var')
+		v_matVar = document.getElementsByClassName('mat-var');
+		v_img = document.getElementsByClassName('mat-img');
+		v_name = document.getElementsByClassName('mat-var-name');
+		v_co2 = document.getElementsByClassName('mat-var-co2');
 		
 		function toCal(i){
-			v_modalCalList.innerHTML += v_matVar[i-1].outerHTML;
+			
+			
+			v_alpha = '<div class="cal-var"><div class="cal-var-img"><img alt="cal-img" src="'+ v_img[i-1].src +'"></div><div class="cal-var-name">'
+			v_alpha = v_name[i-1].innerHTML + '</div><div class="cal-var-co2">'
+			v_alpha += v_co2[i-1].innerHTML + '</div><div class="cal-var-input"><input class="input-EA" type="number" name="name" pattern="[0-9]" ></div></div>'
+			
+			
+			v_modalCalList.innerHTML += v_matVar[i-1].outerHTML; 
 			v_matVar[i-1].style.display = "none";
 		}
 		
