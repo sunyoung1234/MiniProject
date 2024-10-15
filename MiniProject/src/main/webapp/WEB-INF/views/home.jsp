@@ -95,27 +95,24 @@
                 <div class="mb-4 ">
                    	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
                    	<div>
-                   		<form action="${pageContext.request.contextPath }/" method="POST">
-	                   		<select id="category" name="regionCategory" onchange="f_change()">
-	                   			<option value="강원" ${keyRegion == '강원' ? 'selected' : ''  }>강원
-	                   			<option value="경기" ${keyRegion == '경기' ? 'selected' : ''  }>경기
-	                   			<option value="경남" ${keyRegion == '경남' ? 'selected' : ''  }>경남
-	                   			<option value="경북" ${keyRegion == '경북' ? 'selected' : ''  }>경북
-	                   			<option value="광주" ${keyRegion == '광주' ? 'selected' : ''  }>광주
-	                   			<option value="대구" ${keyRegion == '대구' ? 'selected' : ''  }>대구
-	                   			<option value="대전" ${keyRegion == '대전' ? 'selected' : ''  }>대전
-	                   			<option value="부산" ${keyRegion == '부산' ? 'selected' : ''  }>부산
-	                   			<option value="세종" ${keyRegion == '세종' ? 'selected' : ''  }>세종
-	                   			<option value="울산" ${keyRegion == '울산' ? 'selected' : ''  }>울산
-	                   			<option value="인천" ${keyRegion == '인천' ? 'selected' : ''  }>인천
-	                   			<option value="전남" ${keyRegion == '전남' ? 'selected' : ''  }>전남
-	                   			<option value="전북" ${keyRegion == '전북' ? 'selected' : ''  }>전북
-	                   			<option value="제주" ${keyRegion == '제주' ? 'selected' : ''  }>제주
-	                   			<option value="충남" ${keyRegion == '충남' ? 'selected' : ''  }>충남
-	                   			<option value="충북" ${keyRegion == '충북' ? 'selected' : ''  }>충북
-	                   		</select>
-	                   		<button id="categoryBtn" type="submit">검색</button>
-                   		</form>
+                   		<select id="category" name="regionCategory" onchange="f_change()">
+                   			<option value="강원" ${keyRegion == '강원' ? 'selected' : ''  }>강원
+                   			<option value="경기" ${keyRegion == '경기' ? 'selected' : ''  }>경기
+                   			<option value="경남" ${keyRegion == '경남' ? 'selected' : ''  }>경남
+                   			<option value="경북" ${keyRegion == '경북' ? 'selected' : ''  }>경북
+                   			<option value="광주" ${keyRegion == '광주' ? 'selected' : ''  }>광주
+                   			<option value="대구" ${keyRegion == '대구' ? 'selected' : ''  }>대구
+                   			<option value="대전" ${keyRegion == '대전' ? 'selected' : ''  }>대전
+                   			<option value="부산" ${keyRegion == '부산' ? 'selected' : ''  }>부산
+                   			<option value="세종" ${keyRegion == '세종' ? 'selected' : ''  }>세종
+                   			<option value="울산" ${keyRegion == '울산' ? 'selected' : ''  }>울산
+                   			<option value="인천" ${keyRegion == '인천' ? 'selected' : ''  }>인천
+                   			<option value="전남" ${keyRegion == '전남' ? 'selected' : ''  }>전남
+                   			<option value="전북" ${keyRegion == '전북' ? 'selected' : ''  }>전북
+                   			<option value="제주" ${keyRegion == '제주' ? 'selected' : ''  }>제주
+                   			<option value="충남" ${keyRegion == '충남' ? 'selected' : ''  }>충남
+                   			<option value="충북" ${keyRegion == '충북' ? 'selected' : ''  }>충북
+                   		</select>
                    	</div>
                    	<div class="d-flex justify-content-between">
                    		<div class="table-box">
@@ -159,7 +156,7 @@
                    		<div class="table-box">
 	                   		<table>
 	                   			<colgroup>
-		                   			<col width="11%">
+		                   			<col width="13%">
 	                   				<col width="13%">
 	                   				<col width="13%">
 	                   				<col width="13%">
@@ -171,23 +168,22 @@
 	                   					<th>가구수</th>
 	                   					<th>참여가구</th>
 	                   					<th>참여율(%)</th>
-	                   					
 	                   				</tr>
 	                   			</thead>
-	                   			<tbody>
-	                   				<c:forEach items="${keyRegionPoint}" var="regionList">
-		                   				<tr>
-		                    				<th>${regionList.pointCity }</th>
-		                    				<td>${regionList.pointCityApartmentAll }</td>
-		                    				<td>${regionList.pointCityApartmentJoin }</td>
-		                    				<td>${regionList.cityParticipation } </td>
+	                   			<tbody id="tableBottom">
+	                   				<c:forEach items="${keyGangwan }" var="cityList">
+	                   					<tr>
+		                   					<th>${cityList.pointCity}</th>
+		                   					<td>${cityList.pointCityApartmentAll}</td>
+		                   					<td>${cityList.pointCityApartmentJoin}</td>
+		                   					<td>${cityList.cityParticipation}</td>
 		                   				</tr>
 	                   				</c:forEach>
 	                   			</tbody>
 	                   		 </table>
                    		 </div>
                    		 <div class="chart-box">
-                   			차트
+                   			<canvas id="myChart2"></canvas>
                    		</div>
                    </div>
                    	
@@ -206,39 +202,110 @@
         <script type="text/javascript">
         
         	let v_partList = '${keyPartList}'
-        	let v_regionName = '${keyRegionName}'
+        	let v_regionName = "${keyRegionName}"
         	
+        	v_partList = v_partList.replace('[', '')
+       		v_partList = v_partList.replace(']', '')
+       		
+       		v_regionName = v_regionName.replace('[', '')
+       		v_regionName = v_regionName.replace(']', '')
+        	
+       		v_partList = v_partList.split(',')
+           	v_regionName = v_regionName.split(',')
+           	
+           
+        	
+        	let v_temp = {}
+        	v_temp['name'] = v_regionName
+        	v_temp['num'] = v_partList
+        	
+        	console.log(v_temp)
         	console.log(v_partList)
+        	console.log(typeof(v_partList))
         	console.log(v_regionName)
+        	console.log(typeof(v_regionName))
         	
         	let ctx = document.getElementById('myChart')
+        	
         	
         	new Chart(ctx,{
         		type:'bar',
         		data:{
-        			labels: v_regionName,
+        			labels: v_temp['name'],
         			datasets:[{
         				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
-        				data:v_partList
+        				data: v_temp['num']
         			}]
         		},
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-        		//,
-        				//ticks: {
-                           // minRotation: 45, // x축 값의 회전 각도를 설정할 수 있어요.
-                            //padding: 5, // x축 값의 상하 패딩을 설정할 수 있어요.
-                        // }
-                    }
-                }
-        	})
+        		 options: {
+                     scales: {
+                         x: {
+                             ticks: {
+                                 autoSkip: false,
+                                 maxRotation: 45,
+                                 minRotation: 45
+                             }
+                         },
+                         y: {
+                             beginAtZero: true
+                             }
+                     }
+                 }
+             });
+        	
+        	
         	
         	function f_change(){
         		console.log(event.target.value)
         		document.getElementById("category").value = event.target.value
+        		
+				let v_ajax = new XMLHttpRequest();
+       			
+       			v_ajax.open("POST", '${pageContext.request.contextPath}/tableView');
+       			
+				let v_data = "pointRegion=" + event.target.value;
+       			v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       			
+       			v_ajax.onload = () =>{
+       				if(v_ajax.response){
+       					
+       					let v_region = JSON.parse(v_ajax.response)
+       					
+       					let v_input = "";
+       					document.getElementById("tableBottom").innerHTML = ""
+       					
+       					let v_chartRegion = [];
+       					let v_chartPari = [];
+       					
+       					for(let i = 0; i < v_region.length; i++){
+       						v_input += '<tr>'
+       	       					v_input += '<th>'+ v_region[i]["pointCity"] +'</th>'
+       	       					v_input += '<td> '+ v_region[i]["pointCityApartmentAll"] +' </td>'
+       	       					v_input += '<td> '+ v_region[i]["pointCityApartmentJoin"] +' </td>'
+       	       					v_input += '<td> '+ v_region[i]["cityParticipation"] +' </td>'
+       	       					v_input += '<tr>'
+       	       					
+       	       					v_chartRegion += v_region[i]["pointCity"]
+       							v_chartPari += v_region[i]["cityParticipation"]
+       					}
+       					
+       					document.getElementById("tableBottom").innerHTML += v_input
+	       				
+       		           	
+       		           	let v_temp = {}
+			        	v_temp['name'] = v_chartRegion
+			        	v_temp['num'] = v_chartPari
+			        	
+			        	console.log(v_chartRegion)
+			        	console.log(v_chartPari)
+			        	console.log(v_temp)
+			        	
+			        	let ctx2 = document.getElementById('myChart2')
+       					
+       				}
+       			}
+       			
+       			v_ajax.send(v_data);
         		
         	}
         	
