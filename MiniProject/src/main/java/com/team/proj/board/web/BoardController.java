@@ -13,6 +13,9 @@ import com.team.proj.board.service.BoardService;
 import com.team.proj.board.vo.SearchVO;
 import com.team.proj.materials.dto.MaterialsDTO;
 import com.team.proj.materials.service.MaterialsService;
+import com.team.proj.board.dto.BoardDTO;
+import com.team.proj.board.service.BoardService;
+import com.team.proj.board.vo.SearchVO;
 
 @Controller
 public class BoardController {
