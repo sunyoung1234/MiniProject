@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<style type="text/css">   
 		*{
 			border: 1px solid black;
@@ -30,6 +30,11 @@
 			transform: translate(-50%, -50%);
 		}
 		
+		.modal-cal{
+			width: 50%;
+			height: 100%;
+		}
+		
 		.modal-mat-list{
 			width: 50%;
 			height: 100%;
@@ -37,8 +42,8 @@
 		}
 		
 		.modal-cal-list{
-			width: 50%;
-			height: 100%;
+			width: 100%;
+			height: 77%;
 			overflow-y: scroll;
 		}
 		
@@ -143,6 +148,22 @@
 			height: 70%;
 			font-size: 17px;
 		}
+		
+		#resultCal{
+			width: 100%;
+			height: 10%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			color: blue;
+			font-size: 20px;
+			font-weight: bold;
+		}
+		
+		#btnBox{
+			width: 100%;
+			height: 10%;
+		}
 	</style>
 	
 </head>
@@ -150,24 +171,24 @@
 <body>
 	<button id="modalBtn">모달</button> 
 	
-	<div class="modal-box">
+	<div class="modal-box"> 
 		<div class="modal-mat-list">
 			<div>
-				${categoryValue } 
 				<input type="text" placeholder="제품명 입력">
 				<button id="searchBtn"> 검색 </button>
-					<select id="categorySelect">
-						<option value="all" selected> 분류
-						<option value="wood"> 목재
-						<option value="metal"> 금속
-						<option value="plastic"> 플라스틱
-						<option value="mineral"> 광물
-						<option value="etc"> 기타
-					</select>
+				<select id="categorySelect">
+					<option value="all" selected> 분류
+					<option value="wood"> 목재
+					<option value="metal"> 금속
+					<option value="plastic"> 플라스틱
+					<option value="mineral"> 광물
+					<option value="etc"> 기타
+				</select>
 			</div>
 			<div class="material-list">
-				<c:forEach items="${keyMatList }" var="mat"> 
-					<div style="display: none;" class="mat-var" onclick="toCal(${mat.materialNo})" >
+				<c:forEach items="${keyMatList }" var="mat">
+					<div class="mat-var" > 
+						<div class="mat-no" style="display: none;">${mat.materialNo }</div>
 						<div class="mat-var-category">${mat.materialCategory}</div>
 						<div class="mat-var-img">
 							<img class="mat-img" src="${mat.materialImg }">
@@ -178,56 +199,103 @@
 				</c:forEach>
 			</div>
 		</div>
-		<div class="modal-cal-list">
-			<p id="calResult">0</p>
-		</div>
+		<div class="modal-cal">
+			 <form action="${pageContex.request.contextPath }/registCal">
+				<div class="modal-cal-list"></div>
+				<div id="resultCal"> 0 </div>
+				<div id="btnBox">
+					<button id="closeCal" type="button">닫기</button>
+					<button id="registCal" type="button">등록</button>
+				</div>
+			</form>
+		</div> 
+		
 	</div> 
 	
 	
 	<script type="text/javascript"> 
-		v_modalBtn = document.querySelector('#modalBtn');
+		
+	// 모달 띄우기 버튼
+		let v_modalBtn = document.querySelector('#modalBtn');
 		v_modalBtn.addEventListener('click',()=>{
 			document.getElementsByClassName('modal-box')[0].style.display = "flex";
 		})
 		
-		v_modalCalList = document.getElementsByClassName('modal-cal-list')[0];
-		v_matVar = document.getElementsByClassName('mat-var');
-		v_img = document.getElementsByClassName('mat-img');
-		v_name = document.getElementsByClassName('mat-var-name');
-		v_co2 = document.getElementsByClassName('mat-var-co2');
+	// select - option 체크하기	
+		function checkValue() {
+        	let selectedCategory = document.getElementById('categorySelect').value;
+        	let v_materials = document.querySelectorAll('.mat-var');
+
+       	 v_materials.forEach(mat => {
+	            let category = mat.querySelector('.mat-var-category').innerHTML.trim();
+	            if (selectedCategory === 'all' || category === selectedCategory){
+	                mat.style.display = 'flex'; 
+	            } else {
+	                mat.style.display = 'none'; 
+	            }
+	        });
+	    }
+
+	    document.getElementById('categorySelect').addEventListener('change', checkValue);
+	    
+	    checkValue();
+	    
+	// mat-var 클릭이벤트 주기
+		let v_img = document.querySelectorAll('.mat-img');
+		let v_name = document.querySelectorAll('.mat-var-name');
+		let v_co2 = document.querySelectorAll('.mat-var-co2');
 		
-		v_calResult = document.querySelector('#calResult');
+		let v_matVar = document.querySelectorAll('.mat-var');
 		
-		function toCal(i){ 
-			v_alpha = '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ v_img[i-1].src +'"></div><div class="cal-var-name">'
-			v_alpha += v_name[i-1].innerHTML + '</div><div class="cal-var-co2">'
-			v_alpha += v_co2[i-1].innerHTML + '</div><div class="cal-var-input"><input oninput="calculateCal(event)" defaultValue="0" class="input-EA" type="number" value="0" max="99999" name="cal" pattern="[0-9]" >'
-			v_alpha += '<input style="display: none;">' + '</div></div>'
-			 
+		v_matVar.forEach(mat => {
 			
-			v_modalCalList.innerHTML = v_alpha + v_modalCalList.innerHTML;  
-			v_matVar[i-1].style.display = "none"; 
-		}
-		
-		
-		
-		
-		function calculateCal(event){
-			v_coo = parseFloat(event.target.parentElement.parentElement.children[2].innerHTML);
-			v_value = parseFloat(event.target.value);
+			let i = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
 			
-			v_calResult.innerHTML = (parseFloat(v_calResult.innerHTML) + (v_coo * v_value)) + ""; 
-			console.log(typeof v_calResult.innerHTML)
-		}
-		
-		sessionStorage.setItem('category', 'all');
-		let v_categoryValue = sessionStorage.getItem('category');
-		v_select = document.getElementById('categorySelect')
-		v_select.addEventListener('change',()=>{
-			sessionStorage.setItem('category', event.target.value);
-			v_categoryValue = sessionStorage.getItem('category');
+			let v_alpha = '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ v_img[i-1].src +'"></div><div class="cal-var-name">'
+			v_alpha += v_name[i-1].innerHTML + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
+			v_alpha += v_co2[i-1].innerHTML + '</div><div class="cal-var-input"><input defaultValue="0" class="input-EA" type="number" value="0" max="99999" name="cal" pattern="[0-9]" >'
+			v_alpha += '<input style="display: none;">' + '</div><button id="deleteDiv"  type="button">X</button></div>'
+			
+			mat.addEventListener('click',()=>{
+				document.querySelector('.modal-cal-list').innerHTML += v_alpha;
+				mat.style.display = 'none';
+			})
 		})
 		
+	// 리스트 controller로 보내기
+		v_registBtn = document.querySelector('#registCal')
+		v_registBtn.addEventListener('click',()=>{
+			let noList = [];
+			let eaList = [];
+			
+			v_calVar = document.querySelectorAll('.cal-var');
+			
+			v_calVar.forEach(cv =>{
+				v_no = cv.querySelector('#hiddenMatNo').innerHTML.trim();
+				v_ea = cv.querySelector('.input-EA').value;
+				
+				noList.push(v_no);
+				eaList.push(v_ea);
+			})
+			
+			console.log(noList, eaList);
+			
+			$.ajax({
+			    url: '${pageContext.request.contextPath}/registCal',
+			    type: 'POST',
+			    contentType: 'application/json',
+			    data: JSON.stringify({
+			        list1: noList,
+			        list2: eaList
+			    }),
+			    success: function(response) {
+			    	console.log(response);
+			    }
+			    
+			});
+		});
+			
+			    	
 	</script>
 	
 </body>
