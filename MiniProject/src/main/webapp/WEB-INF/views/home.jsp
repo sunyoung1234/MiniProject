@@ -239,11 +239,12 @@
                     scales: {
                         y: {
                             beginAtZero: true
-                        },
-        				ticks: {
-                            minRotation: 45, // x축 값의 회전 각도를 설정할 수 있어요.
-                            padding: 5, // x축 값의 상하 패딩을 설정할 수 있어요.
-                         }
+                        }
+        		//,
+        				//ticks: {
+                           // minRotation: 45, // x축 값의 회전 각도를 설정할 수 있어요.
+                            //padding: 5, // x축 값의 상하 패딩을 설정할 수 있어요.
+                        // }
                     }
                 }
         	})
