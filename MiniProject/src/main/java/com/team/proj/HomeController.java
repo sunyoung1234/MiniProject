@@ -11,11 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team.proj.point.dto.PointDTO;
 import com.team.proj.point.service.PointService;
+import com.team.proj.region.dto.RegionDTO;
+import com.team.proj.region.service.RegionService;
 
 /**
  * Handles requests for the application home page.
@@ -26,13 +29,16 @@ public class HomeController {
 	@Autowired
 	PointService pointService;
 	
+	@Autowired
+	RegionService regionservice;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	@RequestMapping(value = "/")
+	public String home(Model model, String regionCategory) {
 		
 		ArrayList<Double> partList = new ArrayList<>();
 		ArrayList<String> regionName = new ArrayList<>();
@@ -58,6 +64,19 @@ public class HomeController {
 		
 		model.addAttribute("keyPartList",partList);
 		model.addAttribute("keyRegionName",regionName);
+		
+		if(regionCategory == null) {
+			regionCategory = "°­¿ø";
+			List<RegionDTO> regionList = regionservice.getCityPoint(regionCategory);
+			model.addAttribute("keyRegionPoint",regionList);
+		}else {
+			List<RegionDTO> regionList = regionservice.getCityPoint(regionCategory);
+			model.addAttribute("keyRegionPoint",regionList);
+		}
+		
+		model.addAttribute("keyRegion", regionCategory);
+		
+		
 		
 		
 		return "home";

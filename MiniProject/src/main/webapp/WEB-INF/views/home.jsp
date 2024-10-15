@@ -51,7 +51,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link font-bold" href="${pageContext.request.contextPath }/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/loginView">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/registView">회원가입</a></li>
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/boardView">견적 요청</a></li>
                     </ul>
                 </div>
@@ -95,26 +95,27 @@
                 <div class="mb-4 ">
                    	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
                    	<div>
-                   		<select id="category" name="regionCategory" onchange="f_change()">
-                   			<option>지역 선택
-                   			<option value="강원">강원
-                   			<option value="경기">경기
-                   			<option value="경남">경남
-                   			<option value="경북">경북
-                   			<option value="광주">광주
-                   			<option value="대구">대구
-                   			<option value="대전">대전
-                   			<option value="부산">부산
-                   			<option value="세종">세종
-                   			<option value="울산">울산
-                   			<option value="인천">인천
-                   			<option value="전남">전남
-                   			<option value="전북">전북
-                   			<option value="제주">제주
-                   			<option value="충남">충남
-                   			<option value="충북">충북
-                   		</select>
-                   		<button>검색</button>
+                   		<form action="${pageContext.request.contextPath }/" method="POST">
+	                   		<select id="category" name="regionCategory" onchange="f_change()">
+	                   			<option value="강원" ${keyRegion == '강원' ? 'selected' : ''  }>강원
+	                   			<option value="경기" ${keyRegion == '경기' ? 'selected' : ''  }>경기
+	                   			<option value="경남" ${keyRegion == '경남' ? 'selected' : ''  }>경남
+	                   			<option value="경북" ${keyRegion == '경북' ? 'selected' : ''  }>경북
+	                   			<option value="광주" ${keyRegion == '광주' ? 'selected' : ''  }>광주
+	                   			<option value="대구" ${keyRegion == '대구' ? 'selected' : ''  }>대구
+	                   			<option value="대전" ${keyRegion == '대전' ? 'selected' : ''  }>대전
+	                   			<option value="부산" ${keyRegion == '부산' ? 'selected' : ''  }>부산
+	                   			<option value="세종" ${keyRegion == '세종' ? 'selected' : ''  }>세종
+	                   			<option value="울산" ${keyRegion == '울산' ? 'selected' : ''  }>울산
+	                   			<option value="인천" ${keyRegion == '인천' ? 'selected' : ''  }>인천
+	                   			<option value="전남" ${keyRegion == '전남' ? 'selected' : ''  }>전남
+	                   			<option value="전북" ${keyRegion == '전북' ? 'selected' : ''  }>전북
+	                   			<option value="제주" ${keyRegion == '제주' ? 'selected' : ''  }>제주
+	                   			<option value="충남" ${keyRegion == '충남' ? 'selected' : ''  }>충남
+	                   			<option value="충북" ${keyRegion == '충북' ? 'selected' : ''  }>충북
+	                   		</select>
+	                   		<button id="categoryBtn" type="submit">검색</button>
+                   		</form>
                    	</div>
                    	<div class="d-flex justify-content-between">
                    		<div class="table-box">
@@ -174,26 +175,14 @@
 	                   				</tr>
 	                   			</thead>
 	                   			<tbody>
-	                   				<tr>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
-	                    				
-	                   				</tr>
-	                   				<tr>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
-	                    				
-	                   				</tr>
-	                   				<tr>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
-	                   				</tr>
+	                   				<c:forEach items="${keyRegionPoint}" var="regionList">
+		                   				<tr>
+		                    				<th>${regionList.pointCity }</th>
+		                    				<td>${regionList.pointCityApartmentAll }</td>
+		                    				<td>${regionList.pointCityApartmentJoin }</td>
+		                    				<td>${regionList.cityParticipation } </td>
+		                   				</tr>
+	                   				</c:forEach>
 	                   			</tbody>
 	                   		 </table>
                    		 </div>
@@ -249,9 +238,11 @@
         	
         	function f_change(){
         		console.log(event.target.value)
+        		document.getElementById("category").value = event.target.value
+        		
         	}
         	
-        
+        	
         
         </script>
         

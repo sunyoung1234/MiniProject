@@ -14,8 +14,8 @@ public class RegionService {
 	@Autowired
 	IRegionDAO dao;
 	
-	public List<RegionDTO> getCityPoint(String city){
-		List<RegionDTO> result = dao.getCityPoint(city);
+	public List<RegionDTO> getCityPoint(String pointRegion){
+		List<RegionDTO> result = dao.getCityPoint(pointRegion);
 		return result;
 	}
 

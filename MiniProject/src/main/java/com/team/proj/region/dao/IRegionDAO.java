@@ -9,6 +9,6 @@ import com.team.proj.region.dto.RegionDTO;
 @Mapper
 public interface IRegionDAO {
 	
-	List<RegionDTO> getCityPoint(String city);
+	List<RegionDTO> getCityPoint(String pointRegion);
 
 }
