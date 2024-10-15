@@ -145,8 +145,12 @@ font-bold {
 					<!-- 요청서 작성 버튼 -->
 					<div class="position-fixed" style="bottom: 20px; right: 20px;">
 						<button class="btn btn-success" id="requestButton"
+<<<<<<< HEAD
 							href="${pageContext.request.contextPath }/boardWriteView">요청서
 							작성</button>
+=======
+							href="${pageContext.request.contextPath }/boardWriteView">요청서 작성</button>
+>>>>>>> branch 'main' of https://github.com/sunyoung1234/MiniProject.git
 					</div>
 				</div>
 			</div>
