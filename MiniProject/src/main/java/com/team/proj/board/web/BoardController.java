@@ -26,7 +26,6 @@ public class BoardController {
 	public String boardWriteView(Model model) {
 		
 		List<MaterialsDTO> matList = matService.getMatList();
-		System.out.println(matList);
 		model.addAttribute("keyMatList", matList);
 		
 		
