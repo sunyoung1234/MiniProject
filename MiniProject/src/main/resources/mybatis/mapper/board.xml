@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team.proj.board.dao.BoardDAO">
+
+    <!-- 게시글 목록 가져오기 -->
+    <select id="getBoardList"
+        parameterType="com.team.proj.board.vo.SearchVO"
+        resultType="com.team.proj.board.dto.BoardDTO">
+        SELECT
+        ob.order_no AS orderNo,
+        me.request_date AS requestDate,
+        me.order_title AS orderTitle,
+        me.order_content AS orderContent,
+        m.entp_name AS entpName,
+        ob.feedback_yn AS feedbackYn
+        FROM
+        order_board ob
+        JOIN
+        material_estimate me ON ob.order_no = me.order_no
+        JOIN
+        members m ON
+        ob.mem_id = m.mem_id
+        <!-- 검색 조건 추가 -->
+        <if test="searchOption != null and searchWord != null">
+            WHERE
+            ${searchOption} LIKE CONCAT('%', #{searchWord}, '%')
+        </if>
+    </select>
+
+    <!-- 글 한개만 가져오기 -->
+    <select id="getBoard" parameterType="int"
+        resultType="com.team.proj.board.dto.BoardDTO">
+        SELECT
+        ob.order_no AS orderNo,
+        ob.request_date AS requestDate,
+        ob.order_title AS orderTitle,
+        me.order_content AS orderContent,
+        m.entp_name AS entpName,
+        ob.feedback_yn AS feedbackYn
+        FROM
+        order_board ob
+        JOIN
+        members m ON ob.mem_id = m.mem_id
+        JOIN
+        material_estimate me ON ob.order_no = me.order_no
+        WHERE
+        ob.order_no = #{boardNo}
+    </select>
+
+    <!-- 글쓰기 (INSERT) -->
+    <insert id="insertBoard"
+        parameterType="com.team.proj.board.dto.BoardDTO">
+        INSERT INTO order_board (request_date, order_title,
+        order_content,
+        mem_id, feedback_yn)
+        VALUES (#{requestDate},
+        #{orderTitle}, #{orderContent}, #{memId},
+        #{feedbackYn})
+    </insert>
+
+    <!-- 글 수정 (UPDATE) -->
+    <update id="updateBoard"
+        parameterType="com.team.proj.board.dto.BoardDTO">
+        UPDATE order_board
+        SET order_title = #{orderTitle}, order_content = #{orderContent}
+        WHERE order_no = #{orderNo}
+    </update>
+
+    <!-- 글 삭제 (UPDATE) -->
+    <update id="deleteBoard" parameterType="int">
+        UPDATE order_board
+        SET del_yn = 'Y'
+        WHERE order_no = #{no}
+    </update>
+
+</mapper>
