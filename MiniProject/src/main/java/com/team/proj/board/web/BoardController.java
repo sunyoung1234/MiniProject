@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team.proj.materials.dto.MaterialsDTO;
@@ -26,7 +27,7 @@ public class BoardController {
     public String boardView(Model model, SearchVO search) {
         List<BoardDTO> boardList = boardService.getBoardList(search);
         model.addAttribute("boardList", boardList);
-        return "board/boardView";
+        return "board/boardView"	;
     }
 
     @RequestMapping("/boardWriteView")
@@ -34,5 +35,14 @@ public class BoardController {
         List<MaterialsDTO> matList = matService.getMatList();
         model.addAttribute("keyMatList", matList);
         return "board/boardWriteView";
+    }
+    
+    // 게시글 상세보기 메소드
+    @RequestMapping("/boardDetailView/{boardNo}")
+    public String boardDetailView(@PathVariable int boardNo, Model model) {
+        // 게시글 정보를 가져옴
+        BoardDTO boardDetail = boardService.getBoard(boardNo);
+        model.addAttribute("board", boardDetail);
+        return "board/boardDetailView"; // JSP 파일 경로
     }
 }
