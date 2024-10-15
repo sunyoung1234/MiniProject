@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.proj.point.dao.IPointDAO">
+
+	<select id="getPointList" resultType="com.team.proj.point.dto.PointDTO">
+		SELECT 
+		    POINT_REGION,
+		    TO_CHAR(POINT_APARTMENT_ALL,'FM999,999,999') AS POINT_APARTMENT_ALL,
+    		TO_CHAR(POINT_APARTMENT_JOIN,'FM999,999,999') AS POINT_APARTMENT_JOIN,
+		    Round(POINT_APARTMENT_JOIN / POINT_APARTMENT_ALL * 100,2) AS participation
+		FROM regions
+	</select>
+
+
+
+</mapper>
