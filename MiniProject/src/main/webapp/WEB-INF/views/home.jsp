@@ -32,7 +32,7 @@
         	}
         	
         	.chart-box{
-        		width:600px;
+        		width:1000px;
         		height:300px;
         		border: 1px solid black;
         	}
@@ -95,10 +95,24 @@
                 <div class="mb-4 ">
                    	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
                    	<div>
-                   		<select>
-                   			<option>강원
-                   			<option>경기
-                   			<option>강원
+                   		<select id="category" name="regionCategory" onchange="f_change()">
+                   			<option>지역 선택
+                   			<option value="강원">강원
+                   			<option value="경기">경기
+                   			<option value="경남">경남
+                   			<option value="경북">경북
+                   			<option value="광주">광주
+                   			<option value="대구">대구
+                   			<option value="대전">대전
+                   			<option value="부산">부산
+                   			<option value="세종">세종
+                   			<option value="울산">울산
+                   			<option value="인천">인천
+                   			<option value="전남">전남
+                   			<option value="전북">전북
+                   			<option value="제주">제주
+                   			<option value="충남">충남
+                   			<option value="충북">충북
                    		</select>
                    		<button>검색</button>
                    	</div>
@@ -148,10 +162,7 @@
 	                   				<col width="13%">
 	                   				<col width="13%">
 	                   				<col width="13%">
-	                   				<col width="11%">
-	                   				<col width="13%">
-	                   				<col width="13%">
-	                   				<col width="13%">
+	                   				
 	                   			</colgroup>
 	                   			<thead>
 	                   				<tr>
@@ -159,10 +170,7 @@
 	                   					<th>가구수</th>
 	                   					<th>참여가구</th>
 	                   					<th>참여율(%)</th>
-	                   					<th>지역</th>
-	                   					<th>가구수</th>
-	                   					<th>참여가구</th>
-	                   					<th>참여율(%)</th>
+	                   					
 	                   				</tr>
 	                   			</thead>
 	                   			<tbody>
@@ -171,26 +179,16 @@
 	                    				<td>708,894</td>
 	                    				<td>53,458</td>
 	                    				<td>7.54</td>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
+	                    				
 	                   				</tr>
 	                   				<tr>
 	                    				<th>강원</th>
 	                    				<td>708,894</td>
 	                    				<td>53,458</td>
 	                    				<td>7.54</td>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
+	                    				
 	                   				</tr>
 	                   				<tr>
-	                    				<th>강원</th>
-	                    				<td>708,894</td>
-	                    				<td>53,458</td>
-	                    				<td>7.54</td>
 	                    				<th>강원</th>
 	                    				<td>708,894</td>
 	                    				<td>53,458</td>
@@ -217,19 +215,41 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="text/javascript">
+        
+        	let v_partList = '${keyPartList}'
+        	let v_regionName = '${keyRegionName}'
+        	
+        	console.log(v_partList)
+        	console.log(v_regionName)
         	
         	let ctx = document.getElementById('myChart')
         	
         	new Chart(ctx,{
         		type:'bar',
         		data:{
-        			labels:['강원','경기','강원'],
+        			labels: v_regionName,
         			datasets:[{
         				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
-        				data:[2555,2111,1000]
+        				data:v_partList
         			}]
-        		}
+        		},
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+        		//,
+        				//ticks: {
+                           // minRotation: 45, // x축 값의 회전 각도를 설정할 수 있어요.
+                            //padding: 5, // x축 값의 상하 패딩을 설정할 수 있어요.
+                        // }
+                    }
+                }
         	})
+        	
+        	function f_change(){
+        		console.log(event.target.value)
+        	}
         	
         
         

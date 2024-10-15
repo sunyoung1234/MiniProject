@@ -1,6 +1,7 @@
 package com.team.proj;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -33,13 +34,31 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		
+		ArrayList<Double> partList = new ArrayList<>();
+		ArrayList<String> regionName = new ArrayList<>();
+		
 		List<PointDTO> pointList = pointService.getPointList();
 		
 		System.out.println(pointList);
+		
 		model.addAttribute("keyPointList", pointList);
-//		for(PointDTO pd of pointList) {
-//			pd.getParticipation()
-//		}
+		
+		for(PointDTO pd : pointList) {
+			System.out.println(pd.getParticipation());
+			partList.add(pd.getParticipation());
+		}
+		
+		for(PointDTO pd : pointList) {
+			System.out.println(pd.getParticipation());
+			regionName.add(pd.getPointRegion());
+		}
+		
+		System.out.println(partList);
+		System.out.println(regionName);
+		
+		model.addAttribute("keyPartList",partList);
+		model.addAttribute("keyRegionName",regionName);
+		
 		
 		return "home";
 	}
