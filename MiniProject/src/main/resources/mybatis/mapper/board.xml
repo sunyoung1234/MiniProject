@@ -74,5 +74,29 @@
         SET del_yn = 'Y'
         WHERE order_no = #{no}
     </update>
+    
+    <insert id="boardWriteDo" parameterType="com.team.proj.board.dto.BoardDTO">
+		INSERT INTO BOARDS(
+		    order_no,      
+		    mem_id,       
+		    calc_id,       
+		    calc_result,       
+		    order_title,    
+		    order_content,    
+		    request_date,  
+		    feedback_yn,
+		    del_yn
+		)VALUES(
+		    seq_board.nextval,
+		    #{memId},
+		    #{calcId},
+		    #{calcResult},
+		    #{orderTitle},
+		    #{orderContent},
+		    SYSDATE,
+		    'N',
+		    'N'
+		)
+    </insert>
 
 </mapper>

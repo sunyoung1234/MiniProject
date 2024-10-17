@@ -219,8 +219,16 @@
 					<button id="closeCal" type="button">닫기</button>
 					<button id="registCal" type="button">등록</button> 
 				</div>
-		</div> 
+		</div>
 		
+	</div> 
+	<div>
+		<div>
+			<input id="boardTitle" type="text">
+		</div>
+		<div>
+			<input id="boardContent" type="text">
+		</div>
 	</div> 
 	
 	
@@ -438,19 +446,39 @@
 		
 		// 글 등록 버튼  
 		let v_writeBtn = document.querySelector('#boardWriteBtn');
+		let v_boardTitle = document.querySelector('#boardTitle');
+		let v_boardContent = document.querySelector('#boardContent');
 		
 		v_writeBtn.addEventListener('click',()=>{
-			console.log(scId);
 			
-			$.ajax({
-				url: '${pageContext.request.contextPath}/practice',
-				type: 'POST',
-				contentType: 'application/json',
-				data: JSON.stringify({ id: scId }),
-				success: function(resp){
-					console.log(resp);
-				}
-			})
+			if(!v_boardTitle.value.trim() ){
+				alert('글 제목을 입력하세요');
+				return;
+			}else if(!v_boardContent.value.trim()){
+				alert('글 내용을 입력하세요');
+				return;
+			}else if(scId == ""){
+				alert('견적요청 내용을 입력해주세요');
+			}else{
+				let v_title = v_boardTitle.value;
+				let v_content = v_boardContent.value;
+				
+				$.ajax({
+					url: '${pageContext.request.contextPath}/boardWriteDo',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({ 
+							id: scId,
+							title: v_title,
+							content: v_content
+						}),
+					success: function(resp){
+						console.log(resp);
+					}
+				})
+			}
+			
+			
 			
 		})
 		
