@@ -29,4 +29,6 @@ public interface BoardDAO {
    
     // 게시글 수 가져오기
     int getBoardCount(SearchVO search);
+    
+    int boardWriteDo(BoardDTO board);
 }

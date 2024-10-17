@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class BoardService {
+	
 
     private final BoardDAO boardDAO; // BoardDAO의 의존성 주입
 
@@ -38,5 +39,10 @@ public class BoardService {
 
     public int getBoardCount(SearchVO search) {
         return boardDAO.getBoardCount(search);
+    }
+    
+    public int boardWriteDo(BoardDTO board){
+    	int result = boardDAO.boardWriteDo(board);
+    	return result;
     }
 }

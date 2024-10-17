@@ -1,118 +1,117 @@
 package com.team.proj.board.dto;
 
+import java.util.Date;
+
 public class BoardDTO {
 	   
     // material_estimate 관련 필드
     private int orderNo;               // 요청번호
     private String memId;              // 회원 ID
-    private String materialNo;         // 자재 번호
-    private int materialVolume;        // 자재 수량
     private String calcId;             // 계산 ID
-    private int calcNum;               // 계산 수량
+    private double calcResult;               // 계산 결과
     private String orderTitle;         // 요청 제목
     private String orderContent;       // 요청 내용
-    private String beforeAfter;        // 전/후 상태
-    private String requestDate;          // 요청 날짜
-
-    // order_board 관련 필드
+    private Date requestDate;          // 요청 날짜
     private String feedbackYn;         // 피드백 여부
     private String delYn;              // 글 삭제 여부
+    
+	public BoardDTO() {
+		super();
+	}
 
-    // Getter and Setter 추가
-    public int getOrderNo() {
-        return orderNo;
-    }
+	public BoardDTO(int orderNo, String memId, String calcId, double calcResult, String orderTitle, String orderContent,
+			Date requestDate, String feedbackYn, String delYn) {
+		super();
+		this.orderNo = orderNo;
+		this.memId = memId;
+		this.calcId = calcId;
+		this.calcResult = calcResult;
+		this.orderTitle = orderTitle;
+		this.orderContent = orderContent;
+		this.requestDate = requestDate;
+		this.feedbackYn = feedbackYn;
+		this.delYn = delYn;
+	}
 
-    public void setOrderNo(int orderNo) {
-        this.orderNo = orderNo;
-    }
+	@Override
+	public String toString() {
+		return "BoardDTO [orderNo=" + orderNo + ", memId=" + memId + ", calcId=" + calcId + ", calcResult=" + calcResult
+				+ ", orderTitle=" + orderTitle + ", orderContent=" + orderContent + ", requestDate=" + requestDate
+				+ ", feedbackYn=" + feedbackYn + ", delYn=" + delYn + "]";
+	}
 
-    public String getMemId() {
-        return memId;
-    }
+	public int getOrderNo() {
+		return orderNo;
+	}
 
-    public void setMemId(String memId) {
-        this.memId = memId;
-    }
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
+	}
 
-    public String getMaterialNo() {
-        return materialNo;
-    }
+	public String getMemId() {
+		return memId;
+	}
 
-    public void setMaterialNo(String materialNo) {
-        this.materialNo = materialNo;
-    }
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
 
-    public int getMaterialVolume() {
-        return materialVolume;
-    }
+	public String getCalcId() {
+		return calcId;
+	}
 
-    public void setMaterialVolume(int materialVolume) {
-        this.materialVolume = materialVolume;
-    }
+	public void setCalcId(String calcId) {
+		this.calcId = calcId;
+	}
 
-    public String getCalcId() {
-        return calcId;
-    }
+	public double getCalcResult() {
+		return calcResult;
+	}
 
-    public void setCalcId(String calcId) {
-        this.calcId = calcId;
-    }
+	public void setCalcResult(double calcResult) {
+		this.calcResult = calcResult;
+	}
 
-    public int getCalcNum() {
-        return calcNum;
-    }
+	public String getOrderTitle() {
+		return orderTitle;
+	}
 
-    public void setCalcNum(int calcNum) {
-        this.calcNum = calcNum;
-    }
+	public void setOrderTitle(String orderTitle) {
+		this.orderTitle = orderTitle;
+	}
 
-    public String getOrderTitle() {
-        return orderTitle;
-    }
+	public String getOrderContent() {
+		return orderContent;
+	}
 
-    public void setOrderTitle(String orderTitle) {
-        this.orderTitle = orderTitle;
-    }
+	public void setOrderContent(String orderContent) {
+		this.orderContent = orderContent;
+	}
 
-    public String getOrderContent() {
-        return orderContent;
-    }
+	public Date getRequestDate() {
+		return requestDate;
+	}
 
-    public void setOrderContent(String orderContent) {
-        this.orderContent = orderContent;
-    }
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
+	}
 
-    public String getBeforeAfter() {
-        return beforeAfter;
-    }
+	public String getFeedbackYn() {
+		return feedbackYn;
+	}
 
-    public void setBeforeAfter(String beforeAfter) {
-        this.beforeAfter = beforeAfter;
-    }
-//    Date 대신, String으로 세팅
-    public String getRequestDate() {
-        return requestDate;
-    }
+	public void setFeedbackYn(String feedbackYn) {
+		this.feedbackYn = feedbackYn;
+	}
 
-    public void setRequestDate(String requestDate) {
-        this.requestDate = requestDate;
-    }
+	public String getDelYn() {
+		return delYn;
+	}
 
-    // Getters and Setters for order_board fields
-    public String getFeedbackYn() {
-        return feedbackYn;
-    }
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
 
-    public void setFeedbackYn(String feedbackYn) {
-        this.feedbackYn = feedbackYn;
-    }
-
-    public String getDelYn() {
-        return delYn;
-    }
-
-    public void setDelYn(String delYn) {
-        this.delYn = delYn;
-    }
+	
+    
 }
