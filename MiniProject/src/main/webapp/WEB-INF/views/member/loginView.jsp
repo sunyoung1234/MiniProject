@@ -55,26 +55,21 @@
                         </div> 
                         <div class="row gx-5 justify-content-center">
                             <div class="col-lg-8 col-xl-6">
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- * * SB Forms Contact Form * *-->
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- This form is pre-integrated with SB Forms.-->
-                                <!-- To make this form functional, sign up at-->
-                                <!-- https://startbootstrap.com/solution/contact-forms-->
-                                <!-- to get an API token!-->
+                                
+								<span class="err-msg" style="color: red;">${msg}</span>     
                                 <form id="contactForm" action="${pageContext.request.contextPath }/loginDo" method="POST">
                                     <!-- 아이디 input-->
                                     <div class="form-floating mb-3">
                                         <input name="memId" class="form-control" id="inputId" type="text" placeholder="아이디"  />
                                         <label for="inputId">아이디</label>
                                     </div>
-                                    <!-- 비밀번호 input-->
+                                    <!-- 비밀번호 input--> 
                                     <div class="form-floating mb-3">
                                         <input name="memPw" class="form-control" id="inputPw" type="password" placeholder="비밀번호" />
                                         <label for="inputPw">비밀번호</label>
                                     </div> 
                                     <!-- Submit Button-->
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg mb-2 cur-poi" id="submitButton" type="submit">로그인</button></div>
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg mb-2 cur-poi" id="submitBtn" type="submit">로그인</button></div>
                                     <div class="d-grid"><button class="btn btn-primary btn-lg " id="registBtn">회원가입</button></div>
                                     <a class="cur-poi" style="color: black;">아이디/비밀번호 찾기</a>  
                                 </form>
@@ -117,6 +112,8 @@
                 location.href = "${pageContext.request.contextPath}/registView"; 
             }); 
 	        
+            const v_submitBtn = document.querySelector('#submitBtn');
+            
         
         </script>
     </body>
