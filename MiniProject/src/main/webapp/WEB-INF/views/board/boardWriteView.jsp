@@ -394,53 +394,50 @@
 			})
 			if(!isYang){
 				alert('음수불가');
-			}
-			
+			}else{
+				let v_exBox = document.querySelector('#exampleBox'); 
 				
-			
-			let v_exBox = document.querySelector('#exampleBox'); 
-			
-			if(eaList.length == 0){
-				v_exBox.innerHTML = "아직 계산 내용 X"
+				if(eaList.length == 0){
+					v_exBox.innerHTML = "아직 계산 내용 X"
+					document.getElementsByClassName('modal-box')[0].style.display = "none";
+					return;
+				}
+				
+				
+				let strNoList = noList.join(',');
+				let strEaList = eaList.join(',');
+				let v_alpha2 = "";
+				
+				
+				$.ajax({
+				    url: '${pageContext.request.contextPath}/registCal', 
+				    type: 'POST',
+				    contentType: 'application/json',
+				    data: JSON.stringify({
+				        no: strNoList,
+				        ea: strEaList
+				    }), 
+				    success: function(response) { 
+				    	
+				    	console.log(response.registList[0].materialImg);     
+				    	
+				    	for(let i=0; i<response['registList'].length; i++){
+				    		
+				    		v_alpha2 += '<div class="ex-img"><img src="'+ response.registList[i].materialImg
+					    	v_alpha2 += '"></div><div class="ex-name">'+ response.registList[i].materialName 
+					    	v_alpha2 += '</div><div class="ex-EA">'+ eaList[i] +'</div>' 
+				    	}
+				    	
+				    	v_exBox.innerHTML = v_alpha2;
+				    	
+				    	scId = response['scId']; 
+				    	
+				    }
+				    
+				}); 
+				 
 				document.getElementsByClassName('modal-box')[0].style.display = "none";
-				return;
 			}
-			
-			
-			let strNoList = noList.join(',');
-			let strEaList = eaList.join(',');
-			let v_alpha2 = "";
-			
-			
-			$.ajax({
-			    url: '${pageContext.request.contextPath}/registCal', 
-			    type: 'POST',
-			    contentType: 'application/json',
-			    data: JSON.stringify({
-			        no: strNoList,
-			        ea: strEaList
-			    }), 
-			    success: function(response) { 
-			    	
-			    	console.log(response.registList[0].materialImg);     
-			    	
-			    	for(let i=0; i<response['registList'].length; i++){
-			    		
-			    		v_alpha2 += '<div class="ex-img"><img src="'+ response.registList[i].materialImg
-				    	v_alpha2 += '"></div><div class="ex-name">'+ response.registList[i].materialName 
-				    	v_alpha2 += '</div><div class="ex-EA">'+ eaList[i] +'</div>' 
-			    	}
-			    	
-			    	v_exBox.innerHTML = v_alpha2;
-			    	
-			    	scId = response['scId']; 
-			    	
-			    }
-			    
-			}); 
-			 
-			document.getElementsByClassName('modal-box')[0].style.display = "none";
-			 
 			
 		})
 		
@@ -477,9 +474,6 @@
 					}
 				})
 			}
-			
-			
-			
 		})
 		
 		

@@ -27,11 +27,15 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/">Home</a></li>
+					
 						<c:if test="${not empty sessionScope.login}">
 							<li class="nav-item"><a class="nav-link"
-								href="${pageContext.request.contextPath}/memEditView">회원정보</a></li>
+							href="${pageContext.request.contextPath}/">마이페이지</a></li>
+						</c:if>
+							
+						<c:if test="${not empty sessionScope.login}">
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getEntpName() }</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 						</c:if>

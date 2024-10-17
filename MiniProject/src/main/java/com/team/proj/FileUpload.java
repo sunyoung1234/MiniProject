@@ -32,12 +32,13 @@ public class FileUpload {
 	}
 	
 	public AttachDTO getAttachByMultipart(MultipartFile boFile) throws IOException{
-		String fileName = UUID.randomUUID().toString();
+		 String originalFileName = boFile.getOriginalFilename();
+		
+		String fileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'))+ "_" + System.currentTimeMillis() + ".jpeg";
 		
 		File uploadFolder = new File(uploadPath);
 		uploadFolder.mkdir();
 		
-		// separatorchar \\ ¿Ã∑±∞≈
 		String filePath = uploadPath + File.separatorChar + fileName;
 		
 		boFile.transferTo(new File(filePath));
