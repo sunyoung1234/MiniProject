@@ -10,5 +10,17 @@
             material_img
         FROM MATERIALS
 	</select>
+	
+	<select id="getByMatNo" parameterType="int" resultType="com.team.proj.materials.dto.MaterialsDTO">
+		SELECT
+			material_name,
+            gas_kg,
+			material_img
+        FROM MATERIALS
+        WHERE 1=1
+          AND material_no = #{no}
+	</select>
+	
+	
 
 </mapper>

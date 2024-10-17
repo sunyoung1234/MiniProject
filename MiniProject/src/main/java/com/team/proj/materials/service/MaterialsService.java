@@ -17,4 +17,9 @@ public class MaterialsService {
 		List<MaterialsDTO> result = dao.getMatList();
 		return result;
 	}
+	
+	public MaterialsDTO getByMatNo(int no){
+		MaterialsDTO result = dao.getByMatNo(no); 
+		return result;
+	}
 }
