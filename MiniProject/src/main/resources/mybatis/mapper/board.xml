@@ -27,6 +27,7 @@
             ${searchOption} LIKE CONCAT('%', #{searchWord}, '%')
         </if>
     </select>
+    
 
     <!-- 글 한개만 가져오기 -->
     <select id="getBoard" parameterType="int"
