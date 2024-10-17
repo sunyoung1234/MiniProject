@@ -213,11 +213,25 @@
        		v_partList = v_partList.split(',')
            	v_regionName = v_regionName.split(',')
            	
-           
+           	let v_gangwon = '${keyRegion }'
+          	let v_gangwonValue = "${keyRegionValue}"
+               	
+          	v_gangwon = v_gangwon.replace('[', '')
+            v_gangwonValue = v_gangwonValue.replace('[', '')
+              		
+            v_gangwon = v_gangwon.replace('[', '')
+            v_gangwonValue = v_gangwonValue.replace(']', '')
+               	
+            v_gangwon = v_gangwon.split(',')
+            v_gangwonValue = v_gangwonValue.split(',')
         	
         	let v_temp = {}
         	v_temp['name'] = v_regionName
         	v_temp['num'] = v_partList
+        	
+        	let v_temp2 = {}
+        	v_temp2['name'] = v_gangwon
+        	v_temp2['num'] = v_gangwonValue
         	
         	console.log(v_temp)
         	console.log(v_partList)
@@ -227,6 +241,8 @@
         	
         	let ctx = document.getElementById('myChart')
         	
+        	console.log(v_temp2)
+        	
         	
         	new Chart(ctx,{
         		type:'bar',
@@ -235,6 +251,34 @@
         			datasets:[{
         				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
         				data: v_temp['num']
+        			}]
+        		},
+        		 options: {
+                     scales: {
+                         x: {
+                             ticks: {
+                                 autoSkip: false,
+                                 maxRotation: 45,
+                                 minRotation: 45
+                             }
+                         },
+                         y: {
+                             beginAtZero: true
+                             }
+                     }
+                 }
+             });
+        	
+			let ctx2 = document.getElementById('myChart2')
+        	
+        	
+        	new Chart(ctx2,{
+        		type:'bar',
+        		data:{
+        			labels: v_temp2['name'],
+        			datasets:[{
+        				label:'기초단체별 탄소중립포인트 에너지 참여율(%)',
+        				data: v_temp2['num']
         			}]
         		},
         		 options: {
@@ -285,22 +329,23 @@
        	       					v_input += '<td> '+ v_region[i]["cityParticipation"] +' </td>'
        	       					v_input += '<tr>'
        	       					
-       	       					v_chartRegion += v_region[i]["pointCity"]
-       							v_chartPari += v_region[i]["cityParticipation"]
+       	       					v_chartRegion[i] = v_region[i]["pointCity"]
+       							v_chartPari[i] = v_region[i]["cityParticipation"]
        					}
        					
        					document.getElementById("tableBottom").innerHTML += v_input
 	       				
        		           	
-       		           	let v_temp = {}
-			        	v_temp['name'] = v_chartRegion
-			        	v_temp['num'] = v_chartPari
+       		           	let v_temp2 = {}
+			        	v_temp2['name'] = v_chartRegion
+			        	v_temp2['num'] = v_chartPari
 			        	
 			        	console.log(v_chartRegion)
 			        	console.log(v_chartPari)
 			        	console.log(v_temp)
 			        	
-			        	let ctx2 = document.getElementById('myChart2')
+			        	ctx2.remove()
+			        	ctx2.create()
        					
        				}
        			}
