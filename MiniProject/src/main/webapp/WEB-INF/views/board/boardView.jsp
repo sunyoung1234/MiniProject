@@ -116,7 +116,7 @@
 										<c:forEach var="board" items="${boardListById}">
 											<tr> 
 												<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
-												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView/${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
+												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView?orderNo=${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
 												<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
 												<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
 												<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
