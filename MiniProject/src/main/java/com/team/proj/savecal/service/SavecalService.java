@@ -23,4 +23,14 @@ public class SavecalService {
 		List<SavecalDTO> result = dao.findById(id);
 		return result;
 	}
+	
+	public int updateConfirm(String calcId) {
+		int result = dao.updateConfirm(calcId);
+		return result;
+	}
+	
+	public int deleteConfirmN() {
+		int result = dao.deleteConfirmN();
+		return result;
+	}
 }

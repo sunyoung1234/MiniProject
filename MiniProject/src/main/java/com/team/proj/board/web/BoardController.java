@@ -1,5 +1,7 @@
 package com.team.proj.board.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -97,10 +99,18 @@ public class BoardController {
 		
 		total = Math.floor(total * 100) / 100;
 		
+		
+		
 		MemberDTO mem = (MemberDTO) session.getAttribute("login");
 		String mem_id = mem.getMemId();
 		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSSS"); 
+		String unique = sdf.format(date);
+		unique += mem_id;
+		
 		BoardDTO board = new BoardDTO();
+		board.setBoardId(unique);
 		board.setCalcId(calc_id);
 		board.setOrderTitle(boardTitle);
 		board.setOrderContent(boardContent);
@@ -109,6 +119,11 @@ public class BoardController {
 		
 		boardService.boardWriteDo(board);
 		
-		return "nice";
+		// CONFIRM YN Y로 변경
+		scService.updateConfirm(calc_id);
+		// CONFIRM YN N인 것들 삭제
+		scService.deleteConfirmN();
+		
+		return "board/boardView";
 	}
 }

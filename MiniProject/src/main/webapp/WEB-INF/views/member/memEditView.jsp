@@ -24,6 +24,13 @@
 .cur-poi {
 	cursor: pointer;
 }
+
+.prof-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 150px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body class="d-flex flex-column">
