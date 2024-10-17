@@ -45,4 +45,9 @@ public class BoardService {
     	int result = boardDAO.boardWriteDo(board);
     	return result;
     }
+    
+    public List<BoardDTO> getBoardListById(String memId){
+    	List<BoardDTO> result = boardDAO.getBoardListById(memId);
+    	return result;
+    }
 }

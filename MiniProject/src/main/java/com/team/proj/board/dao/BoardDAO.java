@@ -31,4 +31,6 @@ public interface BoardDAO {
     int getBoardCount(SearchVO search);
     
     int boardWriteDo(BoardDTO board);
+    
+    List<BoardDTO> getBoardListById(String memId);
 }

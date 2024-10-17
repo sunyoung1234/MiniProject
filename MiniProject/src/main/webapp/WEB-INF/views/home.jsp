@@ -48,21 +48,8 @@
     </head>
     <body>
 
-        <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-color">
-            <div class="container">
-                <a class="navbar-brand" href="${pageContext.request.contextPath }/">Green Solution</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link font-bold" href="${pageContext.request.contextPath }/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/loginView">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/registView">회원가입</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath }/boardView">견적 요청</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <%@ include file="/WEB-INF/inc/top.jsp"%>
+        
         <!-- Page header with logo and tagline-->
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
