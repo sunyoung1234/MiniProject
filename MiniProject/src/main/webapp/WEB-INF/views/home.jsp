@@ -36,6 +36,12 @@
         		height:300px;
         		border: 1px solid black;
         	}
+        	
+        	.chart-box2{
+        		width:1000px;
+        		height:300px;
+        		border: 1px solid black;
+        	}
         
         </style>
         
@@ -182,7 +188,7 @@
 	                   			</tbody>
 	                   		 </table>
                    		 </div>
-                   		 <div class="chart-box">
+                   		 <div class="chart-box2">
                    			<canvas id="myChart2"></canvas>
                    		</div>
                    </div>
@@ -268,7 +274,11 @@
                      }
                  }
              });
+          	
+        	let v_parent = document.querySelector('.chart-box2')
         	
+        	console.log(v_parent)
+        	console.log(v_parent[0])
 			let ctx2 = document.getElementById('myChart2')
         	
         	
@@ -340,12 +350,33 @@
 			        	v_temp2['name'] = v_chartRegion
 			        	v_temp2['num'] = v_chartPari
 			        	
-			        	console.log(v_chartRegion)
-			        	console.log(v_chartPari)
-			        	console.log(v_temp)
+			        	new Chart(ctx2,{
+			        		type:'bar',
+			        		data:{
+			        			labels: v_temp2['name'],
+			        			datasets:[{
+			        				label:'기초단체별 탄소중립포인트 에너지 참여율(%)',
+			        				data: v_temp2['num']
+			        			}]
+			        		},
+			        		 options: {
+			                     scales: {
+			                         x: {
+			                             ticks: {
+			                                 autoSkip: false,
+			                                 maxRotation: 45,
+			                                 minRotation: 45
+			                             }
+			                         },
+			                         y: {
+			                             beginAtZero: true
+			                             }
+			                     }
+			                 }
+			             });
 			        	
-			        	ctx2.remove()
-			        	ctx2.create()
+			        	
+			        	
        					
        				}
        			}
