@@ -42,13 +42,11 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         String memId = login.getMemId();
-        String entp = login.getEntpName();
         
         List<BoardDTO> boardListById = boardService.getBoardListById(memId);
         
         if(boardListById.size()>0) {
         	model.addAttribute("boardListById", boardListById);
-        	model.addAttribute("keyEntp", entp);
         }else {
         	model.addAttribute("noList","작성한 글이 없습니다.");
         }
@@ -77,7 +75,7 @@ public class BoardController {
         return "board/boardDetailView"; // JSP 파일 경로
     }
     
-    @ResponseBody
+    
 	@RequestMapping("/boardWriteDo")
 	public String practice(@RequestBody Map<String,String> data,HttpSession session) {
 		
@@ -103,6 +101,7 @@ public class BoardController {
 		
 		MemberDTO mem = (MemberDTO) session.getAttribute("login");
 		String mem_id = mem.getMemId();
+		String entpName = mem.getEntpName();
 		
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSSS"); 
@@ -110,6 +109,7 @@ public class BoardController {
 		unique += mem_id;
 		
 		BoardDTO board = new BoardDTO();
+		board.setEntpName(entpName);
 		board.setBoardId(unique);
 		board.setCalcId(calc_id);
 		board.setOrderTitle(boardTitle);

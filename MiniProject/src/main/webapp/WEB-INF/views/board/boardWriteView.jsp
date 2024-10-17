@@ -9,167 +9,185 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<style type="text/css">   
 	* {
-	    box-sizing: border-box;
-	    margin: 0;
-	    padding: 0;
-	}
-	
-	body {
-	    font-family: Arial, sans-serif;
-	    background-color: #f9f9f9;
-	}
-	
-	button {
-	    background-color: #007bff;
-	    color: white;
-	    border: none;
-	    padding: 10px 15px;
-	    border-radius: 5px;
-	    cursor: pointer;
-	    transition: background-color 0.3s;
-	}
-	
-	button:hover {
-	    background-color: #0056b3;
-	}
-	
-	.modal-box {
-	    z-index: 100;
-	    width: 90%;
-	    max-width: 1200px;
-	    height: 80%;
-	    display: none;
-	    justify-content: center;
-	    align-items: flex-start; /* Align items at the top */
-	    position: fixed;
-	    top: 50%;
-	    left: 50%;
-	    transform: translate(-50%, -50%);
-	    background-color: white;
-	    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	    border-radius: 10px;
-	    overflow: hidden; /* Hide overflow of modal box */
-	}
-	
-	.modal-mat-list, .modal-cal {
-	    padding: 20px;
-	    height: calc(100% - 60px); /* Adjust height to accommodate buttons */
-	    overflow-y: auto; /* Enable vertical scroll */
-	}
-	
-	.material-list {
-	    padding: 10px;
-	    border: 1px solid #ddd;
-	    border-radius: 5px;
-	    background-color: #fafafa;
-	}
-	
-	.mat-var {
-	    padding: 10px;
-	    border-bottom: 1px solid #ddd;
-	    display: flex;
-	    align-items: center;
-	}
-	
-	.mat-var:last-child {
-	    border-bottom: none;
-	}
-	
-	.cal-var, .cal-var-input {
-	    padding: 10px;
-	    margin-bottom: 10px;
-	    display: flex;
-	    align-items: center;
-	    background-color: #f0f0f0;
-	    border-radius: 5px;
-	}
-	
-	#resultCal {
-	    margin-top: 20px;
-	    text-align: right;
-	    color: #333;
-	    font-size: 24px;
-	    font-weight: bold;
-	}
-	
-	#btnBox {
-	    display: flex;
-	    justify-content: space-between;
-	    margin-top: 20px;
-	}
-	
-	input[type='number'] {
-	    width: 80px;
-	    margin-left: 10px;
-	    padding: 5px;
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	}
-	
-	input[type='text'], select {
-	    padding: 5px;
-	    margin-right: 10px; 
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	}
-	
-	select {
-	    width: auto;
-	}
-	
-	.material-list img.mat-img {
-	    width: 50px;
-	    height: auto;
-	    margin-right: 10px;
-	}
-	
-	.cal-var-img img.cal-img {
-	    width: 30px;
-	    height: auto;
-	}
-	#exampleBox {
-	    border: 1px solid #ddd;
-	    border-radius: 8px;
-	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	    overflow: hidden;
-	    margin: 20px;
-	    width: 1500px; 
-	    height: 500px;
-	    transition: transform 0.2s;
-	    display: flex;
-	}
-	
-	#exampleBox:hover {
-	    transform: scale(1.05); /* 호버 시 크기 증가 */
-	}
-	
-	.ex-img img {
-	    width: 100%;
-	    height: auto;
-	    border-bottom: 1px solid #ddd;
-	}
-	
-	.ex-name {
-	    font-size: 1.5em;
-	    font-weight: bold;
-	    margin: 10px 0;
-	    text-align: center;
-	    color: #333;
-	}
-	
-	.ex-EA {
-	    font-size: 1em;
-	    color: #666;
-	    text-align: center;
-	    padding: 0 10px;
-	    margin-bottom: 10px;
-	}
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+#overlay {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    z-index: 99; /* 모달보다 낮은 z-index */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.modal-box {
+    z-index: 100;
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.modal-mat-list, .modal-cal {
+    padding: 20px;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+}
+
+.material-list {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+}
+
+.mat-var {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+.mat-var:last-child {
+    border-bottom: none;
+}
+
+.cal-var, .cal-var-input {
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#resultCal {
+    margin-top: 20px;
+    text-align: right;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#btnBox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+input[type='number'] {
+    width: 80px;
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type='text'], textarea, select {
+    padding: 5px;
+    margin-right: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none; /* Prevent resizing */
+}
+
+select {
+    width: auto;
+}
+
+.material-list img.mat-img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.cal-var-img img.cal-img {
+    width: 30px;
+    height: auto;
+}
+
+#exampleBox {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px;
+    width: 1500px; 
+    height: 500px;
+    transition: transform 0.2s;
+    display: flex;
+}
+
+#exampleBox:hover {
+    transform: scale(1.05);
+}
+
+.ex-img img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+  
+.ex-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+    color: #333;
+} 
+
+.ex-EA {
+    font-size: 1em;
+    color: #666;
+    text-align: center;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+ 
 
 	</style>
 	
 </head>
 
 <body>
+	<div id="overlay"></div>
 	<button id="modalBtn">모달</button> 
 	
 	<div id="exampleBox">
@@ -232,18 +250,22 @@
 	</div> 
 	
 	
-	<script type="text/javascript"> 
+	<script type="text/javascript">  
 		
+		let v_overlay = document.getElementById('overlay');
+	
 	// 모달 띄우기 버튼
 		let v_modalBtn = document.querySelector('#modalBtn');
 		v_modalBtn.addEventListener('click',()=>{
 			document.getElementsByClassName('modal-box')[0].style.display = "flex";
+			v_overlay.style.display = "block"; 
 		})
 		
 	// 모달 창 닫기
 		let v_closeModal = document.querySelector('#closeCal');
 		v_closeModal.addEventListener('click',()=>{
-			document.getElementsByClassName('modal-box')[0].style.display = "none";  
+			document.getElementsByClassName('modal-box')[0].style.display = "none"; 
+			v_overlay.style.display = "none"; 
 		})
 		
 	// select - option 체크하기	
@@ -362,7 +384,8 @@
 		// 등록 버튼
 		v_registBtn.addEventListener('click',()=>{
 			
-			
+			v_overlay.style.display = "none";
+			document.getElementsByClassName('modal-box')[0].style.display = "none";
 			let noList = [];
 			let eaList = [];
 			
@@ -436,7 +459,6 @@
 				    
 				}); 
 				 
-				document.getElementsByClassName('modal-box')[0].style.display = "none";
 			}
 			
 		})
@@ -470,10 +492,11 @@
 							content: v_content
 						}),
 					success: function(resp){
-						console.log(resp);
+						location.href = '${pageContext.request.contextPath}/boardView';
 					}
 				})
 			}
+			
 		})
 		
 		

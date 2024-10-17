@@ -12,16 +12,17 @@ public class BoardDTO {
     private double calcResult;               // 계산 결과
     private String orderTitle;         // 요청 제목
     private String orderContent;       // 요청 내용
-    private Date requestDate;          // 요청 날짜
+    private String requestDate;          // 요청 날짜
     private String feedbackYn;         // 피드백 여부
     private String delYn;              // 글 삭제 여부
+    private String entpName;
     
 	public BoardDTO() {
 		super();
 	}
 
 	public BoardDTO(String boardId, int orderNo, String memId, String calcId, double calcResult, String orderTitle,
-			String orderContent, Date requestDate, String feedbackYn, String delYn) {
+			String orderContent, String requestDate, String feedbackYn, String delYn, String entpName) {
 		super();
 		this.boardId = boardId;
 		this.orderNo = orderNo;
@@ -33,13 +34,15 @@ public class BoardDTO {
 		this.requestDate = requestDate;
 		this.feedbackYn = feedbackYn;
 		this.delYn = delYn;
+		this.entpName = entpName;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDTO [boardId=" + boardId + ", orderNo=" + orderNo + ", memId=" + memId + ", calcId=" + calcId
 				+ ", calcResult=" + calcResult + ", orderTitle=" + orderTitle + ", orderContent=" + orderContent
-				+ ", requestDate=" + requestDate + ", feedbackYn=" + feedbackYn + ", delYn=" + delYn + "]";
+				+ ", requestDate=" + requestDate + ", feedbackYn=" + feedbackYn + ", delYn=" + delYn + ", entpName="
+				+ entpName + "]";
 	}
 
 	public String getBoardId() {
@@ -98,11 +101,11 @@ public class BoardDTO {
 		this.orderContent = orderContent;
 	}
 
-	public Date getRequestDate() {
+	public String getRequestDate() {
 		return requestDate;
 	}
 
-	public void setRequestDate(Date requestDate) {
+	public void setRequestDate(String requestDate) {
 		this.requestDate = requestDate;
 	}
 
@@ -121,6 +124,17 @@ public class BoardDTO {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
+
+	public String getEntpName() {
+		return entpName;
+	}
+
+	public void setEntpName(String entpName) {
+		this.entpName = entpName;
+	}
+
+	
+	
 
 	
 	

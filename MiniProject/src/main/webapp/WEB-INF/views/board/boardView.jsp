@@ -114,12 +114,12 @@
 								<tbody>
 									<c:if test="${not empty boardListById}">
 										<c:forEach var="board" items="${boardListById}">
-											<tr>
+											<tr> 
 												<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
 												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView/${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
 												<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
 												<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
-												<td class="text-center">${keyEntp}</td> <!-- 업체명 -->
+												<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
 												<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
 											</tr>
 										</c:forEach>

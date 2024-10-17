@@ -91,7 +91,8 @@
 		    order_content,    
 		    request_date,  
 		    feedback_yn,
-		    del_yn
+		    del_yn,
+		    entp_name
 		)VALUES(
 			#{boardId},
 		    seq_board.nextval,
@@ -102,7 +103,8 @@
 		    #{orderContent},
 		    SYSDATE,
 		    'N',
-		    'N'
+		    'N',
+		    #{entpName}
 		)
     </insert>
 
@@ -116,14 +118,15 @@
 		    calc_result,       
 		    order_title,    
 		    order_content,    
-		    request_date,  
+		    TO_CHAR(request_date, 'YYYY-MM-DD HH24:MI') AS request_date ,  
 		    feedback_yn,
-		    del_yn
+		    del_yn,
+		    entp_name
 		FROM BOARDS
 		WHERE 1=1
-		  AND DEL_YN = 'N'
 		<if test="memId != 'admin'">
 		  AND MEM_ID = #{memId}
 		</if>
+		ORDER BY ORDER_NO DESC
 	</select>
 </mapper>
