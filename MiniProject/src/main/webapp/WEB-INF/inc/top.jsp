@@ -41,8 +41,12 @@
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/registView">회원가입</a></li>
 						</c:if>
-						<li class="nav-item"><a class="nav-link"
+						<c:if test="${not empty sessionScope.login}">
+							<li class="nav-item"><a class="nav-link"
 							href="${pageContext.request.contextPath}/boardView">견적 요청</a></li>
+						</c:if>
+						
+						
 					</ul>
 
 				</div>
