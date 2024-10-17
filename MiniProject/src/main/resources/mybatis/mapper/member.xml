@@ -48,6 +48,7 @@
             mem_email = #{memEmail},
             mem_phone = #{memPhone},
             mem_profile = #{memProfile}
-        WHERE mem_id = #{memId}
+        WHERE 1=1
+          AND mem_id = #{memId}
     </update>
 </mapper>

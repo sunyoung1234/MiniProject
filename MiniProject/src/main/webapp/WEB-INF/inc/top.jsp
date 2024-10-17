@@ -38,16 +38,14 @@
 								href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getEntpName() }</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath}/boardView">견적 요청</a></li>
 						</c:if>
 						<c:if test="${empty sessionScope.login}">
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/loginView">로그인</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/registView">회원가입</a></li>
-						</c:if>
-						<c:if test="${not empty sessionScope.login}">
-							<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/boardView">견적 요청</a></li>
 						</c:if>
 						
 						

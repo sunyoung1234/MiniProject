@@ -81,6 +81,19 @@
 							<form id="editForm"
 								action="${pageContext.request.contextPath}/memberUpdate"
 								method="POST" enctype="multipart/form-data">
+								
+								<!-- Profile image input -->
+								<div class="form-floating mb-3">
+									<div class="d-flex justify-content-center">
+										<img class="prof-img" id="imgBox"
+											src="C:/uploads/no003_1729148466127.jpeg "
+											alt="Profile Image"
+<%-- 											onerror="this.src='${pageContext.request.contextPath}/images/default.jpg';"  --%>/>
+										<input name="memProfile" class="form-control d-none"
+											id="registProfile" type="file" accept="image/*" />
+									</div>
+								</div>
+								
 								<!-- ID input (Read-only) -->
 								<div class="form-floating mb-3">
 									<input name="memId" class="form-control" id="inputId"
@@ -115,18 +128,6 @@
 										for="inputEntp">회사명 (변경 불가)</label>
 								</div>
 
-								<!-- Profile image input -->
-								<div class="form-floating mb-3">
-									<div class="d-flex justify-content-center">
-										<img class="prof-img" id="imgBox"
-											src="${pageContext.request.contextPath}${member.memProfile}"
-											alt="Profile Image"
-<%-- 											onerror="this.src='${pageContext.request.contextPath}/images/default.jpg';"  --%>/>
-										<input name="memProfile" class="form-control d-none"
-											id="registProfile" type="file" accept="image/*" />
-									</div>
-								</div>
-
 
 								<!-- Submit Button -->
 								<div class="d-grid">
@@ -136,7 +137,11 @@
 							</form>
 
 							<div class="d-grid">
-								<button class="btn btn-secondary btn-lg" id="backBtn">뒤로가기</button>
+								<button class="btn mb-2 btn-secondary btn-lg" id="backBtn">뒤로가기</button>
+							</div>
+							
+							<div class="d-grid"> 
+								<button class="btn btn-secondary btn-lg" style="color: white; background-color: red;">회원탈퇴</button>
 							</div>
 						</div>
 					</div>

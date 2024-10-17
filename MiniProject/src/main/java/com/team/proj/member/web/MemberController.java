@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team.proj.FileUpload;
 import com.team.proj.attach.dto.AttachDTO;
 import com.team.proj.attach.service.AttachService;
+import com.team.proj.board.service.BoardService;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.member.service.MemberService;
 
@@ -28,6 +29,9 @@ public class MemberController {
 
     @Autowired
     FileUpload fileUpload;
+    
+    @Autowired
+    BoardService boardService;
 
     // 로그인 페이지로 이동
     @RequestMapping("/loginView")
@@ -39,18 +43,6 @@ public class MemberController {
     @RequestMapping("/registView")
     public String registView() {
         return "member/registView";
-    }
-
-    // 회원 정보 수정 페이지로 이동
-    @RequestMapping("/memEditView")
-    public String memEditView(HttpSession session, Model model) {
-        MemberDTO member = (MemberDTO) session.getAttribute("login");
-        if (member != null) {
-            model.addAttribute("member", member); // 세션에서 회원 정보를 모델에 추가
-            return "member/memEditView"; // JSP 페이지로 이동
-        } else {
-            return "redirect:/loginView"; // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-        }
     }
 
     // 로그인 처리
@@ -103,7 +95,19 @@ public class MemberController {
         session.invalidate(); // 세션 무효화
         return "redirect:/"; // 홈으로 리다이렉트
     }
-
+    
+    // 회원 정보 수정 페이지로 이동
+    @RequestMapping("/memEditView")
+    public String memEditView(HttpSession session, Model model) {
+        MemberDTO member = (MemberDTO) session.getAttribute("login");
+        if (member != null) {
+            model.addAttribute("member", member); // 세션에서 회원 정보를 모델에 추가
+            return "member/memEditView"; // JSP 페이지로 이동
+        } else {
+            return "redirect:/loginView"; // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+        }
+    }
+    
     // 회원 정보 수정 처리
     @RequestMapping("/memberUpdate")
     public String memberUpdate(HttpServletRequest req, MultipartFile img, HttpSession session) {
@@ -118,6 +122,8 @@ public class MemberController {
         String entp = member.getEntpName(); // 회사명은 변경할 수 없음
 
         String imgPath = member.getMemProfile(); // 기존 이미지 경로
+        
+        
         if (img != null && !img.isEmpty()) { // 새로운 이미지가 업로드된 경우
             try {
                 AttachDTO attach = fileUpload.getAttachByMultipart(img);
@@ -136,5 +142,19 @@ public class MemberController {
         session.setAttribute("login", updatedMember);
 
         return "redirect:/memEditView"; // 수정 완료 후 회원정보 수정 페이지로 리다이렉트
+    }
+    
+    @RequestMapping("/deleteMember")
+    public String deleteMember(HttpSession session) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	String id = login.getMemId();
+    	
+
+    	
+    	
+    	
+    	
+    	return "home";
     }
 }
