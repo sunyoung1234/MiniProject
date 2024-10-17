@@ -10,4 +10,6 @@ import com.team.proj.materials.dto.MaterialsDTO;
 public interface IMaterialsDAO {
 	
 	List<MaterialsDTO> getMatList();
+	
+	MaterialsDTO getByMatNo(int no); 
 }
