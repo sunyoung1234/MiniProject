@@ -38,8 +38,6 @@ public class BoardController {
 
     @RequestMapping("/boardView")
     public String boardView(Model model, SearchVO search, HttpSession session) {
-        List<BoardDTO> boardList = boardService.getBoardList(search);
-        model.addAttribute("boardList", boardList);
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         String memId = login.getMemId();
         
@@ -67,10 +65,11 @@ public class BoardController {
     }
     
     // 게시글 상세보기 메소드
-    @RequestMapping("/boardDetailView/{boardNo}")
-    public String boardDetailView(@PathVariable int boardNo, Model model) {
+    @RequestMapping("/boardDetailView")
+    public String boardDetailView(int orderNo, Model model) {
         // 게시글 정보를 가져옴
-        BoardDTO boardDetail = boardService.getBoard(boardNo);
+    	System.out.println(orderNo);
+        BoardDTO boardDetail = boardService.getBoard(orderNo);
         model.addAttribute("board", boardDetail);
         return "board/boardDetailView"; // JSP 파일 경로
     }

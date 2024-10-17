@@ -3,50 +3,23 @@
 
 <mapper namespace="com.team.proj.board.dao.BoardDAO">
 
-    <!-- 게시글 목록 가져오기 -->
-    <select id="getBoardList"
-        parameterType="com.team.proj.board.vo.SearchVO"
-        resultType="com.team.proj.board.dto.BoardDTO">
-        SELECT
-        ob.order_no AS orderNo,
-        me.request_date AS requestDate,
-        me.order_title AS orderTitle,
-        me.order_content AS orderContent,
-        m.entp_name AS entpName,
-        ob.feedback_yn AS feedbackYn
-        FROM
-        order_board ob
-        JOIN
-        material_estimate me ON ob.order_no = me.order_no
-        JOIN
-        members m ON
-        ob.mem_id = m.mem_id
-        <!-- 검색 조건 추가 -->
-        <if test="searchOption != null and searchWord != null">
-            WHERE
-            ${searchOption} LIKE CONCAT('%', #{searchWord}, '%')
-        </if>
-    </select>
-    
 
     <!-- 글 한개만 가져오기 -->
-    <select id="getBoard" parameterType="int"
-        resultType="com.team.proj.board.dto.BoardDTO">
-        SELECT
-        ob.order_no AS orderNo,
-        ob.request_date AS requestDate,
-        ob.order_title AS orderTitle,
-        me.order_content AS orderContent,
-        m.entp_name AS entpName,
-        ob.feedback_yn AS feedbackYn
-        FROM
-        order_board ob
-        JOIN
-        members m ON ob.mem_id = m.mem_id
-        JOIN
-        material_estimate me ON ob.order_no = me.order_no
-        WHERE
-        ob.order_no = #{boardNo}
+    <select id="getBoard" parameterType="int" resultType="com.team.proj.board.dto.BoardDTO">
+		SELECT
+		    b.order_no,
+		    b.request_date,
+		    b.order_title,
+		    b.order_content,
+		    a.mem_id,
+		    a.entp_name,
+		    b.calc_result,
+		    b.request_date,
+		    b.feedback_yn,
+		    b.del_yn
+		FROM BOARDS b, MEMBERS a
+		WHERE b.mem_id = a.mem_id(+)
+		AND b.order_no = #{orderNo}
     </select>
 
     <!-- 글쓰기 (INSERT) -->
@@ -108,7 +81,7 @@
 		)
     </insert>
 
-	<!-- 회원아디로 게시글 불러오기 -->
+	<!-- 회원아이디로 게시글 불러오기 -->
 	<select id="getBoardListById" parameterType="String" resultType="com.team.proj.board.dto.BoardDTO">
 		SELECT
 			board_id,
