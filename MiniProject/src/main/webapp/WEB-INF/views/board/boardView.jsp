@@ -113,18 +113,23 @@
 								<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
 								<colgroup>
 									<col style="width: 7%;" />
+									<!-- 번호  -->
+									<col style="width: 50%;" />
+									<!-- 제목  -->
+									<%-- <col style="width: 40%;" /> <!-- 내용  -->  --%>
 									<col style="width: 15%;" />
+									<!-- 날짜  -->
 									<col style="width: 15%;" />
-									<col style="width: 40%;" />
-									<col style="width: 15%;" />
-									<col style="width: 10%;" />
+									<!-- 업체명  -->
+									<col style="width: 13%;" />
+									<!-- 피드백 여부  -->
 								</colgroup>
 								<thead class="thead-light">
 									<tr>
-										<th scope="col" class="text-center">순번</th>
-										<th scope="col" class="text-center">날짜</th>
+										<th scope="col" class="text-center">번호</th>
 										<th scope="col" class="text-center">제목</th>
-										<th scope="col" class="text-center">내용</th>
+										<th scope="col" class="text-center">날짜</th>
+										<!-- <th scope="col" class="text-center">내용</th>     내용을 내역에서 보여줄 필요가 있을지?. 일단 제외-->
 										<th scope="col" class="text-center">업체명</th>
 										<th scope="col" class="text-center">피드백 여부</th>
 									</tr>
@@ -133,13 +138,12 @@
 									<c:if test="${not empty boardList}">
 										<c:forEach var="board" items="${boardList}">
 											<tr>
-												<th scope="row" class="text-center">${board.orderNo}</th>
-												<td class="text-center">${board.requestDate}</td>
-												<td class="text-center"><a
-													href="${pageContext.request.contextPath}/boardDetailView/${board.orderNo}">${board.orderTitle}</a></td>
-												<td class="text-center">${board.orderContent}</td>
-												<td class="text-center">${board.entpName}</td>
-												<td class="text-center">${board.feedbackYn}</td>
+												<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
+												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView/${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
+												<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
+												<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
+												<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
+												<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
 											</tr>
 										</c:forEach>
 									</c:if>
