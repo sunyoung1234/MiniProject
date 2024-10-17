@@ -26,10 +26,10 @@
 }
 
 .prof-img {
-    height: 200px;
-    width: 200px;
-    border-radius: 150px;
-    cursor: pointer;
+	height: 200px;
+	width: 200px;
+	border-radius: 150px;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -91,7 +91,7 @@
 								<!-- Password input -->
 								<div class="form-floating mb-3">
 									<input name="memPw" class="form-control" id="inputPw"
-										type="password" placeholder="비밀번호" /> <label for="inputPw">비밀번호</label>
+										type="password" placeholder="비밀번호" value="${member.memPw}" /> <label for="inputPw">비밀번호</label>
 								</div>
 
 								<!-- Email input -->
@@ -118,12 +118,15 @@
 								<!-- Profile image input -->
 								<div class="form-floating mb-3">
 									<div class="d-flex justify-content-center">
-										<img class="prof-img" id="imgBox" src="${member.memProfile}"
-											alt="Profile Image" /> <input name="memProfile"
-											class="form-control d-none" id="registProfile" type="file"
-											accept="image/*" />
+										<img class="prof-img" id="imgBox"
+											src="${pageContext.request.contextPath}${member.memProfile}"
+											alt="Profile Image"
+<%-- 											onerror="this.src='${pageContext.request.contextPath}/images/default.jpg';"  --%>/>
+										<input name="memProfile" class="form-control d-none"
+											id="registProfile" type="file" accept="image/*" />
 									</div>
 								</div>
+
 
 								<!-- Submit Button -->
 								<div class="d-grid">
