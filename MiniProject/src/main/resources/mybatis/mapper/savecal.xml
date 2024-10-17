@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.proj.savecal.dao.ISavecalDAO">
+
+	<insert id="addSavecal" parameterType="com.team.proj.savecal.dto.SavecalDTO">
+		INSERT INTO SAVECAL(
+			calc_id,
+	        material_no,
+	        material_volume,
+	        confirm_yn
+		)VALUES(
+			#{calcId},
+			#{materialNo},
+			#{materialVolume},
+			#{confirmYn}
+		)
+	</insert>
+	
+	<select id="findById" parameterType="String" resultType="com.team.proj.savecal.dto.SavecalDTO">
+		SELECT
+			calc_id, 
+	        material_no,
+	        material_volume,
+	        confirm_yn
+	   	FROM SAVECAL
+	   	WHERE 1=1
+	   	  AND calc_id = #{calcId}
+	</select>
+	
+	
+</mapper>

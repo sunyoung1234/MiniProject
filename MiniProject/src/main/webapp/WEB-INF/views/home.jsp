@@ -189,7 +189,7 @@
 	                   		 </table>
                    		 </div>
                    		 <div class="chart-box2">
-                   			<canvas id="myChart2"></canvas>
+                   		 	<canvas id="myChart2"></canvas>
                    		</div>
                    </div>
                    	
@@ -275,14 +275,9 @@
                  }
              });
           	
-        	let v_parent = document.querySelector('.chart-box2')
-        	
-        	console.log(v_parent)
-        	console.log(v_parent[0])
-			let ctx2 = document.getElementById('myChart2')
-        	
-        	
-        	new Chart(ctx2,{
+			let ctx2 = document.getElementById("myChart2")
+			
+        	let v_chart = new Chart(ctx2,{
         		type:'bar',
         		data:{
         			labels: v_temp2['name'],
@@ -307,7 +302,7 @@
                  }
              });
         	
-        	
+        	v_chart
         	
         	function f_change(){
         		console.log(event.target.value)
@@ -350,30 +345,15 @@
 			        	v_temp2['name'] = v_chartRegion
 			        	v_temp2['num'] = v_chartPari
 			        	
-			        	new Chart(ctx2,{
-			        		type:'bar',
-			        		data:{
-			        			labels: v_temp2['name'],
-			        			datasets:[{
-			        				label:'기초단체별 탄소중립포인트 에너지 참여율(%)',
-			        				data: v_temp2['num']
-			        			}]
-			        		},
-			        		 options: {
-			                     scales: {
-			                         x: {
-			                             ticks: {
-			                                 autoSkip: false,
-			                                 maxRotation: 45,
-			                                 minRotation: 45
-			                             }
-			                         },
-			                         y: {
-			                             beginAtZero: true
-			                             }
-			                     }
-			                 }
-			             });
+			        	console.log(v_temp2)
+			        	
+			        	v_chart.data.datasets[0].label = '기초단체별 탄소중립포인트 에너지 참여율(%)'
+			            v_chart['data']['labels'] = v_temp2['name']
+       					v_chart['data']['datasets'][0]['data'] = v_temp2['num'];
+       					
+       					v_chart.update();
+						
+			        	v_chart
 			        	
 			        	
 			        	

@@ -1,8 +1,9 @@
 package com.team.proj.board.web;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ import com.team.proj.board.service.BoardService;
 import com.team.proj.board.vo.SearchVO;
 import com.team.proj.materials.dto.MaterialsDTO;
 import com.team.proj.materials.service.MaterialsService;
+import com.team.proj.member.dto.MemberDTO;
+import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.service.SavecalService;
 
 @Controller
 public class BoardController {
@@ -26,6 +30,9 @@ public class BoardController {
 
     @Autowired
     BoardService boardService;
+    
+    @Autowired
+    SavecalService scService;
 
     @RequestMapping("/boardView")
     public String boardView(Model model, SearchVO search) {
@@ -35,8 +42,11 @@ public class BoardController {
     }
 
     @RequestMapping("/boardWriteView")
-    public String boardWriteView(Model model) {
+    public String boardWriteView(Model model, HttpSession session) {
         List<MaterialsDTO> matList = matService.getMatList();
+        MemberDTO mem = (MemberDTO) session.getAttribute("login");
+       
+        
         model.addAttribute("keyMatList", matList);
         return "board/boardWriteView";
     }
@@ -50,5 +60,40 @@ public class BoardController {
         return "board/boardDetailView"; // JSP 파일 경로
     }
     
-    
+    @ResponseBody
+	@RequestMapping("/boardWriteDo")
+	public String practice(@RequestBody Map<String,String> data,HttpSession session) {
+		
+		String calc_id = data.get("id");
+		String boardTitle = data.get("title");
+		String boardContent = data.get("content");
+		List<SavecalDTO> scList = scService.findById(calc_id);
+		
+		double total = 0;
+		
+		for(SavecalDTO sc : scList) {
+			int matNo = sc.getMaterialNo();
+			int matVol = sc.getMaterialVolume();
+			MaterialsDTO mat = matService.getByMatNo(matNo);
+			double co2kg = mat.getGasKg();
+			
+			total += co2kg * matVol;
+		}
+		
+		total = Math.floor(total * 100) / 100;
+		
+		MemberDTO mem = (MemberDTO) session.getAttribute("login");
+		String mem_id = mem.getMemId();
+		
+		BoardDTO board = new BoardDTO();
+		board.setCalcId(calc_id);
+		board.setOrderTitle(boardTitle);
+		board.setOrderContent(boardContent);
+		board.setCalcResult(total);
+		board.setMemId(mem_id);
+		
+		boardService.boardWriteDo(board);
+		
+		return "nice";
+	}
 }
