@@ -28,11 +28,11 @@ public class FileUpload {
 				attachList.add(attach);
 			}
 		}
-		return attachList;
+		return attachList; 
 	}
 	
 	public AttachDTO getAttachByMultipart(MultipartFile boFile) throws IOException{
-		 String originalFileName = boFile.getOriginalFilename();
+		String originalFileName = boFile.getOriginalFilename();
 		
 		String fileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'))+ "_" + System.currentTimeMillis() + ".jpeg";
 		

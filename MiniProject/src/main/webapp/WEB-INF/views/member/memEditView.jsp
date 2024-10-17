@@ -85,16 +85,16 @@
 								<!-- Profile image input -->
 								<div class="form-floating mb-3">
 									<div class="d-flex justify-content-center">
-										<img class="prof-img" id="imgBox"
-											src="C:/uploads/no003_1729148466127.jpeg "
-											alt="Profile Image"
+										<img class="prof-img" id="imgBox"      
+											src="${pageContext.request.contextPath}/displayImage?imgName=${member.memProfile }" 
+							 				alt="Profile Image"
 <%-- 											onerror="this.src='${pageContext.request.contextPath}/images/default.jpg';"  --%>/>
-										<input name="memProfile" class="form-control d-none"
+										<input name="img" class="form-control d-none"
 											id="registProfile" type="file" accept="image/*" />
 									</div>
 								</div>
 								
-								<!-- ID input (Read-only) -->
+								<!-- ID input (Read-only) --> 
 								<div class="form-floating mb-3">
 									<input name="memId" class="form-control" id="inputId"
 										type="text" value="${member.memId}" readonly /> <label
@@ -187,6 +187,7 @@
         document.querySelector('#backBtn').addEventListener('click', () => {
             location.href = "${pageContext.request.contextPath}/"; // home으로 돌아가기
         });
+        console.log(document.querySelector('#imgBox').src)
     </script>
 </body>
 </html>

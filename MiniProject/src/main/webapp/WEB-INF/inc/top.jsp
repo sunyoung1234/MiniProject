@@ -10,6 +10,10 @@
 		.bg-color{
         		background-color: #10bd66;
         	}
+        #pfImg{
+        	width: 5%;
+        	border-radius: 10px; 
+        }
 	</style>
 	
 

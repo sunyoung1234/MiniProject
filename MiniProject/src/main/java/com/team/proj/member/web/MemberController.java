@@ -72,7 +72,7 @@ public class MemberController {
             // 이미지를 업로드하고 경로를 얻습니다.
             if (img != null && !img.isEmpty()) {
                 AttachDTO attach = fileUpload.getAttachByMultipart(img);
-                imgPath = attach.getAtchPath(); // 업로드된 이미지 경로
+                imgPath = attach.getAtchPath().substring(11); // 업로드된 이미지 경로
                 attachService.insertAttach(attach); // 이미지 정보 DB에 저장
             } else {
                 // 기본 이미지 경로 지정 (기본 프로필 이미지)
@@ -93,7 +93,7 @@ public class MemberController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
-        return "redirect:/"; // 홈으로 리다이렉트
+        return "home"; // 홈으로 리다이렉트
     }
     
     // 회원 정보 수정 페이지로 이동
@@ -121,25 +121,27 @@ public class MemberController {
         String phone = req.getParameter("memPhone"); // 수정된 전화번호
         String entp = member.getEntpName(); // 회사명은 변경할 수 없음
 
-        String imgPath = member.getMemProfile(); // 기존 이미지 경로
+        String imgPath = ""; // 기존 이미지 경로 초기화
         
         
-        if (img != null && !img.isEmpty()) { // 새로운 이미지가 업로드된 경우
-            try {
+        try {
+            // 이미지를 업로드하고 경로를 얻습니다.
+            if (img != null && !img.isEmpty()) {
                 AttachDTO attach = fileUpload.getAttachByMultipart(img);
-                imgPath = attach.getAtchPath(); // 새 이미지 경로로 변경
+                imgPath = attach.getAtchPath().substring(11); // 업로드된 이미지 경로
                 attachService.insertAttach(attach); // 이미지 정보 DB에 저장
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                // 기본 이미지 경로 지정 (기본 프로필 이미지)
+                imgPath = member.getMemProfile();
             }
+
+            MemberDTO updatedMem = new MemberDTO(id, pw, email, phone, entp, imgPath);
+            memberService.updateMember(updatedMem);
+            session.setAttribute("login", updatedMem);
+        } catch (IOException e) { 
+            e.printStackTrace();
+            return "redirect:/registView"; // 에러 발생 시 회원가입 페이지로 돌아가기
         }
-
-        // 수정된 회원 정보를 DTO에 담습니다.
-        MemberDTO updatedMember = new MemberDTO(id, pw, email, phone, entp, imgPath);
-        memberService.updateMember(updatedMember); // DB 업데이트
-
-        // 세션 정보도 업데이트합니다.
-        session.setAttribute("login", updatedMember);
 
         return "redirect:/memEditView"; // 수정 완료 후 회원정보 수정 페이지로 리다이렉트
     }
@@ -157,4 +159,5 @@ public class MemberController {
     	
     	return "home";
     }
+    
 }
