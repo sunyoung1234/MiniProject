@@ -12,4 +12,8 @@ public interface ISavecalDAO {
 	int addSavecal(SavecalDTO sc);
 	
 	List<SavecalDTO> findById(String calcId);
+	
+	int updateConfirm(String calcId);
+	
+	int deleteConfirmN();
 }

@@ -5,7 +5,8 @@ import java.util.Date;
 public class BoardDTO {
 	   
     // material_estimate 관련 필드
-    private int orderNo;               // 요청번호
+	private String boardId;			   // 게시글 id
+    private int orderNo;               // 번호
     private String memId;              // 회원 ID
     private String calcId;             // 계산 ID
     private double calcResult;               // 계산 결과
@@ -19,9 +20,10 @@ public class BoardDTO {
 		super();
 	}
 
-	public BoardDTO(int orderNo, String memId, String calcId, double calcResult, String orderTitle, String orderContent,
-			Date requestDate, String feedbackYn, String delYn) {
+	public BoardDTO(String boardId, int orderNo, String memId, String calcId, double calcResult, String orderTitle,
+			String orderContent, Date requestDate, String feedbackYn, String delYn) {
 		super();
+		this.boardId = boardId;
 		this.orderNo = orderNo;
 		this.memId = memId;
 		this.calcId = calcId;
@@ -35,9 +37,17 @@ public class BoardDTO {
 
 	@Override
 	public String toString() {
-		return "BoardDTO [orderNo=" + orderNo + ", memId=" + memId + ", calcId=" + calcId + ", calcResult=" + calcResult
-				+ ", orderTitle=" + orderTitle + ", orderContent=" + orderContent + ", requestDate=" + requestDate
-				+ ", feedbackYn=" + feedbackYn + ", delYn=" + delYn + "]";
+		return "BoardDTO [boardId=" + boardId + ", orderNo=" + orderNo + ", memId=" + memId + ", calcId=" + calcId
+				+ ", calcResult=" + calcResult + ", orderTitle=" + orderTitle + ", orderContent=" + orderContent
+				+ ", requestDate=" + requestDate + ", feedbackYn=" + feedbackYn + ", delYn=" + delYn + "]";
+	}
+
+	public String getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(String boardId) {
+		this.boardId = boardId;
 	}
 
 	public int getOrderNo() {
@@ -112,6 +122,7 @@ public class BoardDTO {
 		this.delYn = delYn;
 	}
 
+	
 	
     
 }

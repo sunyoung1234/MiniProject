@@ -63,6 +63,7 @@ public class SavecalController {
 		 Date date = new Date(); 
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSSS"); 
 		 String unique = sdf.format(date);
+		 unique += login.getMemId();
 		 response.put("scId", unique);
 		 
 		 String yn = "N";

@@ -75,9 +75,14 @@
         WHERE order_no = #{no}
     </update>
     
+    
+    
+    
+    
     <!-- 게시글 작성 -->
     <insert id="boardWriteDo" parameterType="com.team.proj.board.dto.BoardDTO">
 		INSERT INTO BOARDS(
+			board_id,
 		    order_no,      
 		    mem_id,       
 		    calc_id,       
@@ -88,6 +93,7 @@
 		    feedback_yn,
 		    del_yn
 		)VALUES(
+			#{boardId},
 		    seq_board.nextval,
 		    #{memId},
 		    #{calcId},
@@ -103,6 +109,7 @@
 	<!-- 회원아디로 게시글 불러오기 -->
 	<select id="getBoardListById" parameterType="String" resultType="com.team.proj.board.dto.BoardDTO">
 		SELECT
+			board_id,
 			order_no,      
 		    mem_id,       
 		    calc_id,       
@@ -115,6 +122,8 @@
 		FROM BOARDS
 		WHERE 1=1
 		  AND DEL_YN = 'N'
+		<if test="memId != 'admin'">
 		  AND MEM_ID = #{memId}
+		</if>
 	</select>
 </mapper>
