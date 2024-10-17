@@ -35,9 +35,24 @@ public class BoardController {
     SavecalService scService;
 
     @RequestMapping("/boardView")
-    public String boardView(Model model, SearchVO search) {
+    public String boardView(Model model, SearchVO search, HttpSession session) {
         List<BoardDTO> boardList = boardService.getBoardList(search);
         model.addAttribute("boardList", boardList);
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        String memId = login.getMemId();
+        String entp = login.getEntpName();
+        
+        List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+        
+        if(boardListById.size()>0) {
+        	model.addAttribute("boardListById", boardListById);
+        	model.addAttribute("keyEntp", entp);
+        }else {
+        	model.addAttribute("noList","작성한 글이 없습니다.");
+        }
+        
+        System.out.println(boardListById);
+        
         return "board/boardView"	;
     }
 
