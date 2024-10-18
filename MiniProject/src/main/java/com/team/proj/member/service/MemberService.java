@@ -1,5 +1,7 @@
 package com.team.proj.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.team.proj.member.dao.IMemberDAO;
@@ -22,4 +24,11 @@ public class MemberService {
 	public int updateMember(MemberDTO member) { 
 		return dao.updateMember(member);
 	}
+	
+	// 회원 목록 불러오기 메소드
+	public List<MemberDTO> getMemberList(){
+		List<MemberDTO> result = dao.getMemberList();
+		return result;
+	}
+	
 }

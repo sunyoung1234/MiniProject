@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
 import com.team.proj.member.dto.MemberDTO;
+import com.team.proj.member.service.MemberService;
 import com.team.proj.point.dto.PointDTO;
 import com.team.proj.point.service.PointService;
 import com.team.proj.region.dto.RegionDTO;
@@ -40,6 +41,9 @@ public class HomeController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -127,9 +131,9 @@ public class HomeController {
 	public String mypage(HttpSession session, Model model) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		
 		 String memId = login.getMemId();
-	        
+	      
+		 model.addAttribute("member",login);
         List<BoardDTO> boardListById = boardService.getBoardListById(memId);
         
         if(boardListById.size()>0) {
@@ -138,14 +142,46 @@ public class HomeController {
         	model.addAttribute("noList","작성한 글이 없습니다.");
         }
 		
+        
 		
 		return "member/mypage";
 	}
+
 	
+	
+
 	@RequestMapping("/adminpage")
-	public String adminpage() {
-		
-		return "member/adminpage";
+	public String adminpage(HttpSession session, Model model) {
+
+	    // 로그인 정보 가져오기
+	    MemberDTO login = (MemberDTO) session.getAttribute("login");
+
+	    // 로그인 정보가 없거나, 관리자가 아닐 경우 로그인 페이지로 되돌아가기
+	    if (login == null || !"admin".equals(login.getMemId())) {
+	        return "redirect:/loginView";
+	    }
+
+	    // 회원 목록 가져오기
+	    List<MemberDTO> memberList = memberService.getMemberList();
+	    model.addAttribute("keyMemberList", memberList);
+		model.addAttribute("member",login);
+	    BoardDTO boardDTO = new BoardDTO();
+	    boardDTO.setFeedbackYn("N");  // feedback_yn이 "N"인 글만 가져옴
+	    List<BoardDTO> boardListByIdConfirm = boardService.getBoardListByIdConfirm(boardDTO);
+	    model.addAttribute("boardListByIdConfirm", boardListByIdConfirm);
+
+	    // adminpage 뷰로 이동
+	    return "member/adminpage";
 	}
+
 	
+	
+	
+	
+
+	
+	
+	
+	
+
 }

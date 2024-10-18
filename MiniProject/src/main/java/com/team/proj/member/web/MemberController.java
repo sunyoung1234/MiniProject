@@ -1,6 +1,7 @@
 package com.team.proj.member.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -159,5 +160,8 @@ public class MemberController {
     	
     	return "home";
     }
+    
+
+	
     
 }

@@ -125,9 +125,9 @@ th, td {
 						<div class="col-6 justify-content-center d-flex">
 							<div class="form-floating mb-3">
 								<div class="d-flex justify-content-center me-3">
-									<!--<img class="prof-img" id="imgBox"
+									<img class="prof-img" id="imgBox"
 										src="${pageContext.request.contextPath}/displayImage?imgName=${member.memProfile}"
-										alt="profile Image" />  -->
+										alt="profile Image" /> 
 									
 								</div>
 							</div>
@@ -242,13 +242,6 @@ th, td {
 	<script src="js/scripts.js"></script>
 
 	<script type="text/javascript">
-        document.querySelector('.prof-img').addEventListener('click', () => {
-            document.querySelector('#registProfile').click();
-        });
-
-        document.querySelector('#backBtn').addEventListener('click', () => {
-            location.href = "${pageContext.request.contextPath}/"; // home으로 돌아가기
-        });
         console.log(document.querySelector('#imgBox').src)
     </script>
 </body>
