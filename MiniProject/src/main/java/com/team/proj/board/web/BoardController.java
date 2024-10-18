@@ -125,4 +125,21 @@ public class BoardController {
 		
 		return "board/boardView";
 	}
+	
+	@RequestMapping("/boardViewAdmin")
+	public String boardViewAdmin(HttpSession session, Model model) {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+        String memId = login.getMemId();
+        
+        List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+        
+        if(boardListById.size()>0) {
+        	model.addAttribute("boardListById", boardListById);
+        }else {
+        	model.addAttribute("noList","작성한 글이 없습니다.");
+        }
+		
+		return "board/boardViewAdmin";
+	}
 }

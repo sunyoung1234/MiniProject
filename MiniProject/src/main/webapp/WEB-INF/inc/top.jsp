@@ -32,12 +32,11 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 					
-						<c:if test="${not empty sessionScope.login}">
-							<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
-						</c:if>
+						
+						
 							
-						<c:if test="${not empty sessionScope.login}">
+						<c:if test="${not empty sessionScope.login && sessionScope.login.getMemId() != 'admin'}">
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getEntpName() }</a></li>
 							<li class="nav-item"><a class="nav-link"
@@ -45,6 +44,16 @@
 							<li class="nav-item"><a class="nav-link"
 							href="${pageContext.request.contextPath}/boardView">견적 요청</a></li>
 						</c:if>
+						
+						<c:if test="${not empty sessionScope.login && sessionScope.login.getMemId() == 'admin'}">
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/adminpage">관리자페이지</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getEntpName() }</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/boardViewAdmin">견적내역관리</a></li>
+						</c:if>
+						
 						<c:if test="${empty sessionScope.login}">
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/loginView">로그인</a></li>

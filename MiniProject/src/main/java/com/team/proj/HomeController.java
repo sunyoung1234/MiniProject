@@ -122,4 +122,10 @@ public class HomeController {
 		return "member/mypage";
 	}
 	
+	@RequestMapping("/adminpage")
+	public String adminpage() {
+		
+		return "member/adminpage";
+	}
+	
 }

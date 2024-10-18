@@ -64,20 +64,28 @@
 						action="${pageContext.request.contextPath}/boardSearch"
 						onsubmit="return validateSearchForm()">
 						<div class="row mb-4">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<select class="form-select" name="searchOption">
 									<option value="title" selected>제목</option>
 									<option value="content">내용</option>
 									<option value="company">업체명</option>
 								</select>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-5">
 								<input type="text" class="form-control" name="searchWord"
 									value="${param.searchWord}" placeholder="검색어를 입력하세요" />
 							</div>
 							<div class="col-md-2">
 								<button type="submit" class="btn btn-success">검색</button>
 							</div>
+					
+							<div class="col-md-2">
+								<select class="form-select" name="confirmValue" id="confirm" onchange="f_change()")>
+									<option>피드백 여부
+									<option value="Y">확인
+									<option value="N">미확인
+								</select>
+							</div> 
 						</div>
 					</form>
 
@@ -129,12 +137,7 @@
 								</tbody>
 							</table>
 							
-								<!-- 요청서 작성 버튼 -->
-						<div class="d-flex justify-content-end mb-2" >
-							<a class="btn btn-success"
-								href="${pageContext.request.contextPath}/boardWriteView">요청서
-								작성</a>
-						</div>
+						
 	
 						</div>
 					</div>
@@ -161,5 +164,23 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
+	<script type="text/javascript">
+		
+		
+		function f_change(){
+			
+			console.log(event.target.value)
+			
+			let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
+			let v_query = "&confirm=" + event.target.value
+			
+			location.href =  v_url + v_query;
+			
+			
+		}
+		
+	
+	</script>
+	
 </body>
 </html>

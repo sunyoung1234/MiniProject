@@ -42,6 +42,25 @@
         		height:300px;
         		border: 1px solid black;
         	}
+        	
+        	.point-box{
+        		border: 1px solid black;
+        		background-color: #F8F9FA;
+        	}
+        	
+        	.point-title{
+        	 	padding-left:10px;
+        	}
+        	
+        	.point-head{
+        		border: 1px solid black;
+        		text-align: center;
+        	}
+        	
+        	.point-body{
+        		text-align: center;
+        		border: 1px solid black;
+        	}
         
         </style>
         
@@ -85,8 +104,10 @@
                     
                 </div>
                 
-                <div class="mb-4 ">
-                   	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
+                <div class="point-box mb-4">
+                	<div class="point-title">
+	                   	<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
+                	</div>
                    	<div>
                    		<select id="category" name="regionCategory" onchange="f_change()">
                    			<option value="강원" ${keyRegion == '강원' ? 'selected' : ''  }>강원
@@ -116,7 +137,7 @@
 	                   				<col width="13%">
 	                   				<col width="13%">
 	                   			</colgroup>
-	                   			<thead>
+	                   			<thead class="point-head">
 	                   				<tr>
 	                   					<th>지역</th>
 	                   					<th>가구수</th>
@@ -124,7 +145,7 @@
 	                   					<th>참여율(%)</th>
 	                   				</tr>
 	                   			</thead>
-	                   			<tbody>
+	                   			<tbody class="point-body">
 	                   				<c:forEach items="${keyPointList}" var="pointList">
 		                   				<tr>
 		                    				<th>${pointList.pointRegion }</th>
@@ -143,8 +164,10 @@
                    	
                   </div>
                   
-                  <div >
-                   	<h3>기초단체별 탄소중립포인트 에너지 참여현황</h3>
+                  <div class="point-box mb-4">
+                  	<div class="point-title">
+	                   	<h3>기초단체별 탄소중립포인트 에너지 참여현황</h3>
+                  	</div>
                    	<div class="d-flex justify-content-between">
                    		<div class="table-box">
 	                   		<table>
@@ -155,7 +178,7 @@
 	                   				<col width="13%">
 	                   				
 	                   			</colgroup>
-	                   			<thead>
+	                   			<thead class="point-head">
 	                   				<tr>
 	                   					<th>지역</th>
 	                   					<th>가구수</th>
@@ -163,7 +186,7 @@
 	                   					<th>참여율(%)</th>
 	                   				</tr>
 	                   			</thead>
-	                   			<tbody id="tableBottom">
+	                   			<tbody class="point-body" id="tableBottom">
 	                   				<c:forEach items="${keyGangwan }" var="cityList">
 	                   					<tr>
 		                   					<th>${cityList.pointCity}</th>
