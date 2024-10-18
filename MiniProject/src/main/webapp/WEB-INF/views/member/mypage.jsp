@@ -64,27 +64,25 @@ th, td {
 }
 
 .mypage-profile-text {
-	font-size: 24px;
+	font-size: 16px;
 	text-decoration: none;
 	color: black;
 	
 }
 
 .mypage-profile-text:hover{
-	font-size: 24px;
-	text-decoration: none;
-	color: black;
+
 }
 
 
 .mypage-profile-text-small{
-	font-size: 12px;
+	font-size: 14px;
 	text-decoration: none;
 	color: black;
 }
 
-.mypage-profile-text-small:hover{
-	font-size: 12px;
+.mypage-profile-text-small{
+	font-size: 14px;
 	text-decoration: none;
 	color: black;
 }
