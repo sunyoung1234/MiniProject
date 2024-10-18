@@ -115,5 +115,11 @@ public class HomeController {
 		return regionDetail; 
 	}
 	
+	@RequestMapping("/mypage")
+	public String mypage() {
+		
+		
+		return "member/mypage";
+	}
 	
 }

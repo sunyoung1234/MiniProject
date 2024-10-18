@@ -34,7 +34,7 @@
 					
 						<c:if test="${not empty sessionScope.login}">
 							<li class="nav-item"><a class="nav-link"
-							href="${pageContext.request.contextPath}/">마이페이지</a></li>
+							href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
 						</c:if>
 							
 						<c:if test="${not empty sessionScope.login}">
