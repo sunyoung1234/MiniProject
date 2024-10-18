@@ -50,4 +50,9 @@ public class BoardService {
     	List<BoardDTO> result = boardDAO.getBoardListById(memId);
     	return result;
     }
+    
+    public List<BoardDTO> getBoardListByIdConfirm(BoardDTO check){
+    	List<BoardDTO> result = boardDAO.getBoardListByIdConfirm(check);
+    	return result;
+    }
 }

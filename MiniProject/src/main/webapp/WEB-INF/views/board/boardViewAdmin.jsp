@@ -80,10 +80,10 @@
 							</div>
 					
 							<div class="col-md-2">
-								<select class="form-select" name="confirmValue" id="confirm" onchange="f_change()")>
-									<option>피드백 여부
-									<option value="Y">확인
-									<option value="N">미확인
+								<select class="form-select" name="feedbackYn" id="confirm" onchange="f_change()")>
+									<option >피드백 여부
+									<option value="Y" ${getBoardListByIdConfirm.feedbackYn == "Y" ? 'selected' : '' }>확인
+									<option value="N" ${getBoardListByIdConfirm.feedbackYn == "N" ? 'selected' : '' }>미확인
 								</select>
 							</div> 
 						</div>
@@ -117,19 +117,17 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:if test="${not empty boardListById}">
-										<c:forEach var="board" items="${boardListById}">
-											<tr> 
-												<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
-												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView?orderNo=${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
-												<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
-												<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
-												<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
-												<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
-											</tr>
-										</c:forEach>
-									</c:if>
-									<c:if test="${empty boardListById}">
+									<c:forEach var="board" items="${BoardListByIdConfirm}">
+										<tr> 
+											<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
+											<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView?orderNo=${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
+											<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
+											<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
+											<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
+											<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
+										</tr>
+									</c:forEach>
+									<c:if test="${empty BoardListByIdConfirm}">
 										<tr>
 											<td colspan="6" class="text-center">게시물이 없습니다.</td>
 										</tr>
@@ -166,16 +164,18 @@
 	<script src="js/scripts.js"></script>
 	<script type="text/javascript">
 		
+	
 		
 		function f_change(){
 			
 			console.log(event.target.value)
 			
+			
 			let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
-			let v_query = "&confirm=" + event.target.value
+			let v_query = "?feedbackYn=" + event.target.value
+	
 			
 			location.href =  v_url + v_query;
-			
 			
 		}
 		

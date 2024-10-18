@@ -33,4 +33,6 @@ public interface BoardDAO {
     int boardWriteDo(BoardDTO board);
     
     List<BoardDTO> getBoardListById(String memId);
+    
+    List<BoardDTO> getBoardListByIdConfirm(BoardDTO check);
 }

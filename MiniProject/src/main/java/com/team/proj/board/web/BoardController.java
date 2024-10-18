@@ -127,18 +127,30 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardViewAdmin")
-	public String boardViewAdmin(HttpSession session, Model model) {
+	public String boardViewAdmin(HttpSession session, Model model, BoardDTO check, String feedbackYn) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
         String memId = login.getMemId();
         
-        List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+        check.setMemId(memId);
+        check.setFeedbackYn(feedbackYn);
+        System.out.println(check);
         
-        if(boardListById.size()>0) {
-        	model.addAttribute("boardListById", boardListById);
+        System.out.println(memId);
+        System.out.println(feedbackYn);
+        
+        List<BoardDTO> getBoardListByIdConfirm = boardService.getBoardListByIdConfirm(check);
+        
+        if(getBoardListByIdConfirm.size()>0) {
+        	model.addAttribute("BoardListByIdConfirm", getBoardListByIdConfirm);
+        	System.out.println(getBoardListByIdConfirm);
         }else {
         	model.addAttribute("noList","작성한 글이 없습니다.");
         }
+        
+       
+        
+        
 		
 		return "board/boardViewAdmin";
 	}
