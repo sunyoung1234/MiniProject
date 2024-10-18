@@ -64,27 +64,25 @@ th, td {
 }
 
 .mypage-profile-text {
-	font-size: 24px;
+	font-size: 16px;
 	text-decoration: none;
 	color: black;
 	
 }
 
 .mypage-profile-text:hover{
-	font-size: 24px;
-	text-decoration: none;
-	color: black;
+
 }
 
 
 .mypage-profile-text-small{
-	font-size: 12px;
+	font-size: 14px;
 	text-decoration: none;
 	color: black;
 }
 
-.mypage-profile-text-small:hover{
-	font-size: 12px;
+.mypage-profile-text-small{
+	font-size: 14px;
 	text-decoration: none;
 	color: black;
 }
@@ -127,9 +125,10 @@ th, td {
 						<div class="col-6 justify-content-center d-flex">
 							<div class="form-floating mb-3">
 								<div class="d-flex justify-content-center me-3">
-									<img class="prof-img" id="imgBox"
+									<!--<img class="prof-img" id="imgBox"
 										src="${pageContext.request.contextPath}/displayImage?imgName=${member.memProfile}"
-										alt="profile Image" />
+										alt="profile Image" />  -->
+									
 								</div>
 							</div>
 							<div class="ms-4 mt-4">
@@ -178,7 +177,7 @@ th, td {
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty boardListById}">
+											<c:if test="${boardListById != null}">
 												<c:forEach var="board" items="${boardListById}">
 													<tr>
 														<th scope="row" class="text-center">${board.orderNo}</th>

@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team.proj.board.dto.BoardDTO;
+import com.team.proj.board.service.BoardService;
+import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.point.dto.PointDTO;
 import com.team.proj.point.service.PointService;
 import com.team.proj.region.dto.RegionDTO;
@@ -32,6 +37,9 @@ public class HomeController {
 	
 	@Autowired
 	RegionService regionservice;
+	
+	@Autowired
+	BoardService boardService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -116,7 +124,19 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		
+		 String memId = login.getMemId();
+	        
+        List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+        
+        if(boardListById.size()>0) {
+        	model.addAttribute("boardListById", boardListById);
+        }else {
+        	model.addAttribute("noList","작성한 글이 없습니다.");
+        }
 		
 		
 		return "member/mypage";

@@ -22,6 +22,9 @@
 <link href="css/styles.css" rel="stylesheet" />
 
 <style type="text/css">
+.bg-color {
+	background-color: #10bd66;
+}
 
 .table-box {
 	width: 100%;
@@ -128,17 +131,16 @@
 									</c:if>
 								</tbody>
 							</table>
-							
-								<!-- 요청서 작성 버튼 -->
-						<div class="d-flex justify-content-end mb-2" >
-							<a class="btn btn-success"
-								href="${pageContext.request.contextPath}/boardWriteView">요청서
-								작성</a>
-						</div>
-	
+
 						</div>
 					</div>
 
+					<!-- 요청서 작성 버튼 -->
+					<div class="position-fixed" style="bottom: 20px; right: 20px;">
+						<a class="btn btn-success"
+							href="${pageContext.request.contextPath}/boardWriteView">요청서
+							작성</a>
+					</div>
 
 				</div>
 			</div>
