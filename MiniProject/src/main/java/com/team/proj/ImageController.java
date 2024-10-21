@@ -36,6 +36,8 @@ public class ImageController{
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(mediaType);
 		
+		System.out.println(imgPath);
+		
 		try {
 			inputStream = new FileInputStream(imgPath);
 			
