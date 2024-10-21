@@ -51,4 +51,21 @@
         WHERE 1=1
           AND mem_id = #{memId}
     </update>
+    
+    <!-- 관리자 아이디를 제외한 회원목록 불러오기 -->
+    <select id="getMemberList" resultType="com.team.proj.member.dto.MemberDTO">
+    	SELECT
+            mem_id,
+            mem_pw,
+            mem_email,
+            mem_phone,
+            entp_name,
+            mem_profile,
+            mem_level
+        FROM members
+        WHERE mem_id != 'admin'
+    </select>
+    
+    <!-- 20241021 0933 test -->
+    
 </mapper>
