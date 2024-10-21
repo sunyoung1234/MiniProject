@@ -66,5 +66,9 @@
         WHERE mem_id != 'admin'
     </select>
     
+<<<<<<< HEAD
+    <!-- 20241021 0933 test -->
+=======
+>>>>>>> branch 'main' of https://github.com/sunyoung1234/MiniProject.git
     
 </mapper>
