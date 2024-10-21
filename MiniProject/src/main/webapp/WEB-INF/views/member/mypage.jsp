@@ -262,9 +262,8 @@ th, td {
                      scales: {
                          x: {
                              ticks: {
-                                 autoSkip: false,
-                                 maxRotation: 45,
-                                 minRotation: 45
+                                 autoSkip: false
+                                 
                              }
                          },
                          y: {
