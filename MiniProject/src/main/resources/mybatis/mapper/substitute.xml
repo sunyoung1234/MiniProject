@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.proj.substitute.dao.ISubDAO">
+
+	<select id="getSubInfo" parameterType="int" resultType="com.team.proj.substitute.dto.SubJoinDTO">
+		SELECT
+		    a.mat_no,
+		    b.sub_no,
+		    b.sub_name,
+		    b.sub_img,
+		    b.gas_kg
+		FROM SUBBYMATNO a
+		INNER JOIN SUBSTITUTE b
+		ON a.sub_name = b.sub_name
+		WHERE mat_no = #{matNo}
+	</select>
+
+</mapper>
