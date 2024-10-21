@@ -57,7 +57,7 @@
 <body class="d-flex flex-column login-bg">
 	<main class="flex-shrink-0">
 		<!-- Navigation-->
-		<%@ include file="/WEB-INF/inc/top.jsp" %>
+		<%@ include file="/WEB-INF/inc/top.jsp"%>
 		<!-- Page content-->
 		<section class="py-5">
 			<div class="container px-5">
@@ -74,12 +74,23 @@
 								<!-- 아이디 input-->
 								<div class="form-floating mb-3">
 									<input name="memId" class="form-control" id="inputId"
-										type="text" placeholder="아이디" required /> <label for="inputId">아이디</label>
+										type="text" placeholder="아이디"
+										value="${cookie.rememberId.value }" required /> <label
+										for="inputId">아이디</label>
 								</div>
 								<!-- 비밀번호 input-->
 								<div class="form-floating mb-3">
 									<input name="memPw" class="form-control" id="inputPw"
-										type="password" placeholder="비밀번호" required /> <label for="inputPw">비밀번호</label>
+										type="password" placeholder="비밀번호" required /> <label
+										for="inputPw">비밀번호</label>
+									<!-- 아이디 기억하기 -->
+									<div class="form-check mb-3 mt-1">
+										<input class="form-check-input" type="checkbox"
+											id="inputRememberId" type="checkbox" name="rememberId"
+											${cookie.rememberId.value == null ? "" : "checked" }>
+										<label class="form-check-label" for="inputRememberId">아이디
+											기억하기</label>
+									</div>
 								</div>
 								<!-- Submit Button-->
 								<div class="d-grid">
@@ -100,7 +111,8 @@
 	<!-- Footer-->
 	<footer class="bg-white py-4 mt-auto">
 		<div class="container px-5">
-			<div class="row align-items-center justify-content-between flex-column flex-sm-row">
+			<div
+				class="row align-items-center justify-content-between flex-column flex-sm-row">
 				<div class="col-auto">
 					<div class="small m-0">Copyright &copy; Your Website 2023</div>
 				</div>
@@ -115,6 +127,7 @@
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
 
