@@ -109,7 +109,8 @@ public class HomeController {
 		model.addAttribute("keyRegion",region);
 		model.addAttribute("keyRegionValue",regionValue);
 		
-		StringBuilder urlBuilder = new StringBuilder("http://localhost:5000/data"); /*URL*/
+		/**
+		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/data"); 
 	    URL url = new URL(urlBuilder.toString());
 	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -133,6 +134,7 @@ public class HomeController {
         
         rd.close();
         conn.disconnect();
+      	**/
 		
 		return "home";
 	}

@@ -34,17 +34,14 @@
         	.chart-box{
         		width:1000px;
         		height:300px;
-        		border: 1px solid black;
         	}
         	
         	.chart-box2{
         		width:1000px;
         		height:300px;
-        		border: 1px solid black;
         	}
         	
         	.point-box{
-        		border: 1px solid black;
         		background-color: #F8F9FA;
         	}
         	
@@ -53,13 +50,12 @@
         	}
         	
         	.point-head{
-        		border: 1px solid black;
+        		border-bottom: 1px solid black;
         		text-align: center;
         	}
         	
         	.point-body{
         		text-align: center;
-        		border: 1px solid black;
         	}
         
         </style>
@@ -74,8 +70,11 @@
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Green Solution</h1>
-                    <p class="lead mb-0">온실가스 배출로 인해 지구온난화가 진행중이며 몇 도 씨 상승시 어떻게 된다 이러한 현상의 도움을 주고자 이 기업을 설립하였습니다</p>
-                    <p class="lead mb-0">Green Solution은 건축 자재에 따른 탄소 배출량을 계산하고 더 나은 탄소 배출 절감을 진행하는 건축 자재 견적 솔루션 기업입니다.</p>
+                    <p class="lead mb-0">대기 중 온실가스 농도가 증가함에 따라 대기와 해양은 따뜻해지고
+눈과 빙하의 양은 줄어들고 해수면은 상승하고 해양산성화가 진행 중으로
+지구온난화는 명백하게 진행되고 있다는 것을 알 수 있으며, 기후변화 영향이 나타나고 그 정도가 진행됨에 따라 기후위기를 초래하고 있습니다.</p>
+					<br>
+                    <p class="lead mb-0">Green Solution은 이러한 기후 위기를 실감하고 탄소 중립을 위한 방법들 중 하나로 건축 자재에 따른 탄소 배출량을 계산하고 더 나은 탄소 배출 절감을 진행하는 건축 자재 견적 솔루션 기업입니다.</p>
                 </div>
             </div>
         </header>
