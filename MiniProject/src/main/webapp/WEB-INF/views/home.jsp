@@ -96,7 +96,10 @@
                     
                     <div class="gas mb-4">
                     	<h4 class="card-title">20년 이후 온실가스 예상 배출량 추이</h2>
-                        <a href="https://www.index.go.kr/unity/potal/indicator/IndexInfo.do?cdNo=210&clasCd=2&idxCd=4288"><img class="card-img-top" src="resources/image/chart428801_1Img.png" /></a>
+                        <a href="https://www.index.go.kr/unity/potal/indicator/IndexInfo.do?cdNo=210&clasCd=2&idxCd=4288">
+                        	<!-- flask 서버로부터 이미지 요청 후 응답받기 -->
+							<!-- <img src="http://localhost:5000/pltimg"> -->
+                        	<img class="card-img-top" src="resources/image/chart428801_1Img.png" /></a>
                         <div class="card-body">
                             <p class="card-text">온실가스 배출량은 해마다 증가하는 추세이고 탄소 중립을 실현하기 위해서는 탄소 배출량을 절감해야한다.</p>
                         </div>
