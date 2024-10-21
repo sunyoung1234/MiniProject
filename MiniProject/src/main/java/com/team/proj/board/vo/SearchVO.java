@@ -1,18 +1,24 @@
 package com.team.proj.board.vo;
 
 public class SearchVO {
-    private String searchOption;  // 검색 종류(제목 title, 내용 content, 작성자 name)
+    // 검색 옵션
+    private String searchOption;  // 검색 종류 (제목: title, 내용: content, 작성자: name)
     private String searchWord;    // 검색어
-    private int pageNo = 1;       // 현재 페이지 번호
-    private int rowSizePerPage = 10; // 한 페이지에서 보여줄 게시글의 수
-    private int start;            // 현재 페이지의 시작 글 번호
-    private int end;              // 현재 페이지의 끝 글 번호
-    private int firstPage;        // 화면에 그려지는 페이지 번호의 첫번째 숫자
-    private int lastPage;         // 화면에 그려지는 페이지 번호의 마지막 숫자
-    private int boardCount;       // 전체 게시글의 수
-    private int finalPage;        // 마지막 페이지의 번호
+    
+    // 페이징 관련 변수
+    private int pageNo = 1;          // 현재 페이지 번호
+    private int rowSizePerPage = 10;  // 한 페이지에서 보여줄 게시글 수
+    private int pageSize = 10;        // 페이지 리스트의 페이지 개수
+    private int boardCount;           // 전체 게시글 수
+    
+    // 페이징 계산을 위한 변수
+    private int start;                // 현재 페이지의 시작 글 번호
+    private int end;                  // 현재 페이지의 끝 글 번호
+    private int firstPage;            // 화면에 표시되는 페이지 번호의 첫 번째 숫자
+    private int lastPage;             // 화면에 표시되는 페이지 번호의 마지막 숫자
+    private int finalPage;            // 마지막 페이지 번호
 
-    // getters and setters
+    // Getters and Setters
     public String getSearchOption() {
         return searchOption;
     }
@@ -91,5 +97,13 @@ public class SearchVO {
 
     public void setFinalPage(int finalPage) {
         this.finalPage = finalPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }
