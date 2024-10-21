@@ -12,6 +12,7 @@
 		    b.order_title,
 		    b.order_content,
 		    a.mem_id,
+		    b.calc_id,
 		    a.entp_name,
 		    b.calc_result,
 		    b.request_date,

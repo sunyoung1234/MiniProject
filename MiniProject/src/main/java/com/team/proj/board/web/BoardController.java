@@ -10,10 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
@@ -22,6 +20,7 @@ import com.team.proj.materials.dto.MaterialsDTO;
 import com.team.proj.materials.service.MaterialsService;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.dto.SavecalVolDTO;
 import com.team.proj.savecal.service.SavecalService;
 
 @Controller
@@ -66,11 +65,28 @@ public class BoardController {
     
     // 게시글 상세보기 메소드
     @RequestMapping("/boardDetailView")
-    public String boardDetailView(int orderNo, Model model) {
+    public String boardDetailView(int orderNo, Model model, HttpSession session) {
+    	
+    	 List<MaterialsDTO> matList = matService.getMatList();
+         MemberDTO mem = (MemberDTO) session.getAttribute("login");
+        
+         
+         model.addAttribute("keyMatList", matList);
+    	
         // 게시글 정보를 가져옴
     	System.out.println(orderNo);
         BoardDTO boardDetail = boardService.getBoard(orderNo);
         model.addAttribute("board", boardDetail);
+        
+        String calcId = boardDetail.getCalcId();
+        double calcResult = boardDetail.getCalcResult();
+        
+        List<SavecalVolDTO> scVolList = scService.getScVol(calcId);
+        
+        model.addAttribute("scVolList", scVolList);
+        model.addAttribute("calcResult", calcResult);
+
+        System.out.println(scVolList);
         return "board/boardDetailView"; // JSP 파일 경로
     }
     
@@ -148,10 +164,14 @@ public class BoardController {
         	model.addAttribute("noList","작성한 글이 없습니다.");
         }
         
-       
-        
-        
 		
 		return "board/boardViewAdmin";
 	}
+	
+	/*
+	 * @RequestMapping("/replyWriteDo") public String replyWriteDo(@RequestBody
+	 * Map<String>)
+	 */
+	
+	
 }
