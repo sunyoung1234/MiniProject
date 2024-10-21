@@ -211,7 +211,7 @@ th, td {
 				<!-- 차트 영역 시작 -->
 				<div class="row align-items-start">
 					<div class="col-6">
-						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border">차트1</div>
+						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
 					</div>
 					<div class="col-6">
 						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border">차트2</div>
@@ -239,9 +239,44 @@ th, td {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script type="text/javascript">
         console.log(document.querySelector('#imgBox').src)
+        
+        let ctx = document.getElementById("myChart")
+        
+        new Chart(ctx,{
+        		type:'bar',
+        		data:{
+        			labels: [24,36],
+        			datasets:[{
+        				label:'솔루션 전 탄소 배출량',
+        				data: [2000,1500]
+        			},{
+        				label:'솔루션 후 탄소 배출량',
+        				data: [1500,1000]
+        			}]
+        		},
+        		 options: {
+                     scales: {
+                         x: {
+                             ticks: {
+                                 autoSkip: false,
+                                 maxRotation: 45,
+                                 minRotation: 45
+                             }
+                         },
+                         y: {
+                             beginAtZero: true
+                             }
+                     }
+                 }
+             });
+        
+        
+        
     </script>
+    
 </body>
 </html>

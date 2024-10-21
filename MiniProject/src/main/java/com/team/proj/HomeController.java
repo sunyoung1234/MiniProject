@@ -1,5 +1,11 @@
 package com.team.proj;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,10 +55,11 @@ public class HomeController {
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 * @throws Exception 
 	 */
 	
 	@RequestMapping("/")
-	public String home(Model model, String regionCategory) {
+	public String home(Model model, String regionCategory) throws Exception, ProtocolException {
 		
 		// ±¤¿ª½Ãµµº°
 		ArrayList<Double> partList = new ArrayList<>();
@@ -102,7 +109,32 @@ public class HomeController {
 		model.addAttribute("keyRegion",region);
 		model.addAttribute("keyRegionValue",regionValue);
 		
-		
+		/**
+		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/data"); 
+	    URL url = new URL(urlBuilder.toString());
+	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while (true) {
+        	String line = rd.readLine();
+        	if(line == null) {
+        		break;
+        	}
+            sb.append(line);
+        }
+        
+        rd.close();
+        conn.disconnect();
+      	**/
 		
 		return "home";
 	}
