@@ -223,8 +223,8 @@ th, td {
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty boardListByIdConfirm}">
-												<c:forEach var="board" items="${boardListByIdConfirm}">
+											<c:if test="${not empty boardList}">
+												<c:forEach var="board" items="${boardList}">
 													<tr>
 														<th scope="row" class="text-center">${board.orderNo}</th>
 														<!-- 번호 -->
@@ -240,7 +240,7 @@ th, td {
 													</tr>
 												</c:forEach>
 											</c:if>
-											<c:if test="${empty boardListByIdConfirm}">
+											<c:if test="${empty boardList}">
 												<tr>
 													<td colspan="6" class="text-center">게시물이 없습니다.</td>
 												</tr>
@@ -254,14 +254,14 @@ th, td {
 												<!-- 첫번째 페이지로 이동 -->
 												<!-- 관리자 페이지이므로, &searchWord=${pageSearch.searchWord } 이 부분은 제거하였음. -->
 												<li class="page-item"><a class="page-link"
-													href="<c:url value='/adminpage?curPage=1&searchOption=${pageSearch.searchOption}'/>"
+													href="<c:url value='/adminpage?pageNo=1&searchOption=${pageSearch.searchOption}'/>"
 													aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 												</a></li>
 												<!-- 이전 페이지로 이동 -->
 												<li class="page-item"><c:if
 														test="${pageSearch.firstPage != 1 }">
 														<a class="page-link"
-															href="<c:url value='/adminpage?curPage=${pageSearch.firstPage - 1 }&searchOption=${pageSearch.searchOption}'/>"
+															href="<c:url value='/adminpage?pageNo=${pageSearch.firstPage - 1 }&searchOption=${pageSearch.searchOption}'/>"
 															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 														</a>
 													</c:if> <c:if test="${pageSearch.firstPage == 1 }">
@@ -269,38 +269,38 @@ th, td {
 															aria-hidden="true">&lt;</span>
 														</a>
 													</c:if></li>
-											<!-- 중앙 페이지 넘버들 -->
-											<c:forEach begin="${pageSearch.firstPage}"
-												end="${pageSearch.lastPage}" var="page">
-												<c:if test="${page != pageSearch.curPage }">
-													<li class="page-item"><a class="page-link"
-														href="<c:url value='/adminpage?curPage=${page }&searchOption=${pageSearch.searchOption}'/>"
-														aria-label="Previous">${page}</a></li>
-												</c:if>
-												<c:if test="${page == pageSearch.curPage }">
-													<li class="page-item" aria-current="page"><span
-														class="page-link">${page}</span></li>
-												</c:if>
-											</c:forEach>
-											<!-- 다음 페이지로 이동 -->
-											<li class="page-item"><c:if
-													test="${pageSearch.lastPage != pageSearch.totalPageCount}">
-													<a class="page-link"
-														href="<c:url value='/adminpage?curPage=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}'/>">
-														<span aria-hidden="true">&gt;</span>
-													</a>
-												</c:if> <c:if
-													test="${pageSearch.lastPage == pageSearch.totalPageCount}">
-													<a class="page-link" href="#" aria-label="Next"> <span
-														aria-hidden="true">&gt;</span>
-													</a>
-												</c:if></li>
+												<!-- 중앙 페이지 넘버들 -->
+												<c:forEach begin="${pageSearch.firstPage}"
+													end="${pageSearch.lastPage}" var="page">
+													<c:if test="${page != pageSearch.pageNo }">
+														<li class="page-item"><a class="page-link"
+															href="<c:url value='/adminpage?pageNo=${page }&searchOption=${pageSearch.searchOption}'/>"
+															aria-label="Previous">${page}</a></li>
+													</c:if>
+													<c:if test="${page == pageSearch.pageNo }">
+														<li class="page-item" aria-current="page"><span
+															class="page-link">${page}</span></li>
+													</c:if>
+												</c:forEach>
+												<!-- 다음 페이지로 이동 -->
+												<li class="page-item"><c:if
+														test="${pageSearch.lastPage != pageSearch.boardCount}">
+														<a class="page-link"
+															href="<c:url value='/adminpage?pageNo=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}'/>">
+															<span aria-hidden="true">&gt;</span>
+														</a>
+													</c:if> <c:if
+														test="${pageSearch.lastPage == pageSearch.boardCount}">
+														<a class="page-link" href="#" aria-label="Next"> <span
+															aria-hidden="true">&gt;</span>
+														</a>
+													</c:if></li>
 
-											<!-- 마지막 페이지로 이동 -->
-											<li class="page-item"><a class="page-link"
-												href="<c:url value='/adminpage?curPage=${pageSearch.totalPageCount }&searchOption=${pageSearch.searchOption }'/>">
-													<span aria-hidden="true">&raquo;</span>
-											</a></li>
+												<!-- 마지막 페이지로 이동 -->
+												<li class="page-item"><a class="page-link"
+													href="<c:url value='/adminpage?pageNo=${pageSearch.boardCount }&searchOption=${pageSearch.searchOption }'/>">
+														<span aria-hidden="true">&raquo;</span>
+												</a></li>
 											</ul>
 										</nav>
 									</div>

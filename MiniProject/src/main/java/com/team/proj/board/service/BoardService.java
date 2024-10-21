@@ -20,22 +20,14 @@ public class BoardService {
     }
 
     public List<BoardDTO> getBoardList(SearchVO search) {
-        return boardDAO.getBoardList(search);
+    	List<BoardDTO> result = boardDAO.getBoardList(search);
+        return result;
     }
 
     public BoardDTO getBoard(int boardNo) {
         return boardDAO.getBoard(boardNo);
     }
 
-    // 글 수정 메서드 제거		-- mapper 에서 처리
-    // public int updateBoard(BoardDTO board) {
-    //     return boardDAO.updateBoard(board);
-    // }
-
-    // 글 삭제 메서드 제거 		-- mapper 에서 처리
-    // public int deleteBoard(int no) {
-    //     return boardDAO.deleteBoard(no);
-    // }
 
     public int getBoardCount(SearchVO search) {
         return boardDAO.getBoardCount(search);

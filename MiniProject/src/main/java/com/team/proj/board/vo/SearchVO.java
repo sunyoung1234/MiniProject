@@ -2,18 +2,18 @@ package com.team.proj.board.vo;
 
 public class SearchVO {
     // 검색 옵션
-    private String searchOption;  // 검색 종류 (제목: title, 내용: content, 작성자: name)
+    private String searchOption;  // 검색 종류 (제목: title, 내용: content, 업체명: company)
     private String searchWord;    // 검색어
     
     // 페이징 관련 변수
     private int pageNo = 1;          // 현재 페이지 번호
-    private int rowSizePerPage = 10;  // 한 페이지에서 보여줄 게시글 수
+    private int rowSizePerPage = 5;  // 한 페이지에서 보여줄 게시글 수
     private int pageSize = 10;        // 페이지 리스트의 페이지 개수
     private int boardCount;           // 전체 게시글 수
     
     // 페이징 계산을 위한 변수
     private int start;                // 현재 페이지의 시작 글 번호
-    private int end;                  // 현재 페이지의 끝 글 번호
+    private int end;                  // 현재 페이	지의 끝 글 번호
     private int firstPage;            // 화면에 표시되는 페이지 번호의 첫 번째 숫자
     private int lastPage;             // 화면에 표시되는 페이지 번호의 마지막 숫자
     private int finalPage;            // 마지막 페이지 번호
@@ -106,4 +106,34 @@ public class SearchVO {
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
+    
+    // 페이징 메소드
+    public void pageSetting() {
+        // 전체 페이지 수 계산
+        finalPage = (int) Math.ceil((double) boardCount / rowSizePerPage);
+        
+        // 현재 페이지의 시작 글 번호
+        start = (pageNo - 1) * rowSizePerPage + 1;
+        
+        // 현재 페이지의 끝 글 번호
+        end = start + rowSizePerPage - 1;
+        
+        // 만약 끝 글 번호가 전체 글 수보다 크면, 끝 글 번호를 전체 글 수로 설정
+        if (end > boardCount) {
+            end = boardCount;
+        }
+        
+        // 페이지 리스트의 첫 번째 페이지 번호
+        firstPage = ((pageNo - 1) / pageSize) * pageSize + 1;
+        
+        // 페이지 리스트의 마지막 페이지 번호
+        lastPage = firstPage + pageSize - 1;
+        
+        // 마지막 페이지가 전체 페이지 수보다 크면, 마지막 페이지를 전체 페이지 수로 설정
+        if (lastPage > finalPage) {
+            lastPage = finalPage;
+        }
+    }
 }
+
+
