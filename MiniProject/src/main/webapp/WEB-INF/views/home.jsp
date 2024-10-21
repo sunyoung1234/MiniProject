@@ -42,7 +42,6 @@
         	}
         	
         	.point-box{
-        		background-color: #F8F9FA;
         	}
         	
         	.point-title{
