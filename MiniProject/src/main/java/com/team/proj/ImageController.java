@@ -30,11 +30,13 @@ public class ImageController{
 		ResponseEntity<byte[]> entity = null;
 		
 		String imgPath = uploadPath + File.separator + imgName;
-		
+		 
 		MediaType mediaType = MediaType.IMAGE_JPEG;
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(mediaType);
+		
+		System.out.println(imgPath);
 		
 		try {
 			inputStream = new FileInputStream(imgPath);

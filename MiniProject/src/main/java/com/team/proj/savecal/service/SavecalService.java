@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.proj.savecal.dao.ISavecalDAO;
 import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.dto.SavecalVolDTO;
 
 @Service
 public class SavecalService {
@@ -31,6 +32,12 @@ public class SavecalService {
 	
 	public int deleteConfirmN() {
 		int result = dao.deleteConfirmN();
+		return result;
+	}
+	
+	
+	public List<SavecalVolDTO> getScVol(String calcId){
+		List<SavecalVolDTO> result = dao.getScVol(calcId);
 		return result;
 	}
 }

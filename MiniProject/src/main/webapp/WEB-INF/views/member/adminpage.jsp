@@ -179,159 +179,15 @@ th, td {
 																<td class="text-center">${member.entpName}</td>
 																<td class="text-center">${member.memPhone}</td>
 																<td class="text-center">${member.memEmail}</td>
-
-																<td>
-																	<!-- 관리자_회원정보수정 모달창 버튼 -->
-																	<div class="d-grid mt-5 ms-4">
-																		<button class="v-edit-btn bg-color"
-																			data-bs-toggle="modal" data-bs-target="#memberModal">회원관리</button>
-																	</div> <!-- 관리자_회원정보수정 모달창 -->
-																	<div class="modal fade" id="memberModal" tabindex="-1"
-																		aria-labelledby="memberModalLabel" aria-hidden="true">
-																		<div class="modal-dialog modal-lg">
-																			<div class="modal-content">
-																				<div class="modal-header">
-																					<h5 class="modal-title" id="memberModalLabel">회원관리</h5>
-																					<button type="button" class="btn-close"
-																						data-bs-dismiss="modal" aria-label="Close"></button>
-																				</div>
-
-																				<div class="modal-body container px-5">
-																					<div class="bg-light rounded-4 py-5 px-4 px-md-5">
-																						<div class="text-center mb-5">
-																							<h1 class="fw-bolder">회원정보 수정</h1>
-																						</div>
-																						<div class="row gx-5 justify-content-center">
-																							<div class="col-lg-8 col-xl-6">
-																								<form id="editForm"
-																									action="${pageContext.request.contextPath}/memberUpdate"
-																									method="POST" enctype="multipart/form-data">
-
-																									<!-- Profile image input -->
-																									<div class="form-floating mb-3">
-																										<div class="d-flex justify-content-center">
-																											<img class="prof-img" id="imgBox"
-																												src="${pageContext.request.contextPath}/displayImage?imgName=${member.memProfile }"
-																												alt="Profile Image" /> <input name="img"
-																												class="form-control d-none"
-																												id="registProfile" type="file"
-																												accept="image/*" />
-																										</div>
-																									</div>
-
-																									<!-- ID input (Read-only) -->
-																									<div class="form-floating mb-3">
-																										<input name="memId" class="form-control"
-																											id="inputId" type="text"
-																											value="${member.memId}" readonly /> <label
-																											for="inputId">아이디 (변경 불가)</label>
-																									</div>
-
-																									<!-- Password input -->
-																									<div class="form-floating mb-3">
-																										<input name="memPw" class="form-control"
-																											id="inputPw" type="password"
-																											placeholder="비밀번호" value="${member.memPw}" />
-																										<label for="inputPw">비밀번호</label>
-																									</div>
-
-																									<!-- Email input -->
-																									<div class="form-floating mb-3">
-																										<input name="memEmail" class="form-control"
-																											id="inputEmail" type="email"
-																											value="${member.memEmail}" placeholder="이메일" />
-																										<label for="inputEmail">이메일</label>
-																									</div>
-
-																									<!-- Phone input -->
-																									<div class="form-floating mb-3">
-																										<input name="memPhone" class="form-control"
-																											id="inputPhone" type="tel"
-																											value="${member.memPhone}"
-																											placeholder="휴대폰 번호" /> <label
-																											for="inputPhone">휴대폰 번호</label>
-																									</div>
-
-																									<!-- Company Name input (Read-only) -->
-																									<div class="form-floating mb-3">
-																										<input name="entpName" class="form-control"
-																											id="inputEntp" type="text"
-																											value="${member.entpName}" readonly /> <label
-																											for="inputEntp">회사명 (변경 불가)</label>
-																									</div>
-
-
-																									<!-- Submit Button -->
-																									<div class="d-grid">
-																										<button
-																											class="btn btn-primary btn-lg mb-2 cur-poi"
-																											id="submitButton" type="submit">수정하기</button>
-																									</div>
-																								</form>
-
-																								<div class="d-grid">
-																									<button class="btn mb-2 btn-secondary btn-lg"
-																										id="backBtn">뒤로가기</button>
-																								</div>
-
-																								<div class="d-grid">
-																									<button class="btn btn-secondary btn-lg"
-																										style="color: white; background-color: red;">회원탈퇴</button>
-																								</div>
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-
-
-
-																				<div class="modal-body">
-																					<table class="table table-hover">
-																						<thead>
-																							<tr>
-																								<th scope="col">아이디</th>
-																								<th scope="col">업체명</th>
-																								<th scope="col">휴대폰번호</th>
-																								<th scope="col">이메일</th>
-																							</tr>
-																						</thead>
-																						<tbody>
-																							<!-- 회원정보 불러오는 부분은, 기존 실습때 따로 했던 파일에서 추출한거라 수정 필요하므로, 임시 메모 -->
-																							<c:forEach items="${keyMemberList}" var="member">
-																								<tr>
-																									<td class="text-center">${member.memId}</td>
-																									<td class="text-center">${member.entpName}</td>
-																									<td class="text-center">${member.memPhone}</td>
-																									<td class="text-center">${member.memEmail}</td>
-
-																									<td>
-																										<!-- 회원관리 모달창 버튼 -->
-																										<div class="d-grid mt-5 ms-4">
-																											<button class="v-edit-btn bg-color"
-																												data-bs-toggle="modal"
-																												data-bs-target="#memberModal">회원관리</button>
-																										</div>
-
-																									</td>
-
-																								</tr>
-																							</c:forEach>
-																						</tbody>
-																					</table>
-																				</div>
-																				<!-- 관리자_회원정보수정 모달창 닫기 -->
-																				<div class="modal-footer">
-																					<button type="button" class="btn btn-secondary"
-																						data-bs-dismiss="modal">닫기</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</td>
 																<!-- 관리자_회원정보수정 모달창 영역 종료  -->
 
 															</tr>
 														</c:forEach>
+														<c:if test="${empty keyMemberList}">
+															<tr>
+																<td colspan="6" class="text-center">회원이 없습니다.</td>
+															</tr>
+														</c:if>
 													</tbody>
 												</table>
 											</div>
@@ -367,8 +223,8 @@ th, td {
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty boardListById}">
-												<c:forEach var="board" items="${boardListById}">
+											<c:if test="${not empty boardListByIdConfirm}">
+												<c:forEach var="board" items="${boardListByIdConfirm}">
 													<tr>
 														<th scope="row" class="text-center">${board.orderNo}</th>
 														<!-- 번호 -->
@@ -384,7 +240,7 @@ th, td {
 													</tr>
 												</c:forEach>
 											</c:if>
-											<c:if test="${empty boardListById}">
+											<c:if test="${empty boardListByIdConfirm}">
 												<tr>
 													<td colspan="6" class="text-center">게시물이 없습니다.</td>
 												</tr>
@@ -432,15 +288,9 @@ th, td {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
-
+	
 	<script type="text/javascript">
-        document.querySelector('.prof-img').addEventListener('click', () => {
-            document.querySelector('#registProfile').click();
-        });
 
-        document.querySelector('#backBtn').addEventListener('click', () => {
-            location.href = "${pageContext.request.contextPath}/"; // home으로 돌아가기
-        });
         console.log(document.querySelector('#imgBox').src)
     </script>
 </body>
