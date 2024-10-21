@@ -55,4 +55,14 @@ public class BoardService {
     	List<BoardDTO> result = boardDAO.getBoardListByIdConfirm(check);
     	return result;
     }
+    
+    public BoardDTO getBoardByNo(int boardNo) {
+    	BoardDTO result = boardDAO.getBoardByNo(boardNo);
+    	return result;
+    }
+    
+    public int updateFeedbackYN(int boardNo) {
+    	int result = boardDAO.updateFeedbackYN(boardNo);
+    	return result;
+    }
 }
