@@ -124,29 +124,6 @@
 		</if>
 		ORDER BY ORDER_NO DESC
 	</select>
-	
-	<select id="getBoardByNo" parameterType="int" resultType="com.team.proj.board.dto.BoardDTO">
-		SELECT
-			board_id,
-			order_no,      
-		    mem_id,       
-		    calc_id,       
-		    calc_result,       
-		    order_title,    
-		    order_content,    
-		    TO_CHAR(request_date, 'YYYY-MM-DD HH24:MI') AS request_date ,  
-		    feedback_yn,
-		    del_yn,
-		    entp_name
-		FROM BOARDS
-		WHERE 1=1
-		  AND ORDER_NO = #{boardNo}
-	</select>
-	
-	<update id="updateFeedbackYN" parameterType="int">
-		UPDATE BOARDS
-		SET feedback_yn = 'Y'
-		WHERE ORDER_NO = #{boardNo}
-	</update>
+
 	
 </mapper>
