@@ -46,5 +46,18 @@
 	</delete>
 	
 	
+	<select id="getScVol" parameterType="String" resultType="com.team.proj.savecal.dto.SavecalVolDTO">
+		SELECT
+				a.material_volume,
+				b.material_img, 
+				b.material_name
+		FROM SAVECAL a 
+		INNER JOIN Materials b
+		ON a.material_no = b.material_no
+		WHERE calc_id = #{calcId}	
+	</select>
+	
+	
+	
 	
 </mapper>
