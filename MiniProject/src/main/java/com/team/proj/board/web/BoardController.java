@@ -143,30 +143,54 @@ public class BoardController {
 		return "board/boardView";
 	}
 
+	
+	
 	@RequestMapping("/boardViewAdmin")
-	public String boardViewAdmin(HttpSession session, Model model, BoardDTO check, String feedbackYn) {
+	public String boardViewAdmin(HttpSession session, Model model, BoardDTO check, String feedbackYn, SearchVO pageSearch) {
+	    // 로그인 정보 가져오기
+	    MemberDTO login = (MemberDTO) session.getAttribute("login");
+	    String memId = login.getMemId();
 
-		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		String memId = login.getMemId();
+	    // 로그인 정보가 없거나, 관리자가 아닐 경우 로그인 페이지로 되돌아가기
+	    if (login == null || !"admin".equals(login.getMemId())) {
+	        return "redirect:/loginView";
+	    }
+	    
+	    // 게시글 확인을 위한 조건 설정
+	    check.setMemId(memId);
+	    check.setFeedbackYn(feedbackYn);
+	    System.out.println(check);
+	    System.out.println(memId);
+	    System.out.println(feedbackYn);
 
-		check.setMemId(memId);
-		check.setFeedbackYn(feedbackYn);
-		System.out.println(check);
+	    // 게시글 목록 확인
+	    List<BoardDTO> getBoardListByIdConfirm = boardService.getBoardListByIdConfirm(check);
 
-		System.out.println(memId);
-		System.out.println(feedbackYn);
+	    // 게시글 목록이 있는지 확인
+	    if (getBoardListByIdConfirm.size() > 0) {
+	        model.addAttribute("BoardListByIdConfirm", getBoardListByIdConfirm);
+	        System.out.println(getBoardListByIdConfirm);
+	    } else {
+	        model.addAttribute("noList", "작성한 글이 없습니다.");
+	    }
 
-		List<BoardDTO> getBoardListByIdConfirm = boardService.getBoardListByIdConfirm(check);
+	    // 페이징 처리
+	    int totalRowCount = boardService.getBoardCount(pageSearch);
+	    System.out.println(pageSearch);
+	    pageSearch.setBoardCount(totalRowCount);
+	    pageSearch.pageSetting();
 
-		if (getBoardListByIdConfirm.size() > 0) {
-			model.addAttribute("BoardListByIdConfirm", getBoardListByIdConfirm);
-			System.out.println(getBoardListByIdConfirm);
-		} else {
-			model.addAttribute("noList", "작성한 글이 없습니다.");
-		}
+	    // 게시글 목록 가져오기
+	    List<BoardDTO> boardList = boardService.getBoardList(pageSearch);
+	    model.addAttribute("boardList", boardList);
+	    model.addAttribute("pageSearch", pageSearch);
+	    model.addAttribute("member", login);
+	    System.out.println(boardList);
 
-		return "board/boardViewAdmin";
+	    // adminpage 뷰로 이동
+	    return "board/boardViewAdmin";
 	}
+
 
 	 @ResponseBody
 	 @RequestMapping("/replyWriteDo") 

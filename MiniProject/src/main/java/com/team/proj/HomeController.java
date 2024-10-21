@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
+import com.team.proj.board.vo.SearchVO;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.member.service.MemberService;
 import com.team.proj.point.dto.PointDTO;
@@ -183,8 +184,7 @@ public class HomeController {
 	
 
 	@RequestMapping("/adminpage")
-	public String adminpage(HttpSession session, Model model) {
-
+	public String adminpage(HttpSession session, Model model, SearchVO pageSearch) {
 	    // 로그인 정보 가져오기
 	    MemberDTO login = (MemberDTO) session.getAttribute("login");
 
@@ -193,14 +193,27 @@ public class HomeController {
 	        return "redirect:/loginView";
 	    }
 
+	    // 페이징
+	    int totalRowCount = boardService.getBoardCount(pageSearch);
+	    System.out.println(pageSearch);
+	    pageSearch.setBoardCount(totalRowCount);
+	    pageSearch.pageSetting();
+
+	    // 게시글 목록 가져오기
+	    List<BoardDTO> boardList = boardService.getBoardList(pageSearch);
+	    model.addAttribute("boardList", boardList);
+	    model.addAttribute("pageSearch", pageSearch);
+	    model.addAttribute("member", login);
+	    System.out.println(boardList);
 	    // 회원 목록 가져오기
 	    List<MemberDTO> memberList = memberService.getMemberList();
 	    model.addAttribute("keyMemberList", memberList);
-		model.addAttribute("member",login);
-	    BoardDTO boardDTO = new BoardDTO();
-	    boardDTO.setFeedbackYn("N");  // feedback_yn이 "N"인 글만 가져옴
-	    List<BoardDTO> boardListByIdConfirm = boardService.getBoardListByIdConfirm(boardDTO);
-	    model.addAttribute("boardListByIdConfirm", boardListByIdConfirm);
+
+//	    // 피드백이 "N"인 게시글 목록 가져오기
+//	    BoardDTO boardDTO = new BoardDTO();
+//	    boardDTO.setFeedbackYn("N");
+//	    List<BoardDTO> boardListByIdConfirm = boardService.getBoardListByIdConfirm(boardDTO);
+//	    model.addAttribute("boardListByIdConfirm", boardListByIdConfirm);
 
 	    // adminpage 뷰로 이동
 	    return "member/adminpage";
