@@ -66,5 +66,6 @@
         WHERE mem_id != 'admin'
     </select>
     
+    <!-- 20241021 0933 test -->
     
 </mapper>
