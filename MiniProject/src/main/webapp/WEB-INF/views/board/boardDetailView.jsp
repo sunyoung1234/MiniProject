@@ -669,9 +669,7 @@
 				let v_replyBtn = document.querySelector('#replyWriteBtn');
 				let v_content = document.querySelector('#replyContent');
 				let b_no = document.querySelector('#boardNum');
-				
-				console.log(typeof b_no.innerHTML);     
-				console.log("aa");     
+				     
 				
 				
 				v_replyBtn.addEventListener('click',()=>{
@@ -690,10 +688,11 @@
 							data: JSON.stringify({
 								id: scId,
 								content: v_content.value,
-								no: b_no.value
+								no: b_no.innerHTML
 							}),
 							success: function(r){
-								console.log(r);  
+								console.log(r);
+								location.href = location.href;
 							}
 						})
 					}

@@ -10,6 +10,18 @@ public class ReplyDTO {
 	public ReplyDTO() {
 		super();
 	}
+	
+	
+	public ReplyDTO(String replyId, String boardId, String replyContent, String replyCalcId, double replyCalcResult) {
+		super();
+		this.replyId = replyId;
+		this.boardId = boardId;
+		this.replyContent = replyContent;
+		this.replyCalcId = replyCalcId;
+		this.replyCalcResult = replyCalcResult;
+	}
+
+
 	public ReplyDTO(String replyId, String boardId, String replyContent, String replyCalcId, String replyDate,
 			double replyCalcResult) {
 		super();

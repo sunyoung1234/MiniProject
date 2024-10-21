@@ -35,4 +35,8 @@ public interface BoardDAO {
     List<BoardDTO> getBoardListById(String memId);
     
     List<BoardDTO> getBoardListByIdConfirm(BoardDTO check);
+    
+    BoardDTO getBoardByNo(int boardNo);
+    
+    int updateFeedbackYN(int boardNo);
 }
