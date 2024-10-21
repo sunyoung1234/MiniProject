@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.proj.region.dao.IRegionDAO">
 
-	<select id="getCityPoint" parameterType="String" resultType="com.team.proj.region.dto.RegionDTO">
-		
-	
+	<select id="getCityPoint" resultType="com.team.proj.region.dto.RegionDTO" parameterType="String">
+		SELECT 
+		    POINT_REGION,
+		    POINT_CITY,
+		    TO_CHAR(POINT_CITY_APARTMENT_ALL,'FM999,999,999') AS POINT_CITY_APARTMENT_ALL,
+		    TO_CHAR(POINT_CITY_APARTMENT_JOIN,'FM999,999,999') AS POINT_CITY_APARTMENT_JOIN,
+		    Round(POINT_CITY_APARTMENT_JOIN / POINT_CITY_APARTMENT_ALL * 100,2) AS cityParticipation
+		FROM cities
+		WHERE POINT_REGION = #{pointRegion}
 	</select>
 
 
