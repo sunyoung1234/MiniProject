@@ -77,9 +77,9 @@ font-bold {
 /* 비디오와 텍스트 레이아웃 */
 .video-section {
 	position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
-	height: 95vh; /* 비디오의 높이를 화면의 50%로 설정 */
+	height: 99vh; /* 비디오의 높이를 화면의 50%로 설정 */
 	overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
-	top: -7px;
+	top: -80px;
 }
 
 .video-section video {
@@ -101,30 +101,45 @@ font-bold {
 
 /* 카드 스타일 */
 .card {
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.2s;
+	border-radius: 10px;
+	overflow: hidden;
+	transition: transform 0.2s;
 }
 
 /* .card:hover {
     transform: scale(1.02);
 } */
-
 .card-header {
-    padding: 20px;
-    text-align: center;
+	padding: 20px;
+	text-align: center;
 }
 
 .card-body {
-    padding: 20px;
+	padding: 20px;
 }
 
 /* 차트 스타일 */
 #gasChart {
-    background-color: #f8f9fa;
-    border-radius: 10px;
+	border-radius: 10px;
 }
 
+.solution-section {
+	background-color: white; /* 배경색 */
+	padding: 50px 20px; /* 상하 좌우 패딩 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	height: 400px;
+}
+
+.solution-content h2 {
+	color: #2c3e50; /* 제목 색상 */
+	font-weight: bold; /* 제목 두껍게 */
+}
+
+.solution-content p {
+	color: #34495e; /* 본문 색상 */
+	max-width: 800px; /* 최대 너비 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
 </style>
 
 </head>
@@ -143,37 +158,59 @@ font-bold {
 
 		<!-- 비디오 위에 텍스트 영역 -->
 		<div class="overlay-text">
-			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">Green
-				Solution</h2>
+			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">기술과
+				가치가 만나</h2>
+			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">비즈니스
+				성공을</h2>
 			<p style="margin: 0; margin-bottom: 5px">대기 중 온실가스 농도가 증가함에 따라
 				대기와 해양은 따뜻해지고...</p>
 			<p style="margin: 0;">Green Solution은 기후 위기를 실감하고 탄소 중립을 위한 방법들 중
 				하나입니다.</p>
 		</div>
 	</header>
-	<!-- 두 번째 영역: 탄소 배출 관련 정보 -->
-	<section id="section2" class="hidden">
-		<div class="container">
-<!-- 			<h2 class="mb-5 text-center">탄소 배출 관련 정보</h2> -->
-			<div class="row justify-content-center">
-				<div class="col-lg-8">
-					<div class="card shadow-lg mb-4">
-						<div class="card-header text-white bg-success">
-							<h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
-						</div>
-						<div class="card-body">
-							<div>
-								<canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
-							</div>
-							<p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을
-								실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
-						</div>
-					</div>
-				</div>
-			</div>
+	<!-- 두 번째 영역: 설명 텍스트 섹션 -->
+	<section class="solution-section" id="section2">
+		<div class="solution-content">
+			<h2
+				style="margin: 0; font-size: 60px; margin-bottom: 20px; text-align: center;">Green
+				Solution</h2>
+			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">대기
+				중 온실가스 농도가 증가함에 따라 대기와 해양은 따뜻해지고...</p>
+			<p style="font-size: 18px; text-align: center;">Green Solution은
+				기후 위기를 실감하고 탄소 중립을 위한 방법들 중 하나입니다.</p>
 		</div>
 	</section>
 
+
+	<!-- 카드 두개  -->
+	<div class="card-container d-flex justify-content-center">
+		<div class="card me-3" style="flex: 1; max-width: 500px;">
+			<img
+				src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png"
+				class="card-img-top" alt="Nature Build"
+				style="width: 100%; height: 300px;">
+			<div class="card-body">
+				<h3 class="card-title">광역시도별 탄소중립포인트 에너지 참여현황</h3>
+				<p class="card-text">카드 내용 1</p>
+				<a href="${pageContext.request.contextPath}/regionPageView.jsp"
+					class="btn btn-success">더 알아보기</a>
+				<!-- 링크 추가 -->
+			</div>
+		</div>
+		<div class="card me-3" style="flex: 1; max-width: 500px;">
+			<img
+				src="${pageContext.request.contextPath}/resources/image/nature_build.png"
+				class="card-img-top" alt="Nature co2 image"
+				style="width: 100%; height: 300px;">
+			<div class="card-body">
+				<h3 class="card-title">기초단체별 탄소중립포인트 에너지 참여현황</h3>
+				<p class="card-text">카드 내용 2</p>
+				<a href="${pageContext.request.contextPath}/regionCityView.jsp"
+					class="btn btn-success">더 알아보기</a>
+				<!-- 링크 추가 -->
+			</div>
+		</div>
+	</div>
 	<!-- 세 번째 영역: 광역시도별 탄소중립포인트 에너지 참여현황 -->
 	<section id="section3" class="hidden">
 		<div class="container">
@@ -276,7 +313,27 @@ font-bold {
 			</div>
 		</div>
 	</section>
-
+	<!-- 두 번째 영역: 탄소 배출 관련 정보 -->
+	<section id="section2" class="hidden">
+		<div class="container">
+			<div class="row justify-content-center ">
+				<div class="col-lg-11">
+					<div class="card shadow-lg mb-4">
+						<div class="card-header text-white bg-success">
+							<h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
+						</div>
+						<div class="card-body">
+							<div>
+								<canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
+							</div>
+							<p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을
+								실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
