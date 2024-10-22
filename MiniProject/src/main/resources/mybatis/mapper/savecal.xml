@@ -57,6 +57,20 @@
 		WHERE calc_id = #{calcId}	
 	</select>
 	
+	<!-- SavecalMatList 가져오기 -->
+	<select id="getScmList" parameterType="String" resultType="com.team.proj.savecal.dto.SavecalMatDTO">
+		SELECT
+		        b.material_no,
+		        b.material_volume,
+		        a.material_img,
+		        a.material_name,
+		        a.gas_kg
+		FROM MATERIALS a
+		INNER JOIN SAVECAL b
+		ON a.material_no = b.material_no
+		WHERE b.calc_id = #{calcId}
+	</select>
+	
 	
 	
 	

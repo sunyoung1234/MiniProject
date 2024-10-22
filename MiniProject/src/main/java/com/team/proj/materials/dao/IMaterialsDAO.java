@@ -12,4 +12,6 @@ public interface IMaterialsDAO {
 	List<MaterialsDTO> getMatList();
 	
 	MaterialsDTO getByMatNo(int no); 
+	
+	
 }
