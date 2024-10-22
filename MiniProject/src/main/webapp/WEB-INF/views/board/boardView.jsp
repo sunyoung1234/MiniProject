@@ -34,20 +34,12 @@
 .cur-poi {
 	cursor: pointer;
 }
+
+.write-box{
+	height:750px;
+}
 </style>
 
-<!-- 검색어가 없을 때 경고창을 띄우는 스크립트 -->
-<script type="text/javascript">
-	function validateSearchForm() {
-		var searchWord = document.forms["searchForm"]["searchWord"].value
-				.trim();
-		if (searchWord === "") {
-			alert("검색어를 입력해주세요.");
-			return false; // 폼 제출 중지
-		}
-		return true; // 폼 제출 진행
-	}
-</script>
 
 </head>
 
@@ -57,32 +49,11 @@
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
-				<div class="bg-light rounded-4 py-5 px-4 px-md-5">
+				<div class="write-box rounded-4 py-5 px-4 px-md-5">
 					<div class="text-center mb-5">
 						<h1 class="fw-bolder">견 적 내 역</h1>
 					</div>
 
-					<!-- 검색 바 -->
-					<form name="searchForm" method="get"
-						action="${pageContext.request.contextPath}/boardSearch"
-						onsubmit="return validateSearchForm()">
-						<div class="row mb-4">
-							<div class="col-md-4">
-								<select class="form-select" name="searchOption">
-									<option value="title" selected>제목</option>
-									<option value="content">내용</option>
-									<option value="company">업체명</option>
-								</select>
-							</div>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="searchWord"
-									value="${param.searchWord}" placeholder="검색어를 입력하세요" />
-							</div>
-							<div class="col-md-2">
-								<button type="submit" class="btn btn-success">검색</button>
-							</div>
-						</div>
-					</form>
 
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
@@ -124,6 +95,8 @@
 											</tr>
 										</c:forEach>
 									</c:if>
+									
+									
 									<c:if test="${empty boardListById}">
 										<tr>
 											<td colspan="6" class="text-center">게시물이 없습니다.</td>
@@ -131,33 +104,25 @@
 									</c:if>
 								</tbody>
 							</table>
+							
+									<!-- 요청서 작성 버튼 -->
+							<div style="bottom: 20px; right: 20px;">
+								<a class="btn btn-success"
+									href="${pageContext.request.contextPath}/boardWriteView">요청서
+									작성</a>
+							</div>
 
 						</div>
 					</div>
 
-					<!-- 요청서 작성 버튼 -->
-					<div class="position-fixed" style="bottom: 20px; right: 20px;">
-						<a class="btn btn-success"
-							href="${pageContext.request.contextPath}/boardWriteView">요청서
-							작성</a>
-					</div>
+					
 
 				</div>
 			</div>
 		</section>
 	</main>
 
-	<!-- Footer -->
-	<footer class="bg-white py-4 mt-auto">
-		<div class="container px-5">
-			<div
-				class="row align-items-center justify-content-between flex-column flex-sm-row">
-				<div class="col-sm-4 text-center text-sm-start">
-					<div class="small m-0 text-muted">© 2024 Your Company</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 	<!-- Bootstrap core JS -->
 	<script

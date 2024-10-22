@@ -75,6 +75,9 @@ public class HomeController {
 		ArrayList<String> region = new ArrayList<>();
 		ArrayList<Double> regionValue = new ArrayList<>();
 		
+		ArrayList<String> year = new ArrayList<>();
+		ArrayList<Double> gas = new ArrayList<>();
+		
 		List<PointDTO> pointList = pointService.getPointList();
 		
 		System.out.println(pointList);
@@ -117,9 +120,19 @@ public class HomeController {
 		
 		List<GreenDTO> greenList = greenService.getListGreen();
 		
-		model.addAttribute("getGreenList",greenList);
+		for(GreenDTO pd : greenList) {
+			System.out.println(pd.getYearMonth());
+			year.add(pd.getYearMonth());
+		}
 		
-		System.out.println("Åº¼Ò °¡½º" + greenList);
+		for(GreenDTO pd : greenList) {
+			System.out.println(pd.getGas());
+			gas.add(pd.getGas());
+		}
+		
+		model.addAttribute("getGreenYear",year);
+		model.addAttribute("getGreenGas",gas);
+		
 		
 		/**
 		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/data"); 

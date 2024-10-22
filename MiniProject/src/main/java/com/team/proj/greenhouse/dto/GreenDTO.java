@@ -3,8 +3,8 @@ package com.team.proj.greenhouse.dto;
 public class GreenDTO {
 	
 	private String yearMonth;
-	private int gas;
-	public GreenDTO(String yearMonth, int gas) {
+	private double gas;
+	public GreenDTO(String yearMonth, double gas) {
 		super();
 		this.yearMonth = yearMonth;
 		this.gas = gas;
@@ -22,12 +22,15 @@ public class GreenDTO {
 	public void setYearMonth(String yearMonth) {
 		this.yearMonth = yearMonth;
 	}
-	public int getGas() {
+	public double getGas() {
 		return gas;
 	}
-	public void setGas(int gas) {
+	public void setGas(double gas) {
 		this.gas = gas;
 	}
+	
+	
+	
 	
 	
 

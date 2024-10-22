@@ -14,6 +14,12 @@
         <link href="css/styles.css" rel="stylesheet" />
         
         <style type="text/css">
+        
+        	.gas-chart-box{
+        		margin-bottom: 400px;
+        	
+        	}
+        	
         	.gas{
         		width:1200px;
         		height:400px;
@@ -83,21 +89,12 @@
         <div class="container">
         	<h2 class="mb-4">탄소 배출 관련 정보</h2>
             
-                <div class="d-flex">
+                <div class="gas-chart-box d-flex">
                     <div class="gas mb-4 me-4">
-                    	<h4 class="card-title">1990년 ~ 2020년 온실가스 배출량 추이</h2>
-                        <a href="https://www.index.go.kr/unity/potal/indicator/IndexInfo.do?cdNo=210&clasCd=2&idxCd=4288"><img class="card-img-top" src="resources/image/chart428801_1Img.png" /></a>
-                        <div class="card-body">
-                            <p class="card-text">온실가스 배출량은 해마다 증가하는 추세이고 탄소 중립을 실현하기 위해서는 탄소 배출량을 절감해야한다.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="gas mb-4">
-                    	<h4 class="card-title">20년 이후 온실가스 예상 배출량 추이</h2>
-                        <a href="https://www.index.go.kr/unity/potal/indicator/IndexInfo.do?cdNo=210&clasCd=2&idxCd=4288">
-                        	<!-- flask 서버로부터 이미지 요청 후 응답받기 -->
-							<!-- <img src="http://localhost:5000/pltimg"> -->
-                        	<img class="card-img-top" src="resources/image/chart428801_1Img.png" /></a>
+                    	<h4 class="card-title"></h4>1990년 ~ 2020년 온실가스 배출량 추이</h2>
+                    	<div>
+                    		<canvas id="gasChart"></canvas>
+                    	</div>
                         <div class="card-body">
                             <p class="card-text">온실가스 배출량은 해마다 증가하는 추세이고 탄소 중립을 실현하기 위해서는 탄소 배출량을 절감해야한다.</p>
                         </div>
@@ -207,16 +204,56 @@
                </div>
                 
          </div>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+         
+         <%@ include file="/WEB-INF/inc/footer.jsp" %>
+        
+
         <script type="text/javascript">
+        
+        	let v_yearMonth = '${getGreenYear}'
+        	let v_gas = '${getGreenGas}'
+        	
+        	v_yearMonth = v_yearMonth.replace('[', '')
+        	v_yearMonth = v_yearMonth.replace(']', '')
+         		
+         	v_gas = v_gas.replace('[', '')
+         	v_gas = v_gas.replace(']', '')
+          	
+         	v_yearMonth = v_yearMonth.split(',')
+            v_gas = v_gas.split(',')
+        	
+        	console.log(v_yearMonth)
+        	console.log(v_gas)
+        	
+        	let gasChart = document.getElementById("gasChart")
+        	
+        	new Chart(gasChart,{
+        		type:'line',
+        		data:{
+        			labels: v_yearMonth,
+        			datasets:[{
+        				label:'온실가스 총배출량',
+        				data: v_gas
+        			},{
+        				label:'온실가스 총배출량',
+        				data: v_gas
+        			}]
+        		},
+        		 options: {
+                     scales: {
+                         x: {
+                             ticks: {
+                                 autoSkip: true,
+                                 maxRotation: 45,
+                                 minRotation: 45
+                             }
+                         },
+                         y: {
+                             beginAtZero: true
+                             }
+                     }
+                 }
+             });
         
         	let v_partList = '${keyPartList}'
         	let v_regionName = "${keyRegionName}"
