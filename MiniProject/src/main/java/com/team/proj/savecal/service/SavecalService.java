@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.proj.savecal.dao.ISavecalDAO;
 import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.dto.SavecalMatDTO;
 import com.team.proj.savecal.dto.SavecalVolDTO;
 
 @Service
@@ -38,6 +39,11 @@ public class SavecalService {
 	
 	public List<SavecalVolDTO> getScVol(String calcId){
 		List<SavecalVolDTO> result = dao.getScVol(calcId);
+		return result;
+	}
+	
+	public List<SavecalMatDTO> getScmList(String calcId){
+		List<SavecalMatDTO> result = dao.getScmList(calcId);
 		return result;
 	}
 }

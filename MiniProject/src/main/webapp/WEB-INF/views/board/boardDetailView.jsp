@@ -299,13 +299,16 @@
 			padding-right: 20px;
 		}
 		
+		.material-img:hover{ 
+			transform: scale(2);
+		}
 		
     
     </style>
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/inc/top.jsp" %>
+	<%@ include file="/WEB-INF/inc/top.jsp" %> 
 	
 	<main class="flex-shrink-0">
 		<section class="py-5">
@@ -378,7 +381,7 @@
 													<img class="material-img" src="${scv.materialImg }">
 												</th> 
 												<td class="text-center">${scv.materialName}</td> <!-- 이름 -->
-												<td class="text-center">${scv.materialVolume}kg</td> <!-- 이름 -->
+												<td class="text-center">${scv.materialVolume} kg</td> <!-- 이름 -->
 											</tr>
 											 
 										</c:forEach>	
@@ -403,26 +406,15 @@
 								
 								<div class="modal-box">
 									<div class="modal-mat-list">
-										<div>
-											<select id="categorySelect">
-												<option value="all" selected>분류
-												<option value="wood">목재
-												<option value="metal">금속
-												<option value="plastic">플라스틱
-												<option value="mineral">광물
-												<option value="etc">기타
-											</select>
-										</div>
 										<div class="material-list">
-											<c:forEach items="${keyMatList }" var="mat">
+											<c:forEach items="${scmList }" var="scm">
 												<div class="mat-var">
-													<div class="mat-no" style="display: none;">${mat.materialNo }</div>
-													<div class="mat-var-category">${mat.materialCategory}</div>
+													<div class="mat-no" style="display: none;">${scm.materialNo }</div>
 													<div class="mat-var-img">
-														<img class="mat-img" src="${mat.materialImg }">
+														<img class="mat-img" src="${scm.materialImg }">
 													</div>
-													<div class="mat-var-name">${mat.materialName}</div>
-													<div class="mat-var-co2">${mat.gasKg}</div>
+													<div class="mat-var-name">${scm.materialName}</div>
+													<div class="mat-var-co2">${scm.gasKg}</div>
 												</div>
 											</c:forEach>
 										</div>
@@ -470,22 +462,6 @@
 					v_overlay.style.display = "none"; 
 				})
 				
-		// select - option 체크하기	 
-				function checkValue() {
-		        	let selectedCategory = document.getElementById('categorySelect').value;
-		        	let v_materials = document.querySelectorAll('.mat-var');
-
-		       	 v_materials.forEach(mat => {
-			            let category = mat.querySelector('.mat-var-category').innerHTML.trim();
-			            if (selectedCategory === 'all' || selectedCategory === category){
-			                mat.style.display = 'flex'; 
-			            } else {
-			                mat.style.display = 'none'; 
-			            }
-			        });
-			    }
-
-			    document.getElementById('categorySelect').addEventListener('change', checkValue);
 			    
 			    
 			    
@@ -497,7 +473,11 @@
 				let v_matVar = document.querySelectorAll('.mat-var');
 				
 				let v_resultCal = document.querySelector('#resultCal');
+				let v_modalCalList = document.querySelectorAll('.modal-cal-list')
 				
+				v_modalCalList[0].innerHTML = "abc"
+				
+				let v_alpha = "";
 				let total = 0;
 				
 				let matBtnList = [];
@@ -507,75 +487,38 @@
 					
 					let i = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
 					
-					let v_alpha = '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ v_img[i-1].src +'"></div><div class="cal-var-name">'
-					v_alpha += v_name[i-1].innerHTML + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
-					v_alpha += v_co2[i-1].innerHTML + '</div><div class="cal-var-input"><input defaultValue="0" class="input-EA" type="number" value="0" max="99999" name="cal" pattern="[0-9]" >'
-					v_alpha += '</div><button class="delete-btn" id="deleteDiv"  type="button">X</button></div>'
-					
-					mat.addEventListener('click',()=>{
-						matBtnList.push(mat);
-						console.log(matBtnList);
-						document.querySelector('.modal-cal-list').innerHTML += v_alpha;
-						mat.style.display = 'none';
+					mat.addEventListener('click',()=>{ 
 						
-						
-						// input 내용 바뀔때마다 계산
-						let v_inputEA = document.querySelectorAll('.input-EA');
-						
-						v_inputEA.forEach(v_ea =>{
-							
-							let v_co2 = parseFloat(v_ea.parentElement.parentElement.children[3].innerHTML); // co2/kg
-							
-							let previousValue = 0;
-							
-							v_ea.addEventListener('input',()=>{
+						$.ajax({
+							url: '${pageContext.request.contextPath}/findSub',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								no: i
+							}),
+							success: function(response){
+								let v_alpha = "";  
 								
-								previousValue = v_ea.defaultValue * v_co2;
-								v_ea.defaultValue = v_ea.value;
+								response.forEach(r =>{
+									v_alpha += '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
+									v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
+									v_alpha += r.gasKg + '</div><div class="cal-var-input"></div>'
+									
+								})
 								
-								  
-								total -= previousValue;
-								total += v_ea.value * v_co2;
-								 
-								v_resultCal.innerHTML = total.toFixed(2) + "  CO₂/kg";  
-								
-							})
-						})
-						
-						// 계산기에서 지우기 X 버튼
-						let v_delete = document.querySelectorAll('.delete-btn');
-						let v_inHTML = document.querySelector('.modal-cal-list').innerHTML;
-						
-						v_delete.forEach((delBtn,idx) =>{
-							
-							delBtn.addEventListener('click',()=>{
-								
-								// div 지우고 
-								// v_innerHTML 이 새로생기면 mat 클릭이벤트를 다시줘야해서 오류뜸
-								
-								/* let v_del = delBtn.parentElement.outerHTML;
-								
-								let firstIndex = v_inHTML.indexOf(v_del);
-								let lastIndex = firstIndex + v_del.length - 1;
-								
-								// 고친거
-								let v_fixHTML = v_inHTML.substring(0,firstIndex) + v_inHTML.substring(lastIndex+1)
-								
-								document.querySelector('.modal-cal-list').innerHTML = v_fixHTML; */ 
-								
-								let v_input = delBtn.parentElement.children[4].children[0];
-								v_input.value = 0;
-								v_input.dispatchEvent(new Event('input'))
-								
-								
-								let v_delDiv = delBtn.parentElement;
-								v_delDiv.style.display = "none"; 
-								matBtnList[idx].style.display = "flex";   
-							})
-						})
+								v_modalCalList[0].innerHTML = v_alpha;
+								v_modalCalList[0].style.display = "block";
+							}
+						}) 
 						
 						
 					})
+					let v_delete = document.querySelectorAll('.delete-btn');
+				
+					v_delete.forEach((delBtn,idx) =>{
+						console.log(delBtn.parentElement);
+					})
+					
 				})
 				
 				// 리스트 controller로 보내기

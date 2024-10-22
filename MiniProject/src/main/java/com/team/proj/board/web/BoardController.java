@@ -23,6 +23,7 @@ import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.reply.dto.ReplyDTO;
 import com.team.proj.reply.service.ReplyService;
 import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.dto.SavecalMatDTO;
 import com.team.proj.savecal.dto.SavecalVolDTO;
 import com.team.proj.savecal.service.SavecalService;
 
@@ -72,10 +73,7 @@ public class BoardController {
 	@RequestMapping("/boardDetailView")
 	public String boardDetailView(int orderNo, Model model, HttpSession session) {
 
-		List<MaterialsDTO> matList = matService.getMatList();
 		MemberDTO mem = (MemberDTO) session.getAttribute("login");
-
-		model.addAttribute("keyMatList", matList);
 
 		// 게시글 정보를 가져옴
 		System.out.println(orderNo);
@@ -84,6 +82,10 @@ public class BoardController {
 
 		String calcId = boardDetail.getCalcId();
 		double calcResult = boardDetail.getCalcResult();
+		
+		List<SavecalMatDTO> scmList = scService.getScmList(calcId);
+		
+		model.addAttribute("scmList", scmList);
 
 		List<SavecalVolDTO> scVolList = scService.getScVol(calcId);
 
@@ -91,6 +93,10 @@ public class BoardController {
 		model.addAttribute("calcResult", calcResult);
 
 		System.out.println(scVolList);
+		
+		
+		
+		
 		return "board/boardDetailView"; // JSP 파일 경로
 	}
 
