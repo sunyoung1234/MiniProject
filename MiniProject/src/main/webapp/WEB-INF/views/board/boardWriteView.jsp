@@ -9,6 +9,10 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />	
+
 <style type="text/css">
 * {
     box-sizing: border-box;
@@ -18,7 +22,6 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
 }
 
 button {
@@ -152,12 +155,9 @@ select {
     overflow: hidden;
     margin: 20px;
     width: 1100px;
-    transition: transform 0.2s;
+    
 }
 
-#exampleBox:hover {
-    transform: scale(1.05); /* 호버 시 크기 증가 */
-}
 
 .ex-img img {
     width: 70px;
@@ -181,16 +181,35 @@ select {
     margin-bottom: 10px;
 }
 
+
+
+
+
 .write-overview {
     display: flex;
     width: 1200px;
     height: 30px;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.overview-top{
+	padding-top:30px;
+	margin-bottom: 50px;
+	margin-left: auto;
+	text-align: center;
+	font-weight: bold;
+	font-size: 40px;
+	
 }
 
 .write-container {
     width: 1200px;
-    border: 1px solid black;
+	margin: auto;
+    margin-top:20px;
+    
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .application {
@@ -210,6 +229,7 @@ select {
 }
 
 .write-title-box {
+
     display: flex;
     width: 100%;
     height: 70px;
@@ -232,7 +252,7 @@ select {
 .write-content-box {
     display: flex;
     width: 100%;
-    height: 200px;
+    height: 100px;
     margin-top: 40px;
 }
 
@@ -241,24 +261,66 @@ select {
     justify-content: center;
     align-items: center;
     width: 33%;
-    height: 200px;
+    height: 100px;
 }
 
 .write-content-input {
-    width: 66%;
+    width: 300px;
     height: 200px;
     padding-right: 20px;
 }
 
 .write-click-btn {
-    display: flex;
-    justify-content: end;
+	margin-top:50px;
+    margin-left:1480px;
 }
 
 .ex-box {
     display: flex;
     width: calc(100% / 5 - 10px);
     height: 50px;
+}
+
+.table-container{
+	margin-top: 70px;
+	padding-left: 180px;
+	padding-bottom: 300px;
+}
+
+.material-box{
+	margin-bottom: 20px;
+	margin-top: 50px;
+	font-weight: bold;
+	display: flex;
+
+}
+
+
+.table-head{
+	border-bottom: 1px solid black;
+	text-align: center;
+	text-size:15px;
+}
+
+
+
+.table-text{
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.material-title{
+	width:150px;
+}
+
+.material-btn-box{
+	margin-left: 790px;
+	width:200px;
+	
+}
+
+.material-btn{
+	background-color:#10bd66;
 }
 
 
@@ -269,10 +331,11 @@ select {
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<div>견적의뢰서</div>
+	<%@ include file="/WEB-INF/inc/top.jsp"%>
+	
 	<div class="write-container">
+		<div class="overview-top">견 적 서</div>
 		<div class="write-overview">
 			<div class="application">
 				신청인
@@ -299,34 +362,47 @@ select {
 		<div class="write-content-box">
 			<div class="write-content">내 용</div>
 			<div class="write-content-input">
-				<textarea id="boardContent" rows="15" cols="111"></textarea>
+				<textarea id="boardContent" rows="5" cols="93"></textarea>
 			</div>
-		 
+		</div>
+		
+		<div class="table-container">
+			<div class="material-box">
+				<div class="material-title">건축 자재</div>
+				<div class="material-btn-box">
+					<button class="material-btn" id="modalBtn">자재 등록</button>
+				</div>
+				
+			</div>
+			
+			<table class="table-box">
+				<colgroup>
+                		<col width="100">
+                 		<col width="240">
+                 		<col width="500">
+                 		<col width="140">
+	            </colgroup>
+			
+				<thead class="table-head">
+					<tr>
+						<th>번호</th>
+						<th>분류</th>
+						<th>자재명</th>
+						<th>kg</th>
+					</tr>
+				</thead>
+				<tbody class="table-text" id="tableText">
+					
+				</tbody>
+			</table>
 		</div>
 		
 		<div id="overlay"></div>
-		<button id="modalBtn">모달</button>
-	
-		<div id="exampleBox">
-			<div class="ex-box">
-				<div class="ex-img">
-					<img src="">
-				</div>
-				<div class="ex-name"></div>
-				<div class="ex-EA"></div>
-			</div>
-		</div>
-		
-		<%-- <form action="${pageContex.request.contextPath }/boardView">
-		<input name="">
-		</form> --%>
-		<div class="write-click-btn">
-			<button id="boardWriteBtn">글 등록</button>
-		</div>
-		
 	</div>
 	
-	
+	<div class="write-click-btn">
+		<button id="boardWriteBtn">글 등록</button>
+	</div>
 
 	
 	
@@ -498,7 +574,6 @@ select {
 			})
 		})
 		
-	// 리스트 controller로 보내기
 		let scId = "";	
 	
 		v_registBtn = document.querySelector('#registCal');
@@ -531,6 +606,7 @@ select {
 			
 			let v_inputEA = document.querySelectorAll('.input-EA');
 			
+			
 			let isYang = true;
 			v_inputEA.forEach(v_ea =>{
 				if(v_ea.value<0){
@@ -540,7 +616,8 @@ select {
 			if(!isYang){
 				alert('음수불가');
 			}else{
-				let v_exBox = document.querySelector('#exampleBox'); 
+				let v_exBox = document.querySelector('#exampleBox');
+				let v_tableText = document.getElementById("tableText")
 				
 				if(eaList.length == 0){
 					v_exBox.innerHTML = "아직 계산 내용 X"
@@ -552,6 +629,7 @@ select {
 				let strNoList = noList.join(',');
 				let strEaList = eaList.join(',');
 				let v_alpha2 = "";
+				let v_count = 1
 				
 				
 				$.ajax({
@@ -564,16 +642,18 @@ select {
 				    }), 
 				    success: function(response) { 
 				    	
-				    	console.log(response.registList[0].materialImg);     
+				    	let v_map = {wood:'목재', plastic:'플라스틱', metal:'금속', mineral:'광물', etc:'기타'}
 				    	
-				    	for(let i=0; i<response['registList'].length; i++){
-				    		
-				    		v_alpha2 += '<div class="ex-box"><div class="ex-img"><img src="'+ response.registList[i].materialImg
-					    	v_alpha2 += '"></div><div class="ex-name">'+ response.registList[i].materialName 
-					    	v_alpha2 += '</div><div class="ex-EA">'+ eaList[i] +'</div></div>' 
+						for(let i=0; i<response['registList'].length; i++){
+							
+				    		v_alpha2 += '<tr><th>'+ v_count + '</th>'
+					    	v_alpha2 += '<td>'+ v_map[response.registList[i].materialCategory] +'</td>'
+					    	v_alpha2 += '<td>'+  response.registList[i].materialName  +'</td>'
+					    	v_alpha2 += '<td>' + eaList[i] +'</td></tr>' 
+					    	v_count += 1
 				    	}
 				    	
-				    	v_exBox.innerHTML = v_alpha2;
+				    	v_tableText.innerHTML = v_alpha2;
 				    	
 				    	scId = response['scId']; 
 				    	
