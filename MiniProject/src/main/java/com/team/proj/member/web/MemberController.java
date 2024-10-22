@@ -113,7 +113,7 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션 무효화
-		return "home"; // 홈으로 리다이렉트
+		return "redirect:/"; // 홈으로 리다이렉트
 	}
 
 	// 회원 정보 수정 페이지로 이동

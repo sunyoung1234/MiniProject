@@ -156,7 +156,7 @@ th, td {
 						</div>
 
 						<!-- 견적내역 영역 -->
-						<div class="col-6 bg-light rounded-4 py-3 border">
+						<div class="col-6 rounded-4 py-3 border">
 							<div class="row gx-5 justify-content-center">
 								<div class="col-lg-12 col-xl-12">
 									<table class="table table-bordered">
@@ -211,10 +211,10 @@ th, td {
 				<!-- 차트 영역 시작 -->
 				<div class="row align-items-start">
 					<div class="col-6">
-						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
+						<div class="rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
 					</div>
 					<div class="col-6">
-						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border">차트2</div>
+						<div class="rounded-4 py-5 px-4 px-md-5 border">차트2</div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
@@ -223,17 +223,7 @@ th, td {
 	</main>
 
 
-	<!-- Footer -->
-	<footer class="bg-white py-4 mt-auto">
-		<div class="container px-5">
-			<div
-				class="row align-items-center justify-content-between flex-column flex-sm-row">
-				<div class="col-sm-4 text-center text-sm-start">
-					<div class="small m-0 text-muted">© 2024 Your Company</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 	<!-- Bootstrap core JS -->
 	<script
