@@ -18,6 +18,7 @@ import com.team.proj.FileUpload;
 import com.team.proj.attach.dto.AttachDTO;
 import com.team.proj.attach.service.AttachService;
 import com.team.proj.board.service.BoardService;
+import com.team.proj.materials.dto.MaterialsDTO;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.member.service.MemberService;
 
@@ -172,6 +173,11 @@ public class MemberController {
 		String id = login.getMemId();
 
 		return "home";
+	}
+	
+	@RequestMapping("/boardWriteView2")
+	public String boardWriteView2(Model model, HttpSession session) {
+		return "board/boardWriteView2";
 	}
 
 }

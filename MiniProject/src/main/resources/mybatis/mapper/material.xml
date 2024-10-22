@@ -13,6 +13,7 @@
 	
 	<select id="getByMatNo" parameterType="int" resultType="com.team.proj.materials.dto.MaterialsDTO">
 		SELECT
+			material_category,
 			material_name,
             gas_kg,
 			material_img
