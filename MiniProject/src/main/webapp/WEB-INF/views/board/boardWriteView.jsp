@@ -57,7 +57,7 @@ button:hover {
     max-width: 1200px;
     height: 80%;
     display: none;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start; /* Align items at the top */
     position: fixed;
     top: 50%;
@@ -69,9 +69,20 @@ button:hover {
     overflow: hidden; /* Hide overflow of modal box */
 }
 
-.modal-mat-list, .modal-cal {
-    padding: 20px;
-    height: calc(100% - 60px); /* Adjust height to accommodate buttons */
+.modal-mat-list {
+	padding-top:20px;
+	padding-left:20px;
+	width:700px;
+    height: 800px; /* Adjust height to accommodate buttons */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.modal-cal {
+	padding-top:20px;
+	padding-left:20px;
+	padding-right:20px;
+	width:650px;
+    height: 800px; /* Adjust height to accommodate buttons */
     overflow-y: auto; /* Enable vertical scroll */
 }
 
@@ -93,10 +104,22 @@ button:hover {
     border-bottom: none;
 }
 
-.cal-var, .cal-var-input {
-    padding: 10px;
+.cal-var{
+	width:550px;
+	padding: 10px;
+    margin-right:20px;
     margin-bottom: 10px;
     display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+} 
+
+
+.cal-var-input {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content:center;
     align-items: center;
     background-color: #f0f0f0;
     border-radius: 5px;
@@ -137,6 +160,10 @@ textarea {
 
 select {
     width: auto;
+}
+
+.category-select{
+	margin-bottom: 10px;
 }
 
 .material-list img.mat-img {
@@ -181,6 +208,10 @@ select {
     text-align: center;
     padding: 0 10px;
     margin-bottom: 10px;
+}
+
+.delete-btn{
+	margin-left:auto;
 }
 
 
@@ -286,7 +317,7 @@ select {
 .table-container{
 	margin-top: 70px;
 	padding-left: 180px;
-	padding-bottom: 300px;
+	padding-bottom: 200px;
 }
 
 .material-box{
@@ -325,6 +356,10 @@ select {
 	background-color:#10bd66;
 }
 
+.sum-gas{
+	margin-left: 890px;
+	margin-bottom: 20px;
+}
 
 
 
@@ -400,6 +435,8 @@ select {
 		</div>
 		
 		<div id="overlay"></div>
+		
+		<div class="sum-gas" id ="sumGas">총 탄소 배출량 : 0</div>
 	</div>
 	
 	<div class="write-click-btn">
@@ -412,7 +449,7 @@ select {
 
 	<div class="modal-box">
 		<div class="modal-mat-list">
-			<div>
+			<div class="category-select">
 				<select id="categorySelect">
 					<option value="all" selected>분류
 					<option value="wood">목재
@@ -576,6 +613,9 @@ select {
 			})
 		})
 		
+		let v_sumGas = document.getElementById("sumGas")
+		
+		
 		let scId = "";	
 	
 		v_registBtn = document.querySelector('#registCal');
@@ -658,6 +698,8 @@ select {
 				    	v_tableText.innerHTML = v_alpha2;
 				    	
 				    	scId = response['scId']; 
+				    	
+				    	v_sumGas.innerHTML = "총 탄소 배출량 : " + total + " CO₂/kg"
 				    	
 				    }
 				    
