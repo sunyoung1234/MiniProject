@@ -208,7 +208,7 @@
 			</choose>
 		</if>
 		<if test="feedbackYn != null">
-			AND feedback_yn = #{feedbackYn}
+			AND a.feedback_yn = #{feedbackYn}
 		</if>
 		
 		ORDER BY order_no DESC
