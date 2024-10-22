@@ -234,6 +234,9 @@
         			datasets:[{
         				label:'온실가스 총배출량',
         				data: v_gas
+        			},{
+        				label:'온실가스 총배출량',
+        				data: v_gas
         			}]
         		},
         		 options: {
