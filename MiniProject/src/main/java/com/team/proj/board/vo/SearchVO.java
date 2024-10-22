@@ -15,7 +15,7 @@ public class SearchVO {
     
     // 페이징 계산을 위한 변수
     private int start;                // 현재 페이지의 시작 글 번호
-    private int end;                  // 현재 페이	지의 끝 글 번호
+    private int end;                  // 현재 페이지의 끝 글 번호
     private int firstPage;            // 화면에 표시되는 페이지 번호의 첫 번째 숫자
     private int lastPage;             // 화면에 표시되는 페이지 번호의 마지막 숫자
     private int finalPage;            // 마지막 페이지 번호

@@ -58,10 +58,6 @@
 		WHERE order_no = #{no}
 	</update>
 
-
-
-
-
 	<!-- 게시글 작성 -->
 	<insert id="boardWriteDo"
 		parameterType="com.team.proj.board.dto.BoardDTO">
