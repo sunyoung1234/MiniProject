@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.team.proj.savecal.dto.SavecalDTO;
+import com.team.proj.savecal.dto.SavecalMatDTO;
 import com.team.proj.savecal.dto.SavecalVolDTO;
 
 @Mapper
@@ -24,4 +25,6 @@ public interface ISavecalDAO {
 	
 	// inner Join 으로 materials의 name , img 추가 SavecalVolDTO
 	List<SavecalVolDTO> getScVol(String calcId);
+	
+	List<SavecalMatDTO> getScmList(String calcId);
 }
