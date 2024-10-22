@@ -30,7 +30,15 @@
 .cur-poi {
 	cursor: pointer;
 }
+
+.page-item.active .page-link {
+	background-color: #198754; /* 강조할 색상 */
+	color: white; /* 텍스트 색상 */
+	border-color: #198754; /* 테두리 색상 */
+}
 </style>
+
+
 
 <!-- 검색어가 없을 때 경고창을 띄우는 스크립트 -->
 <script type="text/javascript">
@@ -53,68 +61,59 @@
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
-				<div class="bg-light rounded-4 py-5 px-4 px-md-5">
+				<div class="py-5 px-4 px-md-5">
 					<div class="text-center mb-5">
-						<h1 class="fw-bolder">견 적 내 역 (관리자)</h1>
+						<h1 class="fw-bolder">견적 내역 (관리자)</h1>
 					</div>
-
 					<!-- 검색 바 -->
 					<form name="searchForm" method="get"
 						action="${pageContext.request.contextPath}/boardViewAdmin"
 						onsubmit="return validateSearchForm()">
-						<div class="row mb-4">
-							<div class="col-md-3">
+						<div class="row mb-4 align-items-end">
+							<div class="col-md-2">
 								<select class="form-select" name="searchOption"
 									id="searchOption">
-									<option value="title" selected>제목</option>
-									<option value="content">내용</option>
-									<option value="company">업체명</option>
+									<option value="title"
+										${param.searchOption == 'title' ? 'selected' : ''}>제목</option>
+									<option value="content"
+										${param.searchOption == 'content' ? 'selected' : ''}>내용</option>
+									<option value="company"
+										${param.searchOption == 'company' ? 'selected' : ''}>업체명</option>
 								</select>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-6">
 								<input type="text" class="form-control" name="searchWord"
 									value="${param.searchWord}" placeholder="검색어를 입력하세요" />
 							</div>
 							<div class="col-md-2">
-								<button type="submit" class="btn btn-success">검색</button>
+								<button type="submit" class="btn btn-success w-100">검색</button>
 							</div>
-
 							<div class="col-md-2">
 								<select class="form-select" name="feedbackYn" id="confirm">
-									<option value="" >피드백 여부</option>
-									<option value="Y"
-										>확인</option>
-									<option value="N"
-										>미확인</option>
+									<option value="">피드백 여부</option>
+									<option value="Y" ${param.feedbackYn == 'Y' ? 'selected' : ''}>확인</option>
+									<option value="N" ${param.feedbackYn == 'N' ? 'selected' : ''}>미확인</option>
 								</select>
-
 							</div>
 						</div>
 					</form>
 
-					<div class="row gx-5 justify-content-center">
-						<div class="col-lg-12 col-xl-10">
+					<div class="row justify-content-center">
+						<div class="col-lg-12">
 							<table class="table table-bordered">
-								<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
+								<!-- 각 열의 너비 설정 -->
 								<colgroup>
 									<col style="width: 7%;" />
-									<!-- 번호  -->
 									<col style="width: 50%;" />
-									<!-- 제목  -->
-									<%-- <col style="width: 40%;" /> <!-- 내용  -->  --%>
 									<col style="width: 15%;" />
-									<!-- 날짜  -->
 									<col style="width: 15%;" />
-									<!-- 업체명  -->
 									<col style="width: 13%;" />
-									<!-- 피드백 여부  -->
 								</colgroup>
 								<thead class="thead-light">
 									<tr>
 										<th scope="col" class="text-center">번호</th>
 										<th scope="col" class="text-center">제목</th>
 										<th scope="col" class="text-center">날짜</th>
-										<!-- <th scope="col" class="text-center">내용</th>     내용을 내역에서 보여줄 필요가 있을지?. 일단 제외-->
 										<th scope="col" class="text-center">업체명</th>
 										<th scope="col" class="text-center">피드백 여부</th>
 									</tr>
@@ -124,94 +123,74 @@
 										<c:forEach var="board" items="${boardList}">
 											<tr>
 												<th scope="row" class="text-center">${board.orderNo}</th>
-												<!-- 번호 -->
 												<td class="text-center"><a
 													href="${pageContext.request.contextPath}/boardDetailView?orderNo=${board.orderNo}">${board.orderTitle}</a></td>
-												<!-- 제목 -->
 												<td class="text-center">${board.requestDate}</td>
-												<!-- 날짜 -->
 												<td class="text-center">${board.entpName}</td>
-												<!-- 업체명 -->
 												<td class="text-center">${board.feedbackYn}</td>
-												<!-- 피드백여부 -->
 											</tr>
 										</c:forEach>
 									</c:if>
 									<c:if test="${empty boardList}">
 										<tr>
-											<td colspan="6" class="text-center">게시물이 없습니다.</td>
+											<td colspan="5" class="text-center">게시물이 없습니다.</td>
 										</tr>
 									</c:if>
 								</tbody>
 							</table>
-							<!-- Paging Bar  -->
-							<div class="d-flex justify-content-center">
+							<!-- Paging Bar -->
+							<div class="d-flex justify-content-center mt-4">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
-										<!-- 첫번째 페이지로 이동 -->
-
 										<li class="page-item"><a class="page-link"
 											href="<c:url value='/boardViewAdmin?pageNo=1&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord}'/>"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										</a></li>
-										<!-- 이전 페이지로 이동 -->
+											aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 										<li class="page-item"><c:if
-												test="${pageSearch.firstPage != 1 }">
+												test="${pageSearch.firstPage != 1}">
 												<a class="page-link"
 													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.firstPage - 1 }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
-													aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-												</a>
-											</c:if> <c:if test="${pageSearch.firstPage == 1 }">
+													aria-label="Previous"> <span aria-hidden="true">&lt;</span></a>
+											</c:if> <c:if test="${pageSearch.firstPage == 1}">
 												<a class="page-link" href="#" aria-label="Previous"> <span
-													aria-hidden="true">&lt;</span>
-												</a>
+													aria-hidden="true">&lt;</span></a>
 											</c:if></li>
-										<!-- 중앙 페이지 넘버들 -->
+
 										<c:forEach begin="${pageSearch.firstPage}"
 											end="${pageSearch.lastPage}" var="page">
-											<c:if test="${page != pageSearch.pageNo }">
+											<c:if test="${page != pageSearch.pageNo}">
 												<li class="page-item"><a class="page-link"
 													href="<c:url value='/boardViewAdmin?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
 													aria-label="Previous">${page}</a></li>
 											</c:if>
-											<c:if test="${page == pageSearch.pageNo }">
-												<li class="page-item" aria-current="page"><span
+											<c:if test="${page == pageSearch.pageNo}">
+												<li class="page-item active" aria-current="page"><span
 													class="page-link">${page}</span></li>
 											</c:if>
 										</c:forEach>
-										<!-- 다음 페이지로 이동 -->
+
 										<li class="page-item"><c:if
 												test="${pageSearch.lastPage != pageSearch.boardCount}">
 												<a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
-													<span aria-hidden="true">&gt;</span>
-												</a>
+													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"><span
+													aria-hidden="true">&gt;</span></a>
 											</c:if> <c:if test="${pageSearch.lastPage == pageSearch.boardCount}">
 												<a class="page-link" href="#" aria-label="Next"> <span
-													aria-hidden="true">&gt;</span>
-												</a>
+													aria-hidden="true">&gt;</span></a>
 											</c:if></li>
 
-										<!-- 마지막 페이지로 이동 -->
 										<li class="page-item"><a class="page-link"
-											href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.boardCount }&searchOption=${pageSearch.searchOption }&searchWord=${pageSearch.searchWord }'/>">
-												<span aria-hidden="true">&raquo;</span>
-										</a></li>
+											href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.boardCount }&searchOption=${pageSearch.searchOption }&searchWord=${pageSearch.searchWord }'/>"><span
+												aria-hidden="true">&raquo;</span></a></li>
 									</ul>
 								</nav>
 							</div>
-							</table>
-
-
-
 						</div>
 					</div>
-
-
 				</div>
 			</div>
 		</section>
 	</main>
+
 
 	<!-- Footer -->
 	<footer class="bg-white py-4 mt-auto">
@@ -230,30 +209,24 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script type="text/javascript">
+	
 		function f_change() {
-
 			console.log(event.target.value)
-
 			let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
 			let v_query = "?feedbackYn=" + event.target.value
-
 			location.href = v_url + v_query;
 		}
-		
 		let v_option = '${pageSearch.searchOption}'
       	let v_search = '${pageSearch.searchWord}'
-      	
       	console.log(v_option)
       	console.log(v_search)
-		
+      	
 		let v_category = document.getElementById('confirm').value
-		
 		document.getElementById('confirm').addEventListener('change', ()=>{
 			v_category = event.target.value
-   			if(v_category != "카테고리"){
+   			if(v_category != null){
    				let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
-	       			let v_query = "?feedbackYn=" + v_category + "&searchOption=" + v_option + "&searchWord" + v_search
-	       			
+	       			let v_query = "?feedbackYn=" + v_category + "&searchOption=" + v_option + "&searchWord=" + v_search
 	       			location.href = v_url + v_query;
    			}else{
    				location.href = "${pageContext.request.contextPath}/boardViewAdmin"
@@ -261,6 +234,7 @@
 		})
 		
 	</script>
+
 
 </body>
 </html>
