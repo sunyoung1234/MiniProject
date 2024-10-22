@@ -21,7 +21,6 @@
 
 	body {
 	    font-family: Arial, sans-serif;
-	    background-color: #f9f9f9;
 	}
 	
 	button {
@@ -268,7 +267,6 @@
     	.content-box{
     		width:100%;
     		height:600px;
-    		border: 1px solid black;
     		margin-bottom: 100px;
     	}
     	
@@ -303,6 +301,11 @@
 			transform: scale(2);
 		}
 		
+		.detail-title{
+			font-size: 40px;
+			margin-bottom: 20px;
+		}
+		
     
     </style>
 </head>
@@ -313,7 +316,7 @@
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
-				<div class="bg-light rounded-4 py-5 px-4 px-md-5">
+				<div class="rounded-4 py-5 px-4 px-md-5">
 					<div class="text-center mb-5">
 						<h1 class="fw-bolder">견 적 내 역</h1>
 					</div>
@@ -321,25 +324,23 @@
 
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
+							
+						
 							<table class="table table-bordered">
 								<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
 								<colgroup>
-									<col style="width: 7%;" />
+									<col style="width: 25%;" />
 									<!-- 번호  -->
-									<col style="width: 40%;" />
-									<!-- 제목  -->
-									<%-- <col style="width: 40%;" /> <!-- 내용  -->  --%>
-									<col style="width: 15%;" />
+									<col style="width: 25%;" />
 									<!-- 날짜  -->
-									<col style="width: 15%;" />
+									<col style="width: 25%;" />
 									<!-- 업체명  -->
-									<col style="width: 23%;" />
+									<col style="width: 25%;" />
 									<!-- 피드백 여부  -->
 								</colgroup>
 								<thead class="thead-light">
 									<tr>
 										<th scope="col" class="text-center">번호</th>
-										<th scope="col" class="text-center">제목</th>
 										<th scope="col" class="text-center">날짜</th>
 										<th scope="col" class="text-center">업체명</th>
 										<th scope="col" class="text-center">피드백 여부</th>
@@ -348,7 +349,6 @@
 								<tbody>
 									<tr> 
 										<th id="boardNum" scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
-										<td class="text-center">${board.orderTitle}</td> <!-- 제목 -->
 										<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
 										<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
 										<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
@@ -357,7 +357,10 @@
 							</table>
 							
 							<div class="content-box">
-								
+								<div>
+									<div class="detail-title">테스트트트트(제목)</div>
+									<div class="detail-content">테스트 내용(내용)</div>
+								</div>
 								 
 								<table style="background-color: white;" class="table table-bordered">
 									<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
