@@ -80,13 +80,12 @@
 							</div>
 
 							<div class="col-md-2">
-								<select class="form-select" name="feedbackYn" id="confirm"
-									onchange="f_change()">
-									<option value="" selected>피드백 여부</option>
+								<select class="form-select" name="feedbackYn" id="confirm">
+									<option value="" >피드백 여부</option>
 									<option value="Y"
-										${getBoardListByIdConfirm.feedbackYn == "Y" ? 'selected' : ''}>확인</option>
+										>확인</option>
 									<option value="N"
-										${getBoardListByIdConfirm.feedbackYn == "N" ? 'selected' : ''}>미확인</option>
+										>미확인</option>
 								</select>
 
 							</div>
@@ -239,8 +238,28 @@
 			let v_query = "?feedbackYn=" + event.target.value
 
 			location.href = v_url + v_query;
-
 		}
+		
+		let v_option = '${pageSearch.searchOption}'
+      	let v_search = '${pageSearch.searchWord}'
+      	
+      	console.log(v_option)
+      	console.log(v_search)
+		
+		let v_category = document.getElementById('confirm').value
+		
+		document.getElementById('confirm').addEventListener('change', ()=>{
+			v_category = event.target.value
+   			if(v_category != "카테고리"){
+   				let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
+	       			let v_query = "?feedbackYn=" + v_category + "&searchOption=" + v_option + "&searchWord" + v_search
+	       			
+	       			location.href = v_url + v_query;
+   			}else{
+   				location.href = "${pageContext.request.contextPath}/boardViewAdmin"
+   			}
+		})
+		
 	</script>
 
 </body>

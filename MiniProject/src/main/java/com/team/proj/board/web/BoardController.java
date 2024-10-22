@@ -146,7 +146,7 @@ public class BoardController {
 	
 	
 	@RequestMapping("/boardViewAdmin")
-	public String boardViewAdmin(HttpSession session, Model model, BoardDTO check, String feedbackYn, SearchVO pageSearch) {
+	public String boardViewAdmin(HttpSession session, Model model, BoardDTO check, SearchVO pageSearch) {
 	    // 로그인 정보 가져오기
 	    MemberDTO login = (MemberDTO) session.getAttribute("login");
 	    String memId = login.getMemId();
@@ -156,19 +156,19 @@ public class BoardController {
 	        return "redirect:/loginView";
 	    }
 	    
+	    System.out.println("페이지 서치: " + pageSearch);
+	    
 	    // 게시글 확인을 위한 조건 설정
 	    check.setMemId(memId);
-	    check.setFeedbackYn(feedbackYn);
 	    System.out.println(check);
 	    System.out.println(memId);
-	    System.out.println(feedbackYn);
 
 	    // 게시글 목록 확인
 	    List<BoardDTO> getBoardListByIdConfirm = boardService.getBoardListByIdConfirm(check);
 
 	    // 게시글 목록이 있는지 확인
 	    if (getBoardListByIdConfirm.size() > 0) {
-	        model.addAttribute("BoardListByIdConfirm", getBoardListByIdConfirm);
+	        model.addAttribute("getBoardListByIdConfirm", getBoardListByIdConfirm);
 	        System.out.println(getBoardListByIdConfirm);
 	    } else {
 	        model.addAttribute("noList", "작성한 글이 없습니다.");

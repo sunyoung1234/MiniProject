@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
 import com.team.proj.board.vo.SearchVO;
+import com.team.proj.greenhouse.dto.GreenDTO;
+import com.team.proj.greenhouse.service.GreenService;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.member.service.MemberService;
 import com.team.proj.point.dto.PointDTO;
@@ -51,6 +53,9 @@ public class HomeController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	GreenService greenService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -109,6 +114,12 @@ public class HomeController {
 		// 기초 단체별(강원)
 		model.addAttribute("keyRegion",region);
 		model.addAttribute("keyRegionValue",regionValue);
+		
+		List<GreenDTO> greenList = greenService.getListGreen();
+		
+		model.addAttribute("getGreenList",greenList);
+		
+		System.out.println("탄소 가스" + greenList);
 		
 		/**
 		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/data"); 

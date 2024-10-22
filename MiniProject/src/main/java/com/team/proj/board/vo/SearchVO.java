@@ -1,6 +1,8 @@
 package com.team.proj.board.vo;
 
 public class SearchVO {
+	
+	private String feedbackYn;
     // 검색 옵션
     private String searchOption;  // 검색 종류 (제목: title, 내용: content, 업체명: company)
     private String searchWord;    // 검색어
@@ -17,95 +19,6 @@ public class SearchVO {
     private int firstPage;            // 화면에 표시되는 페이지 번호의 첫 번째 숫자
     private int lastPage;             // 화면에 표시되는 페이지 번호의 마지막 숫자
     private int finalPage;            // 마지막 페이지 번호
-
-    // Getters and Setters
-    public String getSearchOption() {
-        return searchOption;
-    }
-
-    public void setSearchOption(String searchOption) {
-        this.searchOption = searchOption;
-    }
-
-    public String getSearchWord() {
-        return searchWord;
-    }
-
-    public void setSearchWord(String searchWord) {
-        this.searchWord = searchWord;
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getRowSizePerPage() {
-        return rowSizePerPage;
-    }
-
-    public void setRowSizePerPage(int rowSizePerPage) {
-        this.rowSizePerPage = rowSizePerPage;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public int getEnd() {
-        return end;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
-    }
-
-    public int getFirstPage() {
-        return firstPage;
-    }
-
-    public void setFirstPage(int firstPage) {
-        this.firstPage = firstPage;
-    }
-
-    public int getLastPage() {
-        return lastPage;
-    }
-
-    public void setLastPage(int lastPage) {
-        this.lastPage = lastPage;
-    }
-
-    public int getBoardCount() {
-        return boardCount;
-    }
-
-    public void setBoardCount(int boardCount) {
-        this.boardCount = boardCount;
-    }
-
-    public int getFinalPage() {
-        return finalPage;
-    }
-
-    public void setFinalPage(int finalPage) {
-        this.finalPage = finalPage;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
     
     // 페이징 메소드
     public void pageSetting() {
@@ -134,6 +47,136 @@ public class SearchVO {
             lastPage = finalPage;
         }
     }
+
+	public SearchVO(String feedbackYn, String searchOption, String searchWord, int pageNo, int rowSizePerPage,
+			int pageSize, int boardCount, int start, int end, int firstPage, int lastPage, int finalPage) {
+		super();
+		this.feedbackYn = feedbackYn;
+		this.searchOption = searchOption;
+		this.searchWord = searchWord;
+		this.pageNo = pageNo;
+		this.rowSizePerPage = rowSizePerPage;
+		this.pageSize = pageSize;
+		this.boardCount = boardCount;
+		this.start = start;
+		this.end = end;
+		this.firstPage = firstPage;
+		this.lastPage = lastPage;
+		this.finalPage = finalPage;
+	}
+
+
+	public SearchVO() {
+		super();
+	}
+
+	public String getFeedbackYn() {
+		return feedbackYn;
+	}
+
+	public void setFeedbackYn(String feedbackYn) {
+		this.feedbackYn = feedbackYn;
+	}
+
+	public String getSearchOption() {
+		return searchOption;
+	}
+
+	public void setSearchOption(String searchOption) {
+		this.searchOption = searchOption;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
+	}
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public int getRowSizePerPage() {
+		return rowSizePerPage;
+	}
+
+	public void setRowSizePerPage(int rowSizePerPage) {
+		this.rowSizePerPage = rowSizePerPage;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getBoardCount() {
+		return boardCount;
+	}
+
+	public void setBoardCount(int boardCount) {
+		this.boardCount = boardCount;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	public int getFirstPage() {
+		return firstPage;
+	}
+
+	public void setFirstPage(int firstPage) {
+		this.firstPage = firstPage;
+	}
+
+	public int getLastPage() {
+		return lastPage;
+	}
+
+	public void setLastPage(int lastPage) {
+		this.lastPage = lastPage;
+	}
+
+	public int getFinalPage() {
+		return finalPage;
+	}
+
+	public void setFinalPage(int finalPage) {
+		this.finalPage = finalPage;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchVO [feedbackYn=" + feedbackYn + ", searchOption=" + searchOption + ", searchWord=" + searchWord
+				+ ", pageNo=" + pageNo + ", rowSizePerPage=" + rowSizePerPage + ", pageSize=" + pageSize
+				+ ", boardCount=" + boardCount + ", start=" + start + ", end=" + end + ", firstPage=" + firstPage
+				+ ", lastPage=" + lastPage + ", finalPage=" + finalPage + "]";
+	}
+
+	
+    
+    
 }
 
 

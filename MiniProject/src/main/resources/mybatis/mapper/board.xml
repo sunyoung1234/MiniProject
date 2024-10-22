@@ -207,6 +207,9 @@
 				<when test="searchOption=='company'">AND a.entp_name LIKE '%' || #{searchWord} || '%'</when>
 			</choose>
 		</if>
+		<if test="feedbackYn != null">
+			AND feedback_yn = #{feedbackYn}
+		</if>
 		
 		ORDER BY order_no DESC
 		) a
