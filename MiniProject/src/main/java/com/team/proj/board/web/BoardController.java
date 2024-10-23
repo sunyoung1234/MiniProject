@@ -83,9 +83,12 @@ public class BoardController {
 		String calcId = boardDetail.getCalcId();
 		double calcResult = boardDetail.getCalcResult();
 		
+		// 회원이 올린 자재
 		List<SavecalMatDTO> scmList = scService.getScmList(calcId);
 		
 		model.addAttribute("scmList", scmList);
+		
+		
 
 		List<SavecalVolDTO> scVolList = scService.getScVol(calcId);
 
