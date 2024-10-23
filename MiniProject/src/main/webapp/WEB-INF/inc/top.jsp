@@ -15,6 +15,23 @@ body {
     padding-top: 70px; /* Navbar 높이에 맞춰 여백 설정 */
 }
 
+.navbar-brand {
+    color: black; /* 기본 글자 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.navbar-brand:hover {
+    color: black; /* 마우스 오버 시 색상 변경 없음 */
+    background-color: transparent; /* 배경 색상 변경 없음 */
+}
+
+/* .navbar a:hover 선택자를 수정하여 .navbar-brand에는 영향을 주지 않도록 함 */
+.navbar a:hover:not(.navbar-brand) {
+    background-color: black; /* 마우스 오버 시 링크 배경 색상 변경 */
+    color: white; /* 마우스 오버 시 링크 글자 색상 변경 */
+    border-radius: 5px; /* 모서리 둥글게 */
+}
+
 .navbar {
     position: fixed;
     top: 0;
@@ -51,36 +68,9 @@ body {
     color: black; /* 마우스 오버 시 링크 색상 변경 */
 }
 
-.navbar a:hover {
-    background-color: white; /* 마우스 오버 시 링크 배경 색상 변경 */
-    color: black; /* 마우스 오버 시 링크 글자 색상 변경 */
-    border-radius: 5px; /* 모서리 둥글게 */
-}
-
 .active {
     background-color: black; /* 현재 탭 강조 색상 */
     border-radius: 5px; /* 모서리 둥글게 */
-}
-
-.green-solution {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: rgba(240, 255, 240, 0.9);
-    border-radius: 10px;
-    margin: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.green-solution h2 {
-    font-size: 2.5em;
-    color: #16bd66;
-    margin-bottom: 20px;
-}
-
-.green-solution p {
-    font-size: 1.2em;
-    color: #333;
-    line-height: 1.6;
 }
 
 .navbar-nav {
