@@ -83,31 +83,32 @@ font-bold {
 	opacity: 1;
 }
 
-/* 비디오와 텍스트 레이아웃 */
-.video-section {
-	position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
-	height: 99vh; /* 비디오의 높이를 화면의 50%로 설정 */
-	overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
-	top: -80px;
-}
+        /* 비디오와 텍스트 레이아웃 */
+        .video-section {
+            position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
+            height: 100vh; /* 전체 화면 높이 */
+            overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
+             margin: 0; /* 기본 여백 제거 */
+    		padding: 0; /* 기본 패딩 제거 */
+    		top: -20px;
+        }
 
-.video-section video {
-	width: 100%; /* 비디오의 너비를 부모에 맞춤 */
-	height: 100%; /* 비디오의 높이를 부모에 맞춤 */
-	object-fit: cover; /* 비디오가 비율에 맞게 잘림 */
-}
+        .video-section video {
+            width: 100%; /* 비디오의 너비를 부모에 맞춤 */
+            height: 100%; /* 비디오의 높이를 부모에 맞춤 */
+            object-fit: cover; /* 비디오가 비율에 맞게 잘림 */
+        }
 
-.overlay-text {
-	position: absolute; /* 비디오 위에 텍스트를 올리기 위해 */
-	top: 47%; /* 수직 중앙 정렬 */
-	left: 50%; /* 수평 중앙 정렬 */
-	transform: translate(-50%, -50%); /* 중앙 정렬 */
-	color: white; /* 텍스트 색상 */
-	text-align: center; /* 텍스트 정렬 */
-	opacity: 1; /* 텍스트가 보이도록 설정 */
-	font-size: 1em; /* 비디오 위 텍스트 크기 2배 증가 */
-}
- 
+        .overlay-text {
+            position: absolute; /* 비디오 위에 텍스트를 올리기 위해 */
+            top: 45%; /* 수직 중앙 정렬 */
+            left: 50%; /* 수평 중앙 정렬 */
+            transform: translate(-50%, -50%); /* 중앙 정렬 */
+            color: white; /* 텍스트 색상 */
+            text-align: center; /* 텍스트 정렬 */
+            font-size: 1.5em; /* 비디오 위 텍스트 크기 조정 */
+        }
+
 .carousel-item {
 	height: 400px; /* 카드 높이에 맞게 조정 */
 	position: relative; /* 자식 요소의 절대 위치를 위한 기준 설정 */
@@ -122,12 +123,12 @@ font-bold {
 
 .carousel-overlay-text {
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 20%;
+	left: 40%;
 	transform: translate(-50%, -50%);
-	color: white;
-	font-size: 24px; /* 텍스트 크기 조정 */
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* 텍스트 가독성을 위한 그림자 */
+	color: black;
+	font-size: 30px; /* 텍스트 크기 조정 */
+	font-weight: bold;
 }
 /* 
 .carousel-item-next, .carousel-item-prev, .carousel-item.active {
@@ -138,7 +139,6 @@ font-bold {
 	bottom: 0;
 	opacity: 0; /* 비활성 아이템은 투명 */
 }
-
 .carousel-item.active {
 	opacity: 1; /* 현재 활성화된 아이템은 보이게 설정 */
 }
@@ -150,9 +150,6 @@ font-bold {
 	transition: transform 0.2s;
 }
 
-/* .card:hover {
-    transform: scale(1.02);
-} */
 .card-header {
 	padding: 20px;
 	text-align: center;
@@ -191,6 +188,45 @@ font-bold {
 	margin-bottom: 30px;
 	font-size: 50px;
 }
+
+.custom-carousel-image {
+	width: 50%; /* 1/3 크기 */
+	margin: 0 auto; /* 중앙 정렬 */
+	display: block; /* 블록 요소로 설정 */
+	border-radius: 15px;
+}
+
+/* Fade-in 애니메이션 정의 */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px); /* 텍스트가 위로 이동하는 효과 */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* 원래 위치로 돌아옴 */
+            }
+        }
+
+        /* 애니메이션을 적용할 클래스 */
+        .fade-in {
+            opacity: 0; /* 처음에 투명하게 시작 */
+            animation: fadeInUp 1s ease forwards; /* 1초 동안 애니메이션 적용 */
+        }
+
+        /* 각 텍스트 요소에 지연 시간 추가 */
+        .fade-in:nth-child(1) {
+            animation-delay: 0s; /* 첫 번째 요소는 지연 없음 */
+        }
+        .fade-in:nth-child(2) {
+            animation-delay: 1s; /* 두 번째 요소는 1초 지연 */
+        }
+        .fade-in:nth-child(3) {
+            animation-delay: 2s; /* 세 번째 요소는 2초 지연 */
+        }
+        .fade-in:nth-child(4) {
+            animation-delay: 3s; /* 네 번째 요소는 3초 지연 */
+        }
 </style>
 
 </head>
@@ -198,28 +234,50 @@ font-bold {
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<!-- 첫 번째 영역: 비디오 섹션 -->
-	<header class="video-section" id="section1">
-		<video autoplay loop muted>
-			<source
-				src="${pageContext.request.contextPath}/resources/image/forest.mp4"
-				type="video/mp4">
-			비디오를 지원하지 않는 브라우저입니다.
-		</video>
+    <!-- 첫 번째 영역: 비디오 섹션 -->
+    <header class="video-section" id="section1">
+        <video autoplay loop muted>
+            <source src="${pageContext.request.contextPath}/resources/image/forest.mp4" type="video/mp4">
+        </video>
+        <!-- 비디오 위에 텍스트 영역 -->
+        <div class="overlay-text">
+            <h2 class="fade-in" style="font-size: 40px; margin-bottom: 10px">지속 가능한 건축을 위한 혁신</h2>
+            <h2 class="fade-in" style="font-size: 60px; margin-bottom: 10px">GreenSolution</h2>
+            <p class="fade-in" style="font-size: 20px; margin-bottom: 10px">우리는 건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
+            <p class="fade-in" style="font-size: 20px; margin-bottom: 10px">기술과 지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
+        </div>
+    </header>
 
-		<!-- 비디오 위에 텍스트 영역 -->
-		<div class="overlay-text">
-			<h2 style="margin: 0; font-size: 60px; margin-bottom: 10px">지속 가능한 건축을 위한 혁신</h2>
-			<h2 style="margin: 0; font-size: 60px; margin-bottom: 10px">GreenSolution</h2>
-			<p style="margin: 0; margin-bottom: 5px">우리는 건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
-			<p style="margin: 0;">기술과 지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
-		</div>
-	</header>
 
+
+
+	<!-- 메인 문구 타이틀 -->
 	<div class="solution-content solution-title">
+		<h2>Our Vision</h2>
+	</div>
+
+	<!-- 텍스트 섹션 -->
+	<section class="solution-section" id="section2">
+		<div class="solution-content">
+			<h2
+				style="margin: 0; font-size: 60px; margin-bottom: 20px; text-align: center;">Green
+				Solution</h2>
+			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">대기
+				중 온실가스 농도가 증가하는 가운데</p>
+			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">우리는
+				탄소 배출이 낮은 자재를 통해 건축 산업의 변화를 선도하고 있습니다.</p>
+			<p style="font-size: 18px; text-align: center;">기후 위기에 대응하는 Green
+				Solution의 솔루션은 지속 가능한 미래를 위한 첫걸음입니다.</p>
+		</div>
+	</section>
+
+	<!-- 캐러셀 타이틀 -->
+	<div class="solution-content solution-title" style="margin-bottom: 50px">
 		<h2>About us</h2>
 	</div>
-	<div id="carouselExampleIndicators" class="carousel slide"
+
+	<!-- 캐러셀 메인 -->
+	<div id="carouselExampleIndicators" class="carousel slide" style="margin-bottom: 200px"
 		data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleIndicators"
@@ -232,44 +290,44 @@ font-bold {
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<div class="position-relative">
+				<div class="position-relative text-center">
 					<img
-						src="${pageContext.request.contextPath}/resources/image/자연건축1.jpg"
-						class="d-block w-100" alt="자연 건축">
-					<div class="carousel-overlay-text">자연 건축</div>
+						src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지1.jpg"
+						class="custom-carousel-image" alt="자연 건축">
+					<div class="carousel-overlay-text solution-content"
+						style="color: white; font-size: 26px; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+						자연을 품은 건축,<br> 우리의 미래를 설계합니다.
+					</div>
 				</div>
 			</div>
 			<div class="carousel-item">
-				<div class="position-relative">
+				<div class="position-relative text-center">
 					<img
-						src="${pageContext.request.contextPath}/resources/image/환경건축1.jpg"
-						class="d-block w-100" alt="환경 건축">
-					<div class="carousel-overlay-text">환경 건축</div>
+						src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지2.jpg"
+						class="custom-carousel-image" alt="환경 건축">
+					<div class="carousel-overlay-text solution-content"
+						style="color: white; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+						환경을 생각하는 설계,<br> GreenSolution의 약속입니다.
+					</div>
 				</div>
 			</div>
 			<div class="carousel-item">
-				<div class="position-relative">
+				<div class="position-relative text-center">
 					<img
-						src="${pageContext.request.contextPath}/resources/image/탄소절감1.jpg"
-						class="d-block w-100" alt="탄소 절감">
-					<div class="carousel-overlay-text">탄소 절감</div>
+						src="${pageContext.request.contextPath}/resources/image/jpg3캐러셀이미지3.jpg"
+						class="custom-carousel-image" alt="탄소 절감">
+					<div class="carousel-overlay-text solution-content"
+						style="color: white; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+						탄소 중립을 향한 작은 실천,<br> 큰 변화를 이룹니다.
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-	<!-- 두 번째 영역: 설명 텍스트 섹션 -->
-	<section class="solution-section" id="section2">
-		<div class="solution-content">
-			<h2
-				style="margin: 0; font-size: 60px; margin-bottom: 20px; text-align: center;">Green
-				Solution</h2>
-			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">대기 중 온실가스 농도가 증가하는 가운데</p>
-			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">우리는 탄소 배출이 낮은 자재를 통해 건축 산업의 변화를 선도하고 있습니다.</p>
-			<p style="font-size: 18px; text-align: center;">기후 위기에 대응하는 Green Solution의 솔루션은 지속 가능한 미래를 위한 첫걸음입니다..</p>
-		</div>
-	</section>
+
+
 
 	<div class="solution-content solution-title">
 		<h2>What we do</h2>
@@ -571,8 +629,5 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 </script>
-
-
-
 </body>
 </html>
