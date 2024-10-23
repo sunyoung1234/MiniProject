@@ -317,6 +317,10 @@
 			margin-bottom: 20px;
 		}
 		
+		.detail-box{
+			margin-bottom: 20px;
+		}
+		
 
     
     </style>
@@ -369,7 +373,7 @@
 							</table>
 							
 							<div class="content-box">
-								<div>
+								<div class="detail-box">
 									<div class="detail-title">테스트트트트(제목)</div>
 									<div class="detail-content">테스트 내용(내용)</div>
 								</div>
@@ -403,7 +407,7 @@
 									</tbody>
 								</table>
 								<p id="calcResult">
-									<span style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult }</span>
+									<span style="padding-right: 15px; font-weight: bold; color: blue;">총 탄소 배출량 : ${calcResult }</span>
 									<span style="font-weight: bold;">CO2/KG</span>
 								</p>
 								<h5>내용</h5>
