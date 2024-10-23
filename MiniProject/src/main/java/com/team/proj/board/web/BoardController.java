@@ -64,6 +64,8 @@ public class BoardController {
 	public String boardWriteView(Model model, HttpSession session) {
 		List<MaterialsDTO> matList = matService.getMatList();
 		MemberDTO mem = (MemberDTO) session.getAttribute("login");
+		
+		
 
 		model.addAttribute("keyMatList", matList);
 		return "board/boardWriteView";
