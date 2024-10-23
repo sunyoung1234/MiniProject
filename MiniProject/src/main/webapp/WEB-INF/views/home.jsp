@@ -285,7 +285,7 @@ font-bold {
 			<div class="card-body">
 				<h3 class="card-title">온실가스 배출량 추이</h3>
 				<p class="card-text">1990년 ~ 2020년 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/gasChartView"
+				<a href="${pageContext.request.contextPath}/gasChartView"
 					class="btn btn-success">더 알아보기</a>
 			</div>
 		</div>
@@ -297,7 +297,7 @@ font-bold {
 			<div class="card-body">
 				<h3 class="card-title">광역시도별 탄소중립포인트 참여현황</h3>
 				<p class="card-text">광역시도별 & 기초단체별 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/cityChartView"
+				<a href="${pageContext.request.contextPath}/cityChartView"
 					class="btn btn-success">더 알아보기</a>
 			</div>
 		</div>
