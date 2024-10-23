@@ -17,213 +17,133 @@
 <link href="css/styles.css" rel="stylesheet" />
 
 <style type="text/css">
-.gas-chart-box {
-	margin-bottom: 400px;
+/* 기본 스타일 */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
 }
 
-.gas {
-	width: 1200px;
-	height: 400px;
+h3 {
+    font-weight: bold;
+    color: #2c3e50;
 }
 
-font-bold {
-	font-weight: bold;
-}
-
-.bg-color {
-	background-color: #10bd66;
-}
-
-.table-box {
-	width: 1000px;
-}
-
-.chart-box {
-	width: 1000px;
-	height: 300px;
-}
-
-.chart-box2 {
-	width: 1000px;
-	height: 300px;
-}
-
-.point-box {
-	
-}
-
-.point-title {
-	padding-left: 10px;
-}
-
-.point-head {
-	border-bottom: 1px solid black;
-	text-align: center;
-}
-
-.point-body {
-	text-align: center;
-}
-
-.hidden {
-	opacity: 0;
-	transition: opacity 0.5s ease-in-out; /* 부드러운 전환 효과 */
-}
-
-.visible {
-	opacity: 1;
-}
-
-/* 비디오와 텍스트 레이아웃 */
+/* 비디오 섹션 */
 .video-section {
-	position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
-	height: 99vh; /* 비디오의 높이를 화면의 50%로 설정 */
-	overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
-	top: -80px;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .video-section video {
-	width: 100%; /* 비디오의 너비를 부모에 맞춤 */
-	height: 100%; /* 비디오의 높이를 부모에 맞춤 */
-	object-fit: cover; /* 비디오가 비율에 맞게 잘림 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .overlay-text {
-	position: absolute; /* 비디오 위에 텍스트를 올리기 위해 */
-	top: 47%; /* 수직 중앙 정렬 */
-	left: 50%; /* 수평 중앙 정렬 */
-	transform: translate(-50%, -50%); /* 중앙 정렬 */
-	color: white; /* 텍스트 색상 */
-	text-align: center; /* 텍스트 정렬 */
-	opacity: 1; /* 텍스트가 보이도록 설정 */
-	font-size: 1em; /* 비디오 위 텍스트 크기 2배 증가 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
 }
 
 /* 카드 스타일 */
 .card {
-	border-radius: 10px;
-	overflow: hidden;
-	transition: transform 0.2s;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 40px;
 }
 
-/* .card:hover {
-    transform: scale(1.02);
-} */
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header, .card-body {
+    padding: 20px;
+    text-align: center;
+}
+
 .card-header {
-	padding: 20px;
-	text-align: center;
+    background-color: #10bd66;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .card-body {
-	padding: 20px;
+    color: #34495e;
 }
 
 /* 차트 스타일 */
-#gasChart {
-	border-radius: 10px;
+.chart-box, .chart-box2 {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.solution-section {
-	background-color: white; /* 배경색 */
-	padding: 50px 20px; /* 상하 좌우 패딩 */
-	text-align: center; /* 텍스트 가운데 정렬 */
-	height: 400px;
+canvas {
+    border-radius: 10px;
 }
 
-.solution-content h2 {
-	color: #2c3e50; /* 제목 색상 */
-	font-weight: bold; /* 제목 두껍게 */
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-.solution-content p {
-	color: #34495e; /* 본문 색상 */
-	max-width: 800px; /* 최대 너비 */
-	margin: 0 auto; /* 가운데 정렬 */
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
-.solution-title h2 {
-	margin-left: 500px;
-	margin-bottom: 40px;
-	font-size: 60px;
+th {
+    background-color: #10bd66;
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .chart-box, .chart-box2 {
+        padding: 10px;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
 }
 </style>
+
 
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/inc/top.jsp"%>
+    <%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<!-- 첫 번째 영역: 비디오 섹션 -->
-	<header class="video-section" id="section1">
-		<video autoplay loop muted>
-			<source
-				src="${pageContext.request.contextPath}/resources/image/forest.mp4"
-				type="video/mp4">
-			비디오를 지원하지 않는 브라우저입니다.
-		</video>
-
-		<!-- 비디오 위에 텍스트 영역 -->
-		<div class="overlay-text">
-			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">기술과
-				가치가 만나</h2>
-			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">비즈니스
-				성공을</h2>
-			<p style="margin: 0; margin-bottom: 5px">대기 중 온실가스 농도가 증가함에 따라
-				대기와 해양은 따뜻해지고...</p>
-			<p style="margin: 0;">Green Solution은 기후 위기를 실감하고 탄소 중립을 위한 방법들 중
-				하나입니다.</p>
-		</div>
-	</header>
-
-	<div class="solution-content solution-title">
-		<h2>About us</h2>
-	</div>
-
-	<!-- 두 번째 영역: 설명 텍스트 섹션 -->
-	<section class="solution-section" id="section2">
-		<div class="solution-content">
-			<h2
-				style="margin: 0; font-size: 60px; margin-bottom: 20px; text-align: center;">Green
-				Solution</h2>
-			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">대기
-				중 온실가스 농도가 증가함에 따라 대기와 해양은 따뜻해지고...</p>
-			<p style="font-size: 18px; text-align: center;">Green Solution은
-				기후 위기를 실감하고 탄소 중립을 위한 방법들 중 하나입니다.</p>
-		</div>
-	</section>
-
-	<div class="solution-content solution-title">
-		<h2>What we do</h2>
-	</div>
-	<!-- 카드 두개  -->
-	<div class="card-container d-flex justify-content-center"
-		style="margin-bottom: 150px;">
-		<div class="card me-3" style="flex: 1; max-width: 500px;">
-			<img
-				src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png"
-				class="card-img-top" alt="Nature Build"
-				style="width: 100%; height: 300px;">
-			<div class="card-body">
-				<h3 class="card-title">온실가스 배출량 추이</h3>
-				<p class="card-text">1990년 ~ 2020년 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/gasChartView"
-					class="btn btn-success">더 알아보기</a>
-			</div>
-		</div>
-		<div class="card me-3" style="flex: 1; max-width: 500px;">
-			<img
-				src="${pageContext.request.contextPath}/resources/image/nature_build.png"
-				class="card-img-top" alt="Nature co2 image"
-				style="width: 100%; height: 300px;">
-			<div class="card-body">
-				<h3 class="card-title">광역시도별 탄소중립포인트 참여현황</h3>
-				<p class="card-text">광역시도별 & 기초단체별 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/cityChartView"
-					class="btn btn-success">더 알아보기</a>
-			</div>
-		</div>
-	</div>
-	<%-- <!-- 세 번째 영역: 광역시도별 탄소중립포인트 에너지 참여현황 -->
+	<!-- 세 번째 영역: 광역시도별 탄소중립포인트 에너지 참여현황 -->
 	<section id="section3" class="hidden">
 		<div class="container">
 			<div class="point-box mb-4">
@@ -325,27 +245,6 @@ font-bold {
 			</div>
 		</div>
 	</section>
-	<!-- 두 번째 영역: 탄소 배출 관련 정보 -->
-	<section id="section2" class="hidden">
-		<div class="container">
-			<div class="row justify-content-center ">
-				<div class="col-lg-11">
-					<div class="card shadow-lg mb-4">
-						<div class="card-header text-white bg-success">
-							<h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
-						</div>
-						<div class="card-body">
-							<div>
-								<canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
-							</div>
-							<p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을
-								실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> --%>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
