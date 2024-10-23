@@ -17,6 +17,7 @@
 <link href="css/styles.css" rel="stylesheet" />
 
 <style type="text/css">
+
 .gas-chart-box {
 	margin-bottom: 400px;
 }
@@ -26,120 +27,9 @@
 	height: 400px;
 }
 
-font-bold {
-	font-weight: bold;
-}
 
-.bg-color {
-	background-color: #10bd66;
-}
 
-.table-box {
-	width: 1000px;
-}
 
-.chart-box {
-	width: 1000px;
-	height: 300px;
-}
-
-.chart-box2 {
-	width: 1000px;
-	height: 300px;
-}
-
-.point-box {
-	
-}
-
-.point-title {
-	padding-left: 10px;
-}
-
-.point-head {
-	border-bottom: 1px solid black;
-	text-align: center;
-}
-
-.point-body {
-	text-align: center;
-}
-
-.hidden {
-	opacity: 0;
-	transition: opacity 0.5s ease-in-out; /* 부드러운 전환 효과 */
-}
-
-.visible {
-	opacity: 1;
-}
-
-/* 비디오와 텍스트 레이아웃 */
-.video-section {
-	position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
-	height: 99vh; /* 비디오의 높이를 화면의 50%로 설정 */
-	overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
-	top: -80px;
-}
-
-.video-section video {
-	width: 100%; /* 비디오의 너비를 부모에 맞춤 */
-	height: 100%; /* 비디오의 높이를 부모에 맞춤 */
-	object-fit: cover; /* 비디오가 비율에 맞게 잘림 */
-}
-
-.overlay-text {
-	position: absolute; /* 비디오 위에 텍스트를 올리기 위해 */
-	top: 47%; /* 수직 중앙 정렬 */
-	left: 50%; /* 수평 중앙 정렬 */
-	transform: translate(-50%, -50%); /* 중앙 정렬 */
-	color: white; /* 텍스트 색상 */
-	text-align: center; /* 텍스트 정렬 */
-	opacity: 1; /* 텍스트가 보이도록 설정 */
-	font-size: 1em; /* 비디오 위 텍스트 크기 2배 증가 */
-}
-
-/* 카드 스타일 */
-.card {
-	border-radius: 10px;
-	overflow: hidden;
-	transition: transform 0.2s;
-}
-
-/* .card:hover {
-    transform: scale(1.02);
-} */
-.card-header {
-	padding: 20px;
-	text-align: center;
-}
-
-.card-body {
-	padding: 20px;
-}
-
-/* 차트 스타일 */
-#gasChart {
-	border-radius: 10px;
-}
-
-.solution-section {
-	background-color: white; /* 배경색 */
-	padding: 50px 20px; /* 상하 좌우 패딩 */
-	text-align: center; /* 텍스트 가운데 정렬 */
-	height: 400px;
-}
-
-.solution-content h2 {
-	color: #2c3e50; /* 제목 색상 */
-	font-weight: bold; /* 제목 두껍게 */
-}
-
-.solution-content p {
-	color: #34495e; /* 본문 색상 */
-	max-width: 800px; /* 최대 너비 */
-	margin: 0 auto; /* 가운데 정렬 */
-}
 </style>
 
 </head>
@@ -147,7 +37,7 @@ font-bold {
 
     <%@ include file="/WEB-INF/inc/top.jsp"%>
 
-    <!-- 두 번째 영역: 탄소 배출 관련 정보 -->
+    <!-- 첫번째: 탄소 배출 관련 정보 -->
     <section id="section2" class="hidden">
         <div class="container">
             <div class="row justify-content-center">
@@ -156,9 +46,8 @@ font-bold {
                         <div class="card-header text-white bg-success">
                             <h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="gas">
                             <canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
-                            <p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을 실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -168,7 +57,7 @@ font-bold {
 
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
-
+    
 	<script type="text/javascript">
         
         	let v_yearMonth = '${getGreenYear}'
@@ -182,235 +71,72 @@ font-bold {
           	
          	v_yearMonth = v_yearMonth.split(',')
             v_gas = v_gas.split(',')
-        	
-        	console.log(v_yearMonth)
-        	console.log(v_gas)
+            
         	
         	let gasChart = document.getElementById("gasChart")
+        	
+        	let v_gasTwo = []
+        	for(let i = 0; i < v_gas.length; i+=12){
+        		v_gasTwo.push(v_gas[i])
+        	}
+        	console.log(v_gasTwo)
+        	
+        	let v_array = []
+        	for(let i = 1990; i < 2026; i++){
+        		v_array.push(i)
+        	}
+        	console.log(v_array)
         	
         	new Chart(gasChart,{
         		type:'line',
         		data:{
-        			labels: v_yearMonth,
+        			labels: v_array,
         			datasets:[{
-        				label:'온실가스 총배출량',
-        				data: v_gas
+        				label:'온실가스 총 배출량',
+        				data: v_gasTwo.slice(0,31)
         			},{
-        				label:'온실가스 총배출량',
-        				data: v_gas
+        				label:'20년 이후 예측 온실가스 총 배출량',
+        				data: v_gasTwo.slice(0,36)
         			}]
         		},
         		 options: {
+        			 elements: {
+        		    	   point: {
+        		    	   radius: 0,
+        		    	  },
+        		    },
+        		    plugins: {
+        	            title: {
+        	                display: true,
+        	                text: '년도별 온실가스 총 배출량'
+        	            }
+        	        },
                      scales: {
                          x: {
                              ticks: {
-                                 autoSkip: true,
                                  maxRotation: 45,
-                                 minRotation: 45
-                             }
+                                 minRotation: 45,
+                             },
+                             title: {
+                                 display: true,
+                                 text: '년도'
+                             },
                          },
                          y: {
-                             beginAtZero: true
-                             }
+                             beginAtZero: true,
+                             title: {
+                                 display: true,
+                                 text: '배출량'
+                             },
+                         },
                      }
                  }
              });
         
-        	let v_partList = '${keyPartList}'
-        	let v_regionName = "${keyRegionName}"
-        	
-        	v_partList = v_partList.replace('[', '')
-       		v_partList = v_partList.replace(']', '')
-       		
-       		v_regionName = v_regionName.replace('[', '')
-       		v_regionName = v_regionName.replace(']', '')
-        	
-       		v_partList = v_partList.split(',')
-           	v_regionName = v_regionName.split(',')
-           	
-           	let v_gangwon = '${keyRegion }'
-          	let v_gangwonValue = "${keyRegionValue}"
-               	
-          	v_gangwon = v_gangwon.replace('[', '')
-            v_gangwonValue = v_gangwonValue.replace('[', '')
-              		
-            v_gangwon = v_gangwon.replace('[', '')
-            v_gangwonValue = v_gangwonValue.replace(']', '')
-               	
-            v_gangwon = v_gangwon.split(',')
-            v_gangwonValue = v_gangwonValue.split(',')
-        	
-        	let v_temp = {}
-        	v_temp['name'] = v_regionName
-        	v_temp['num'] = v_partList
-        	
-        	let v_temp2 = {}
-        	v_temp2['name'] = v_gangwon
-        	v_temp2['num'] = v_gangwonValue
-        	
-        	console.log(v_temp)
-        	console.log(v_partList)
-        	console.log(typeof(v_partList))
-        	console.log(v_regionName)
-        	console.log(typeof(v_regionName))
-        	
-        	let ctx = document.getElementById('myChart')
-        	
-        	console.log(v_temp2)
-        	
-        	
-        	new Chart(ctx,{
-        		type:'bar',
-        		data:{
-        			labels: v_temp['name'],
-        			datasets:[{
-        				label:'광역시도별 탄소중립포인트 에너지 참여율(%)',
-        				data: v_temp['num']
-        			}]
-        		},
-        		 options: {
-                     scales: {
-                         x: {
-                             ticks: {
-                                 autoSkip: false,
-                                 maxRotation: 45,
-                                 minRotation: 45
-                             }
-                         },
-                         y: {
-                             beginAtZero: true
-                             }
-                     }
-                 }
-             });
-          	
-			let ctx2 = document.getElementById("myChart2")
-			
-        	let v_chart = new Chart(ctx2,{
-        		type:'bar',
-        		data:{
-        			labels: v_temp2['name'],
-        			datasets:[{
-        				label:'기초단체별 탄소중립포인트 에너지 참여율(%)',
-        				data: v_temp2['num']
-        			}]
-        		},
-        		 options: {
-                     scales: {
-                         x: {
-                             ticks: {
-                                 autoSkip: false,
-                                 maxRotation: 45,
-                                 minRotation: 45
-                             }
-                         },
-                         y: {
-                             beginAtZero: true
-                             }
-                     }
-                 }
-             });
-        	
-        	v_chart
-        	
-        	function f_change(){
-        		console.log(event.target.value)
-        		document.getElementById("category").value = event.target.value
-        		
-				let v_ajax = new XMLHttpRequest();
-       			
-       			v_ajax.open("POST", '${pageContext.request.contextPath}/tableView');
-       			
-				let v_data = "pointRegion=" + event.target.value;
-       			v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-       			
-       			v_ajax.onload = () =>{
-       				if(v_ajax.response){
-       					
-       					let v_region = JSON.parse(v_ajax.response)
-       					
-       					let v_input = "";
-       					document.getElementById("tableBottom").innerHTML = ""
-       					
-       					let v_chartRegion = [];
-       					let v_chartPari = [];
-       					
-       					for(let i = 0; i < v_region.length; i++){
-       						v_input += '<tr>'
-       	       					v_input += '<th>'+ v_region[i]["pointCity"] +'</th>'
-       	       					v_input += '<td> '+ v_region[i]["pointCityApartmentAll"] +' </td>'
-       	       					v_input += '<td> '+ v_region[i]["pointCityApartmentJoin"] +' </td>'
-       	       					v_input += '<td> '+ v_region[i]["cityParticipation"] +' </td>'
-       	       					v_input += '<tr>'
-       	       					
-       	       					v_chartRegion[i] = v_region[i]["pointCity"]
-       							v_chartPari[i] = v_region[i]["cityParticipation"]
-       					}
-       					
-       					document.getElementById("tableBottom").innerHTML += v_input
-	       				
-       		           	
-       		           	let v_temp2 = {}
-			        	v_temp2['name'] = v_chartRegion
-			        	v_temp2['num'] = v_chartPari
-			        	
-			        	console.log(v_temp2)
-			        	
-			        	v_chart.data.datasets[0].label = '기초단체별 탄소중립포인트 에너지 참여율(%)'
-			            v_chart['data']['labels'] = v_temp2['name']
-       					v_chart['data']['datasets'][0]['data'] = v_temp2['num'];
-       					
-       					v_chart.update();
-						
-			        	v_chart
-			        	
-			        	
-			        	
-       					
-       				}
-       			}
-       			
-       			v_ajax.send(v_data);
-        		
-        	}
         	
         	
         
         </script>
-	<script>
-document.addEventListener("DOMContentLoaded", function() {
-	const sections = document.querySelectorAll("section");
-
-	function checkVisibility() {
-		const triggerBottom = window.innerHeight / 5 * 4; // 스크롤이 화면의 80% 지점에 도달했을 때
-		sections.forEach(section => {
-			const sectionTop = section.getBoundingClientRect().top;
-
-			if (sectionTop < triggerBottom) {
-				section.classList.add("visible");
-			} else {
-				section.classList.remove("visible");
-			}
-		});
-	}
-
-	window.addEventListener("scroll", checkVisibility);
-	checkVisibility(); // 초기 호출
-});
-</script>
-
-	<script>
-    // 텍스트 표시 함수
-    function showOverlayText() {
-        const overlayText = document.querySelector('.overlay-text');
-        overlayText.style.opacity = 1; // 텍스트를 보이게 함
-    }
-
-    // 페이지 로드 후 비디오 위의 텍스트 나타나기
-    window.onload = function() {
-        showOverlayText(); // 비디오가 로드된 후 텍스트 보이기
-    };
-</script>
 
 
 </body>
