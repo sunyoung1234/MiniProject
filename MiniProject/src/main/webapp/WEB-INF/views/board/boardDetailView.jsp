@@ -311,19 +311,28 @@
 			transform: scale(2);
 		}
 		
+
+		.mat-var {
+		    cursor: pointer;
+		    transition: background-color 0.3s;
+		}
+		
+		.mat-var:hover {
+		    background-color: #d0d0d0; /* 마우스 오버 시 색상 */
+		}
+				
+
 		.detail-title{
 			font-size: 40px;
 			margin-bottom: 20px;
 		}
 		
-
 		.sub-check-box{
 			margin-right: 5px; 
 		}
 		.disabled {
             pointer-events: none; /* 클릭 이벤트 차단 */
         }
-
 
     
     </style>
@@ -449,12 +458,8 @@
 										<div id="resultCal">0 CO₂/kg</div>
 										<div id="btnBox">
 											<button id="closeCal" type="button">닫기</button>
-
 											<button id="nextSub" type="button">다음</button>
 											<button id="registSub" type="button">등록</button>
-
-											<button id="registCal" type="button">등록</button>
-
 										</div>
 									</div>
 							
@@ -489,7 +494,6 @@
 				v_overlay.style.display = "block";
 				let current = Date.now();
 				sscId = current;
-				console.log(sscId);
 			})
 				
 			// 모달 창 닫기
@@ -502,7 +506,6 @@
 			    
 			    
 			    
-
 			// mat-var(scmList) 클릭이벤트 주기
 			let v_img = document.querySelectorAll('.mat-img');
 			let v_name = document.querySelectorAll('.mat-var-name');
@@ -523,47 +526,27 @@
 			
 		    const event = new Event('change');
 		    const Ievent = new Event('input');
-
+			
+		    let noneCheck = 0;
 			
 			// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
 			v_matVar.forEach((mat,j) => {
 				 
+				
 				let material_no = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
 				let cal_result = parseFloat(document.querySelectorAll('.mat-cal-result')[j].innerHTML);  
 				let sub_total = 0;
 				
 				mat.addEventListener('click',()=>{ 
-
-			// mat-var 클릭이벤트 주기
-				let v_img = document.querySelectorAll('.mat-img');
-				let v_name = document.querySelectorAll('.mat-var-name');
-				let v_co2 = document.querySelectorAll('.mat-var-co2');
-				
-				let v_matVar = document.querySelectorAll('.mat-var');
-				
-				let v_resultCal = document.querySelector('#resultCal');
-				let v_modalCalList = document.querySelectorAll('.modal-cal-list')
-				
-				v_modalCalList[0].innerHTML = "abc"
-				
-				let v_alpha = "";
-				let total = 0;
-				
-				let matBtnList = [];
-				
-				// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
-				v_matVar.forEach(mat => {
-
-					
+					noneCheck = 0;
 					let total=0;
-					v_resultCal.innerHTML = total;
+					v_resultCal.innerHTML = Math.round(100*total)/100;
 					
-
 					for(let index=0; index < v_matVar.length; index++){
 						if(index == j){
 							v_matVar[index].style.backgroundColor="#D0D0D0"
 						}else{
-							v_matVar[index].style.backgroundColor="#F0F0F0"
+							v_matVar[index].style.backgroundColor="#F0F0F0" 
 						}
 					}
 					
@@ -576,7 +559,6 @@
 							no: material_no
 						}),
 						success: function(response){
-							console.log(response)
 							let v_alpha = "";
 							let subNoList = [];
 							response.forEach(r =>{
@@ -610,51 +592,32 @@
 								subI.addEventListener('input',()=>{
 									
 									if(v_checkBox[k].checked){
-										console.log(v_subResult[k].getAttribute('data-value'));
 										if(v_subResult[k].getAttribute('data-value') == null){
 											total -= 0;
 											subMap.set(response[k].subNo, 0);
 										}else{
 											total -= parseFloat(v_subResult[k].getAttribute('data-value'));
-											subMap.set(response[k].subNo, subI.value);
+											subMap.set(response[k].subNo, parseInt(subI.value));
 										}
 										v_subResult[k].setAttribute('data-value',Math.round(100 * subI.value *  v_gas[k].innerHTML) / 100);
 										total += parseFloat(v_subResult[k].getAttribute('data-value')); 
 										
-										subMap.set(response[k].subNo, subI.value)
+										subMap.set(response[k].subNo, parseInt(subI.value))
 									}else{
 										total -= parseFloat(v_subResult[k].getAttribute('data-value'));
 										v_subResult[k].setAttribute('data-value', 0);
 										
 										subMap.set(response[k].subNo, 0)
 									}
-									v_resultCal.innerHTML = total;
-
-					mat.addEventListener('click',()=>{ 
-						
-						$.ajax({
-							url: '${pageContext.request.contextPath}/findSub',
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify({
-								no: i
-							}),
-							success: function(response){
-								let v_alpha = "";  
-								
-								response.forEach(r =>{
-									v_alpha += '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
-									v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
-									v_alpha += r.gasKg + '</div><div class="cal-var-input"></div>'
-
+									v_resultCal.innerHTML = Math.round(100*total)/100;
 									
 								})
 							})
 							
 							v_noneBox.addEventListener('change',()=>{
-								
-
+								  
 								if(v_noneBox.checked){
+									noneCheck += 1;
 									v_noneBox.parentElement.style.backgroundColor = "#D0D0D0";
 									v_checkBox.forEach((check, k)=>{
 										check.checked = false;
@@ -672,15 +635,14 @@
 									for(let index=0; index<response.length; index++){
 										subMap.set(response[index].subNo, 0)
 									}
-									
 								}else{ 
+									noneCheck -= 1;
 									v_noneBox.parentElement.style.backgroundColor = "#F0F0F0";
-									v_resultCal.innerHTML = total;
+									v_resultCal.innerHTML = Math.round(100*total)/100;
 									
 									v_checkBox.forEach((cb)=>{
 										cb.style.display = "block";
 									})
-									
 									v_subResult.forEach((result,k)=>{
 										if(result.getAttribute('data-value')!= 0 && result.getAttribute('data-value')!= null){
 											v_checkBox[k].checked = true;
@@ -696,20 +658,17 @@
 								check.addEventListener('change',()=>{
 									
 									if(check.checked){
-										
 										v_noneBox.parentElement.style.backgroundColor = "#F0F0F0";
 										check.parentElement.style.backgroundColor = "#D0D0D0";
 										v_subInput[x].style.display = "block";
 										v_noneBox.checked = false;
 										 
-										subMap.set(response[x].subNo, v_subInput[x].value);
-										
+										subMap.set(response[x].subNo, parseInt(v_subInput[x].value));
 									}else{
 										check.parentElement.style.backgroundColor = "#F0F0F0";
 										v_subInput[x].style.display = "none";
 										
 										subMap.set(response[x].subNo, 0);
-										console.log(subMap);
 									}
 									v_subInput[x].dispatchEvent(Ievent);
 								})
@@ -724,64 +683,72 @@
 				}) // mat click 끝
 				
 			}) // v_matVar forEach 끝
-
-								v_modalCalList[0].innerHTML = v_alpha;
-								v_modalCalList[0].style.display = "block";
-							}
-						}) 
-						
-						
-					})
-					let v_delete = document.querySelectorAll('.delete-btn');
-				
-					v_delete.forEach((delBtn,idx) =>{
-						console.log(delBtn.parentElement);
-					})
-					
-				})
-
 				
 			// 다음버튼 (선택 없으면 안넘어가게, 기존 < 이후 이면 안넘어가게), 내용저장, total 초기화
 			let v_nextBtn = document.querySelector('#nextSub');
 			
 			v_nextBtn.addEventListener('click',()=>{
-				subMap.set(0, v_resultCal.innerHTML);
+				subMap.set(0, parseInt(100 * v_resultCal.innerHTML) / 100);
+				if(v_resultCal.innerHTML == null){
+					subMap.set(0, 0);
+				}
+				let keysArray = Array.from(subMap.keys());
+				let checkZero = 0; 
+				 
+				for(let key = 0 ; key < keysArray.length - 1; key++){
+					if(subMap.get(keysArray[key]) == 0){
+						checkZero++;
+					}
+				} 
 				
-				let mat_no2 = parseInt(v_matVar[nextIdx % v_matVar.length].querySelector('.mat-no').innerHTML.trim());
-				matMap.set(mat_no2, subMap);
-				console.log(matMap)
-				subMap = new Map();
-				
-				nextIdx++;
-				v_matVar[nextIdx % v_matVar.length].click();
-			})
+				if(noneCheck != 0 || checkZero != 3 ){
+					
+					let mat_no2 = parseInt(v_matVar[nextIdx % v_matVar.length].querySelector('.mat-no').innerHTML.trim());
+					
+					const subObj = Object.fromEntries(subMap);
+					const strSub = JSON.stringify(subObj);
+					
+					matMap.set(mat_no2, strSub);
+					subMap = new Map();
+					
+					nextIdx++;
+					v_matVar[nextIdx % v_matVar.length].click();
+				}else{
+					alert('변경사항이 없으면 변경사항 없음을 선택해주세요')
+				}
+			}) 
 			
 			// 등록버튼 (savesubcal 들 모아서 넘기기   기존 총합  이후 총합 차이)
 			let v_registBtn = document.querySelector('#registSub');
 			
 			v_registBtn.addEventListener('click',()=>{
 				
+				
+				const matObj = Object.fromEntries(matMap);
+				const strMap = JSON.stringify(matObj);
+				let orderNo = ${board.orderNo};
+				console.log(orderNo);
+				
 				$.ajax({
-					url: '${pageContext.request.contextPath}/saveSubCal',
+					url: '${pageContext.request.contextPath}/saveSub',
 					type: 'POST',
 					contentType: 'application/json',
 					data: JSON.stringify({
-						id : sscId,
-						matMap : matMap
-					}),
+						b_id : orderNo + "",
+						id : sscId + "",
+						map : strMap  
+					}), 
 					success: function(response){
 						console.log(response)
 					}
 				})
-
 			})
-			
+			  
 			
 				
 			v_matVar[0].click();
-
-
 		}
+		
 		
 	</script>
 		
