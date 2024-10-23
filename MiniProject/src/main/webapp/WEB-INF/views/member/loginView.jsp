@@ -54,10 +54,12 @@
 </style>
 
 </head>
+
+<%@ include file="/WEB-INF/inc/top.jsp"%>
 <body class="d-flex flex-column login-bg">
 	<main class="flex-shrink-0">
 		<!-- Navigation-->
-		<%@ include file="/WEB-INF/inc/top.jsp"%>
+		
 		<!-- Page content-->
 		<section class="py-5">
 			<div class="container px-5">
