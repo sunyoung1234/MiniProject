@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.proj.savesubcal.dao.ISaveSubcalDAO">
+	
+	<insert id="saveSubCal" parameterType="com.team.proj.savesubcal.dto.SaveSubcalDTO">
+		INSERT INTO SAVESUBCAL(
+				sub_cal_id,
+				board_id,
+				mat_no,
+				sub_no,
+				sub_vol,
+				different_co,
+				confirm_yn
+		)VALUES(
+				#{sub_cal_id},
+				#{board_id},
+				#{mat_no},
+				#{sub_no},
+				#{sub_vol},
+				#{different_co},
+				'N'		
+		)
+		
+	</insert>
+
+
+</mapper>
