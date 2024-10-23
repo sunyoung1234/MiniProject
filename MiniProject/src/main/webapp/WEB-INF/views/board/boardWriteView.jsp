@@ -380,12 +380,11 @@ select {
 			
 			<div class="application1">
 				<div class="apllication-top">업체명</div>
-				<div>00건설</div>
+				<div>${sessionScope.login.getEntpName() }</div>
 			</div>
 			
-			<div class="application1">
+			<div class="application1" id="currentDate">
 				<div class="apllication-top">의뢰일자</div>
-				<div>2024.10.14</div>
 			</div>
 		</div>
 		
@@ -488,6 +487,12 @@ select {
 
 
 	<script type="text/javascript">  
+	
+	    date = new Date();
+	    year = date.getFullYear();
+	    month = date.getMonth() + 1;
+	    day = date.getDate();
+	    document.getElementById("currentDate").innerHTML +=  year + "/" +  month  +   "/" + day  ;
 		
 		let v_overlay = document.getElementById('overlay');
 	

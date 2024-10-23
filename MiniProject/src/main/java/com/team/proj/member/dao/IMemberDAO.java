@@ -19,4 +19,6 @@ public interface IMemberDAO {
 	
 	// 모든 회원 목록 조회 메소드
 	List<MemberDTO> getMemberList();
+	
+	
 }
