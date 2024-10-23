@@ -311,28 +311,19 @@
 			transform: scale(2);
 		}
 		
-
-		.mat-var {
-		    cursor: pointer;
-		    transition: background-color 0.3s;
-		}
-		
-		.mat-var:hover {
-		    background-color: #d0d0d0; /* 마우스 오버 시 색상 */
-		}
-				
-
 		.detail-title{
 			font-size: 40px;
 			margin-bottom: 20px;
 		}
 		
+
 		.sub-check-box{
 			margin-right: 5px; 
 		}
 		.disabled {
             pointer-events: none; /* 클릭 이벤트 차단 */
         }
+
 
     
     </style>
@@ -458,8 +449,12 @@
 										<div id="resultCal">0 CO₂/kg</div>
 										<div id="btnBox">
 											<button id="closeCal" type="button">닫기</button>
+
 											<button id="nextSub" type="button">다음</button>
 											<button id="registSub" type="button">등록</button>
+
+											<button id="registCal" type="button">등록</button>
+
 										</div>
 									</div>
 							
@@ -507,6 +502,7 @@
 			    
 			    
 			    
+
 			// mat-var(scmList) 클릭이벤트 주기
 			let v_img = document.querySelectorAll('.mat-img');
 			let v_name = document.querySelectorAll('.mat-var-name');
@@ -537,10 +533,32 @@
 				let sub_total = 0;
 				
 				mat.addEventListener('click',()=>{ 
+
+			// mat-var 클릭이벤트 주기
+				let v_img = document.querySelectorAll('.mat-img');
+				let v_name = document.querySelectorAll('.mat-var-name');
+				let v_co2 = document.querySelectorAll('.mat-var-co2');
+				
+				let v_matVar = document.querySelectorAll('.mat-var');
+				
+				let v_resultCal = document.querySelector('#resultCal');
+				let v_modalCalList = document.querySelectorAll('.modal-cal-list')
+				
+				v_modalCalList[0].innerHTML = "abc"
+				
+				let v_alpha = "";
+				let total = 0;
+				
+				let matBtnList = [];
+				
+				// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
+				v_matVar.forEach(mat => {
+
 					
 					let total=0;
 					v_resultCal.innerHTML = total;
 					
+
 					for(let index=0; index < v_matVar.length; index++){
 						if(index == j){
 							v_matVar[index].style.backgroundColor="#D0D0D0"
@@ -611,12 +629,31 @@
 										subMap.set(response[k].subNo, 0)
 									}
 									v_resultCal.innerHTML = total;
+
+					mat.addEventListener('click',()=>{ 
+						
+						$.ajax({
+							url: '${pageContext.request.contextPath}/findSub',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								no: i
+							}),
+							success: function(response){
+								let v_alpha = "";  
+								
+								response.forEach(r =>{
+									v_alpha += '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
+									v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
+									v_alpha += r.gasKg + '</div><div class="cal-var-input"></div>'
+
 									
 								})
 							})
 							
 							v_noneBox.addEventListener('change',()=>{
 								
+
 								if(v_noneBox.checked){
 									v_noneBox.parentElement.style.backgroundColor = "#D0D0D0";
 									v_checkBox.forEach((check, k)=>{
@@ -687,6 +724,22 @@
 				}) // mat click 끝
 				
 			}) // v_matVar forEach 끝
+
+								v_modalCalList[0].innerHTML = v_alpha;
+								v_modalCalList[0].style.display = "block";
+							}
+						}) 
+						
+						
+					})
+					let v_delete = document.querySelectorAll('.delete-btn');
+				
+					v_delete.forEach((delBtn,idx) =>{
+						console.log(delBtn.parentElement);
+					})
+					
+				})
+
 				
 			// 다음버튼 (선택 없으면 안넘어가게, 기존 < 이후 이면 안넘어가게), 내용저장, total 초기화
 			let v_nextBtn = document.querySelector('#nextSub');
@@ -720,13 +773,15 @@
 						console.log(response)
 					}
 				})
+
 			})
 			
 			
 				
 			v_matVar[0].click();
+
+
 		}
-		
 		
 	</script>
 		

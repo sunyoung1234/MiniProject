@@ -169,8 +169,7 @@
 		COUNT(*)
 		FROM boards a, members b
 		WHERE 1=1
-		AND a.mem_id =
-		b.mem_id
+		AND a.mem_id = b.mem_id
 		AND a.del_yn = 'N'
 
 	</select>
@@ -196,6 +195,9 @@
 		WHERE 1=1
 		AND a.mem_id = b.mem_id
 		AND a.del_yn = 'N'
+		<if test="feedbackYn != null">
+			AND a.feedback_yn = #{feedbackYn}
+		</if>
 		<if test="searchWord != null">
 			<choose>
 				<when test="searchOption=='title'">AND a.order_title LIKE '%' || #{searchWord} || '%'</when>
@@ -203,9 +205,7 @@
 				<when test="searchOption=='company'">AND a.entp_name LIKE '%' || #{searchWord} || '%'</when>
 			</choose>
 		</if>
-		<if test="feedbackYn != null">
-			AND a.feedback_yn = #{feedbackYn}
-		</if>
+		
 		
 		ORDER BY order_no DESC
 		) a

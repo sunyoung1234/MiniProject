@@ -30,7 +30,8 @@ public class BoardService {
 
 
     public int getBoardCount(SearchVO search) {
-        return boardDAO.getBoardCount(search);
+    	int result = boardDAO.getBoardCount(search);
+        return result;
     }
     
     public int boardWriteDo(BoardDTO board){

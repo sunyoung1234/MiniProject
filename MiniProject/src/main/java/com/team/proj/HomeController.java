@@ -243,11 +243,149 @@ public class HomeController {
 	    return "member/adminpage";
 	}
 
-	
-	
-	
-	
+	  @RequestMapping("/chart/gasChartView")
+	    public String gasChartView(Model model, String regionCategory) throws Exception, ProtocolException {
+		  
+		// 광역시도별
+			ArrayList<Double> partList = new ArrayList<>();
+			ArrayList<String> regionName = new ArrayList<>();
+			ArrayList<String> name = new ArrayList<>();
+			
+			ArrayList<String> region = new ArrayList<>();
+			ArrayList<Double> regionValue = new ArrayList<>();
+			
+			ArrayList<String> year = new ArrayList<>();
+			ArrayList<Double> gas = new ArrayList<>();
+			
+			List<PointDTO> pointList = pointService.getPointList();
+			
+			System.out.println(pointList);
+			
+			model.addAttribute("keyPointList", pointList);
+			
+			for(PointDTO pd : pointList) {
+				System.out.println(pd.getParticipation());
+				partList.add(pd.getParticipation());
+			}
+			
+			for(PointDTO pd : pointList) {
+				System.out.println(pd.getParticipation());
+				regionName.add(pd.getPointRegion());
+			}
+			
+			
+			
+			String gangwon = "강원";
+			List<RegionDTO> city = regionservice.getCityPoint(gangwon);
+			model.addAttribute("keyGangwan",city);
+			
+			for(RegionDTO pd : city) {
+				System.out.println(pd.getPointCity());
+				region.add(pd.getPointCity());
+			}
+			
+			for(RegionDTO pd : city) {
+				System.out.println(pd.getCityParticipation());
+				regionValue.add(pd.getCityParticipation());
+			}
+			
+			// 광역시도별
+			model.addAttribute("keyPartList",partList);
+			model.addAttribute("keyRegionName",regionName);
+			
+			// 기초 단체별(강원)
+			model.addAttribute("keyRegion",region);
+			model.addAttribute("keyRegionValue",regionValue);
+			
+			List<GreenDTO> greenList = greenService.getListGreen();
+			
+			for(GreenDTO pd : greenList) {
+				System.out.println(pd.getYearMonth());
+				year.add(pd.getYearMonth());
+			}
+			
+			for(GreenDTO pd : greenList) {
+				System.out.println(pd.getGas());
+				gas.add(pd.getGas());
+			}
+			
+			model.addAttribute("getGreenYear",year);
+			model.addAttribute("getGreenGas",gas);
+		  
+	        return "chart/gasChartView"; // gasChartView.jsp로 이동
+	    }
 
+	    @RequestMapping("/chart/cityChartView")
+	    public String cityChartView(Model model, String regionCategory) throws Exception, ProtocolException {
+	    	// 광역시도별
+			ArrayList<Double> partList = new ArrayList<>();
+			ArrayList<String> regionName = new ArrayList<>();
+			ArrayList<String> name = new ArrayList<>();
+			
+			ArrayList<String> region = new ArrayList<>();
+			ArrayList<Double> regionValue = new ArrayList<>();
+			
+			ArrayList<String> year = new ArrayList<>();
+			ArrayList<Double> gas = new ArrayList<>();
+			
+			List<PointDTO> pointList = pointService.getPointList();
+			
+			System.out.println(pointList);
+			
+			model.addAttribute("keyPointList", pointList);
+			
+			for(PointDTO pd : pointList) {
+				System.out.println(pd.getParticipation());
+				partList.add(pd.getParticipation());
+			}
+			
+			for(PointDTO pd : pointList) {
+				System.out.println(pd.getParticipation());
+				regionName.add(pd.getPointRegion());
+			}
+			
+			
+			
+			String gangwon = "강원";
+			List<RegionDTO> city = regionservice.getCityPoint(gangwon);
+			model.addAttribute("keyGangwan",city);
+			
+			for(RegionDTO pd : city) {
+				System.out.println(pd.getPointCity());
+				region.add(pd.getPointCity());
+			}
+			
+			for(RegionDTO pd : city) {
+				System.out.println(pd.getCityParticipation());
+				regionValue.add(pd.getCityParticipation());
+			}
+			
+			// 광역시도별
+			model.addAttribute("keyPartList",partList);
+			model.addAttribute("keyRegionName",regionName);
+			
+			// 기초 단체별(강원)
+			model.addAttribute("keyRegion",region);
+			model.addAttribute("keyRegionValue",regionValue);
+			
+			List<GreenDTO> greenList = greenService.getListGreen();
+			
+			for(GreenDTO pd : greenList) {
+				System.out.println(pd.getYearMonth());
+				year.add(pd.getYearMonth());
+			}
+			
+			for(GreenDTO pd : greenList) {
+				System.out.println(pd.getGas());
+				gas.add(pd.getGas());
+			}
+			
+			model.addAttribute("getGreenYear",year);
+			model.addAttribute("getGreenGas",gas);
+	    	
+	        return "chart/cityChartView"; // cityChartView.jsp로 이동
+	    }
+	
 	
 	
 	
