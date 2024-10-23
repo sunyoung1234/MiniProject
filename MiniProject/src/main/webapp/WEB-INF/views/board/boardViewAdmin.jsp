@@ -66,9 +66,7 @@
 						<h1 class="fw-bolder">견적 내역 (관리자)</h1>
 					</div>
 					<!-- 검색 바 -->
-					<form name="searchForm" method="get"
-						action="${pageContext.request.contextPath}/boardViewAdmin"
-						onsubmit="return validateSearchForm()">
+					<form method="get" action="${pageContext.request.contextPath}/boardViewAdmin">
 						<div class="row mb-4 align-items-end">
 							<div class="col-md-2">
 								<select class="form-select" name="searchOption"
@@ -86,17 +84,19 @@
 									value="${param.searchWord}" placeholder="검색어를 입력하세요" />
 							</div>
 							<div class="col-md-2">
-								<button type="submit" class="btn btn-success w-100">검색</button>
+								<button id="searchBtn" type="submit" class="btn btn-success w-100">검색</button>
 							</div>
-							<div class="col-md-2">
-								<select class="form-select" name="feedbackYn" id="confirm">
-									<option value="">피드백 여부</option>
-									<option value="Y" ${param.feedbackYn == 'Y' ? 'selected' : ''}>확인</option>
-									<option value="N" ${param.feedbackYn == 'N' ? 'selected' : ''}>미확인</option>
-								</select>
-							</div>
+							
 						</div>
 					</form>
+					
+					<div class="col-md-2">
+						<select class="form-select" name="feedbackYn" id="feedbackYn" onchange="f_change()">
+							<option value=null selected>피드백여부</option>
+							<option value="Y" ${param.feedbackYn == 'Y' ? 'selected' : ''}>확인</option>
+							<option value="N" ${param.feedbackYn == 'N' ? 'selected' : ''}>미확인</option>
+						</select>
+					</div>
 
 					<div class="row justify-content-center">
 						<div class="col-lg-12">
@@ -210,28 +210,39 @@
 	<script src="js/scripts.js"></script>
 	<script type="text/javascript">
 	
-		function f_change() {
-			console.log(event.target.value)
-			let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
-			let v_query = "?feedbackYn=" + event.target.value
-			location.href = v_url + v_query;
-		}
 		let v_option = '${pageSearch.searchOption}'
       	let v_search = '${pageSearch.searchWord}'
+      	let v_page = '${pageSearch.pageNo}'
       	console.log(v_option)
       	console.log(v_search)
       	
-		let v_category = document.getElementById('confirm').value
-		document.getElementById('confirm').addEventListener('change', ()=>{
-			v_category = event.target.value
-   			if(v_category != null){
-   				let v_url = "${pageContext.request.contextPath}/boardViewAdmin"
-	       			let v_query = "?feedbackYn=" + v_category + "&searchOption=" + v_option + "&searchWord=" + v_search
-	       			location.href = v_url + v_query;
-   			}else{
-   				location.href = "${pageContext.request.contextPath}/boardViewAdmin"
-   			}
-		})
+      	let v_category = document.getElementById('feedbackYn').value
+      	
+		
+      	function f_change(){
+      		
+      		console.log(event.target.value)
+      		
+      		let v_url = "${pageContext.request.contextPath}/boardViewAdmin";
+      		let v_query = "?pageNo=${pageSearch.pageNo}"
+      		
+      		if(event.target.value != 'null'){
+      			v_query = "?pageNo=${pageSearch.pageNo}"
+    			v_query += "&feedbackYn=" + event.target.value;
+      			
+      		}
+      		
+						
+			if(v_search){
+				v_query += "&searchOption=${pageSearch.searchOption}"
+				v_query += "&searchWord=${pageSearch.searchWord}"
+			}
+			
+			location.href =  v_url + v_query;
+      		
+      	}
+      	
+		
 		
 	</script>
 
