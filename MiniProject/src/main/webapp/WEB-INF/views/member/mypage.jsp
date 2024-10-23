@@ -110,6 +110,7 @@ th, td {
 
 </head>
 <body class="d-flex flex-column">
+
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
 	<main class="flex-shrink-0">
