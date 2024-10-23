@@ -140,212 +140,31 @@ font-bold {
 	max-width: 800px; /* 최대 너비 */
 	margin: 0 auto; /* 가운데 정렬 */
 }
-
-.solution-title h2 {
-	margin-left: 500px;
-	margin-bottom: 40px;
-	font-size: 60px;
-}
 </style>
 
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/inc/top.jsp"%>
+    <%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<!-- 첫 번째 영역: 비디오 섹션 -->
-	<header class="video-section" id="section1">
-		<video autoplay loop muted>
-			<source
-				src="${pageContext.request.contextPath}/resources/image/forest.mp4"
-				type="video/mp4">
-			비디오를 지원하지 않는 브라우저입니다.
-		</video>
-
-		<!-- 비디오 위에 텍스트 영역 -->
-		<div class="overlay-text">
-			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">기술과
-				가치가 만나</h2>
-			<h2 style="margin: 0; font-size: 70px; margin-bottom: 10px">비즈니스
-				성공을</h2>
-			<p style="margin: 0; margin-bottom: 5px">대기 중 온실가스 농도가 증가함에 따라
-				대기와 해양은 따뜻해지고...</p>
-			<p style="margin: 0;">Green Solution은 기후 위기를 실감하고 탄소 중립을 위한 방법들 중
-				하나입니다.</p>
-		</div>
-	</header>
-
-	<div class="solution-content solution-title">
-		<h2>About us</h2>
-	</div>
-
-	<!-- 두 번째 영역: 설명 텍스트 섹션 -->
-	<section class="solution-section" id="section2">
-		<div class="solution-content">
-			<h2
-				style="margin: 0; font-size: 60px; margin-bottom: 20px; text-align: center;">Green
-				Solution</h2>
-			<p style="font-size: 18px; text-align: center; margin-bottom: 15px;">대기
-				중 온실가스 농도가 증가함에 따라 대기와 해양은 따뜻해지고...</p>
-			<p style="font-size: 18px; text-align: center;">Green Solution은
-				기후 위기를 실감하고 탄소 중립을 위한 방법들 중 하나입니다.</p>
-		</div>
-	</section>
-
-	<div class="solution-content solution-title">
-		<h2>What we do</h2>
-	</div>
-	<!-- 카드 두개  -->
-	<div class="card-container d-flex justify-content-center"
-		style="margin-bottom: 150px;">
-		<div class="card me-3" style="flex: 1; max-width: 500px;">
-			<img
-				src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png"
-				class="card-img-top" alt="Nature Build"
-				style="width: 100%; height: 300px;">
-			<div class="card-body">
-				<h3 class="card-title">온실가스 배출량 추이</h3>
-				<p class="card-text">1990년 ~ 2020년 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/gasChartView"
-					class="btn btn-success">더 알아보기</a>
-			</div>
-		</div>
-		<div class="card me-3" style="flex: 1; max-width: 500px;">
-			<img
-				src="${pageContext.request.contextPath}/resources/image/nature_build.png"
-				class="card-img-top" alt="Nature co2 image"
-				style="width: 100%; height: 300px;">
-			<div class="card-body">
-				<h3 class="card-title">광역시도별 탄소중립포인트 참여현황</h3>
-				<p class="card-text">광역시도별 & 기초단체별 차트</p>
-				<a href="${pageContext.request.contextPath}/chart/cityChartView"
-					class="btn btn-success">더 알아보기</a>
-			</div>
-		</div>
-	</div>
-	<%-- <!-- 세 번째 영역: 광역시도별 탄소중립포인트 에너지 참여현황 -->
-	<section id="section3" class="hidden">
-		<div class="container">
-			<div class="point-box mb-4">
-				<div class="point-title">
-					<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
-				</div>
-				<div>
-					<select id="category" name="regionCategory" onchange="f_change()">
-						<option value="강원" ${keyRegion == '강원' ? 'selected' : ''}>강원</option>
-						<option value="경기" ${keyRegion == '경기' ? 'selected' : ''}>경기</option>
-						<option value="경남" ${keyRegion == '경남' ? 'selected' : ''}>경남</option>
-						<option value="경북" ${keyRegion == '경북' ? 'selected' : ''}>경북</option>
-						<option value="광주" ${keyRegion == '광주' ? 'selected' : ''}>광주</option>
-						<option value="대구" ${keyRegion == '대구' ? 'selected' : ''}>대구</option>
-						<option value="대전" ${keyRegion == '대전' ? 'selected' : ''}>대전</option>
-						<option value="부산" ${keyRegion == '부산' ? 'selected' : ''}>부산</option>
-						<option value="세종" ${keyRegion == '세종' ? 'selected' : ''}>세종</option>
-						<option value="울산" ${keyRegion == '울산' ? 'selected' : ''}>울산</option>
-						<option value="인천" ${keyRegion == '인천' ? 'selected' : ''}>인천</option>
-						<option value="전남" ${keyRegion == '전남' ? 'selected' : ''}>전남</option>
-						<option value="전북" ${keyRegion == '전북' ? 'selected' : ''}>전북</option>
-						<option value="제주" ${keyRegion == '제주' ? 'selected' : ''}>제주</option>
-						<option value="충남" ${keyRegion == '충남' ? 'selected' : ''}>충남</option>
-						<option value="충북" ${keyRegion == '충북' ? 'selected' : ''}>충북</option>
-					</select>
-				</div>
-				<div class="d-flex justify-content-between">
-					<div class="table-box">
-						<table>
-							<colgroup>
-								<col width="11%">
-								<col width="13%">
-								<col width="13%">
-								<col width="13%">
-							</colgroup>
-							<thead class="point-head">
-								<tr>
-									<th>지역</th>
-									<th>가구수</th>
-									<th>참여가구</th>
-									<th>참여율(%)</th>
-								</tr>
-							</thead>
-							<tbody class="point-body">
-								<c:forEach items="${keyPointList}" var="pointList">
-									<tr>
-										<th>${pointList.pointRegion}</th>
-										<td>${pointList.pointApartmentAll}</td>
-										<td>${pointList.pointApartmentJoin}</td>
-										<td>${pointList.participation}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					<div class="chart-box">
-						<canvas id="myChart"></canvas>
-					</div>
-				</div>
-			</div>
-
-			<div class="point-box mb-4">
-				<div class="point-title">
-					<h3>기초단체별 탄소중립포인트 에너지 참여현황</h3>
-				</div>
-				<div class="d-flex justify-content-between">
-					<div class="table-box">
-						<table>
-							<colgroup>
-								<col width="13%">
-								<col width="13%">
-								<col width="13%">
-								<col width="13%">
-							</colgroup>
-							<thead class="point-head">
-								<tr>
-									<th>지역</th>
-									<th>가구수</th>
-									<th>참여가구</th>
-									<th>참여율(%)</th>
-								</tr>
-							</thead>
-							<tbody class="point-body" id="tableBottom">
-								<c:forEach items="${keyGangwan}" var="cityList">
-									<tr>
-										<th>${cityList.pointCity}</th>
-										<td>${cityList.pointCityApartmentAll}</td>
-										<td>${cityList.pointCityApartmentJoin}</td>
-										<td>${cityList.cityParticipation}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					<div class="chart-box2">
-						<canvas id="myChart2"></canvas>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- 두 번째 영역: 탄소 배출 관련 정보 -->
-	<section id="section2" class="hidden">
-		<div class="container">
-			<div class="row justify-content-center ">
-				<div class="col-lg-11">
-					<div class="card shadow-lg mb-4">
-						<div class="card-header text-white bg-success">
-							<h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
-						</div>
-						<div class="card-body">
-							<div>
-								<canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
-							</div>
-							<p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을
-								실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> --%>
+    <!-- 두 번째 영역: 탄소 배출 관련 정보 -->
+    <section id="section2" class="hidden">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-11">
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header text-white bg-success">
+                            <h4 class="mb-0">1990년 ~ 2020년 온실가스 배출량 추이</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="gasChart" class="w-100" style="max-height: 400px;"></canvas>
+                            <p class="card-text mt-3">온실가스 배출량은 해마다 증가하는 추세이며, 탄소 중립을 실현하기 위해서는 탄소 배출량을 절감해야 합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
