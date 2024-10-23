@@ -147,6 +147,16 @@
 	    height: auto;
 	}
 	
+	.select-none{
+	    height: auto;
+	    padding: 10px;
+	    margin-bottom: 10px;
+	    display: flex;
+	    align-items: center;
+	    background-color: #f0f0f0;
+	    border-radius: 5px; 	 
+	}
+	
 	#exampleBox {
 	    border: 1px solid #ddd;
 	    border-radius: 8px;
@@ -317,6 +327,12 @@
 			margin-bottom: 20px;
 		}
 		
+		.sub-check-box{
+			margin-right: 5px; 
+		}
+		.disabled {
+            pointer-events: none; /* 클릭 이벤트 차단 */
+        }
 
     
     </style>
@@ -423,13 +439,15 @@
 									<div class="modal-mat-list">
 										<div class="material-list">
 											<c:forEach items="${scmList }" var="scm">
-												<div class="mat-var">
+												<div class="mat-var disabled">
 													<div class="mat-no" style="display: none;">${scm.materialNo }</div>
 													<div class="mat-var-img">
 														<img class="mat-img" src="${scm.materialImg }">
 													</div>
-													<div class="mat-var-name">${scm.materialName}</div>
-													<div class="mat-var-co2">${scm.gasKg}</div>
+													
+													<div class="mat-var-name">${scm.materialName}</div> 
+													<div style="padding-left: 15px" class="mat-var-vol">${scm.materialVolume}kg</div>
+													<div style="padding-left: 20px" class="mat-cal-result" >${Math.round(scm.gasKg * scm.materialVolume)}</div>
 												</div>
 											</c:forEach>
 										</div>
@@ -440,9 +458,8 @@
 										<div id="resultCal">0 CO₂/kg</div>
 										<div id="btnBox">
 											<button id="closeCal" type="button">닫기</button>
-											<button id="beforeSub" type="button">이전</button>
 											<button id="nextSub" type="button">다음</button>
-											<button id="registCal" type="button">등록</button>
+											<button id="registSub" type="button">등록</button>
 										</div>
 									</div>
 							
@@ -464,253 +481,250 @@
 	
 		if(${sessionScope.login.getMemId() == 'admin'}){
 			let v_overlay = document.getElementById('overlay');
+			let sscId = "";	
+			let nextIdx = 0;
+			let matMap = new Map(); // matNo - Map(subNo - subVol)
+			let subMap = new Map(); // subNo - subVol
+			let final_result = 0;
 			
 			// 모달 띄우기 버튼  
-				let v_modalBtn = document.querySelector('#modalBtn');
-				v_modalBtn.addEventListener('click',()=>{
-					document.getElementsByClassName('modal-box')[0].style.display = "flex";
-					v_overlay.style.display = "block"; 
-				})
+			let v_modalBtn = document.querySelector('#modalBtn');
+			v_modalBtn.addEventListener('click',()=>{
+				document.getElementsByClassName('modal-box')[0].style.display = "flex";
+				v_overlay.style.display = "block";
+				let current = Date.now();
+				sscId = current;
+				console.log(sscId);
+			})
 				
 			// 모달 창 닫기
-				let v_closeModal = document.querySelector('#closeCal');
-				v_closeModal.addEventListener('click',()=>{
-					document.getElementsByClassName('modal-box')[0].style.display = "none"; 
-					v_overlay.style.display = "none"; 
-				})
+			let v_closeModal = document.querySelector('#closeCal');
+			v_closeModal.addEventListener('click',()=>{
+				document.getElementsByClassName('modal-box')[0].style.display = "none"; 
+				v_overlay.style.display = "none"; 
+			})
 				
 			    
 			    
 			    
-			// mat-var 클릭이벤트 주기
-				let v_img = document.querySelectorAll('.mat-img');
-				let v_name = document.querySelectorAll('.mat-var-name');
-				let v_co2 = document.querySelectorAll('.mat-var-co2');
+			// mat-var(scmList) 클릭이벤트 주기
+			let v_img = document.querySelectorAll('.mat-img');
+			let v_name = document.querySelectorAll('.mat-var-name');
+			let v_co2 = document.querySelectorAll('.mat-var-co2');
+			
+			
+			let v_matVar = document.querySelectorAll('.mat-var');
+			
+			let v_resultCal = document.querySelector('#resultCal');
+			let v_modalCalList = document.querySelectorAll('.modal-cal-list')
+			
+			v_modalCalList[0].innerHTML = "abc"
+			
+			let v_alpha = "";
+			
+			
+			let matBtnList = [];
+			
+		    const event = new Event('change');
+		    const Ievent = new Event('input');
+
+			
+			// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
+			v_matVar.forEach((mat,j) => {
+				 
+				let material_no = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
+				let cal_result = parseFloat(document.querySelectorAll('.mat-cal-result')[j].innerHTML);  
+				let sub_total = 0;
 				
-				// 다음 버튼
-				let v_nextBtn = document.querySelector('#nextSub');
-				// 이전 버튼
-				let v_beforeBtn = document.querySelector('#beforeSub');
-				
-				let v_matVar = document.querySelectorAll('.mat-var');
-				
-				let v_resultCal = document.querySelector('#resultCal');
-				let v_modalCalList = document.querySelectorAll('.modal-cal-list')
-				
-				v_modalCalList[0].innerHTML = "abc"
-				
-				let v_alpha = "";
-				let total = 0;
-				
-				let matBtnList = [];
-				
-				let clickedMatVar = 0;
-				
-				// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
-				v_matVar.forEach((mat,j) => {
+				mat.addEventListener('click',()=>{ 
 					
-					let i = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
+					let total=0;
+					v_resultCal.innerHTML = total;
 					
-					mat.addEventListener('click',()=>{ 
-						 
-						v_matVar[j].style.backgroundColor = "black";
-						let x = (j-1) % v_matVar.length
-						let y = (j+1) % v_matVar.length
-						if( x<0 ){
-							x += v_matVar.length;
+					for(let index=0; index < v_matVar.length; index++){
+						if(index == j){
+							v_matVar[index].style.backgroundColor="#D0D0D0"
+						}else{
+							v_matVar[index].style.backgroundColor="#F0F0F0"
 						}
-						
-						v_matVar[x].style.backgroundColor = "white";
-						v_matVar[y].style.backgroundColor = "white";
-						
-						clickedMatVar = j; 
-						
-						$.ajax({
-							url: '${pageContext.request.contextPath}/findSub',
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify({
-								no: i
-							}),
-							success: function(response){
-								let v_alpha = "";   
-								response.forEach(r =>{
-									v_alpha += '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
-									v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
-									v_alpha += r.gasKg + '</div><input class="abc" style="display: none;" type="number"></div>'
+					}
+					
+					// ajax ( mat no로 sub(대체제) 가져와서 나타내기)
+					$.ajax({
+						url: '${pageContext.request.contextPath}/findSub',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({
+							no: material_no
+						}),
+						success: function(response){
+							console.log(response)
+							let v_alpha = "";
+							let subNoList = [];
+							response.forEach(r =>{
+								v_alpha += '<div class="cal-var"><input class="sub-check-box" type="checkbox"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
+								v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ material_no + '</div><div class="cal-var-co2">'
+								v_alpha += r.gasKg + '</div><input class="sub-input" style="display: none;" type="number">'
+								v_alpha += '<div class="sub-result" style="display: none;"></div></div>'
+								subMap.set(r.subNo, 0);
+							})
+							v_alpha += '<div class="select-none"><input class="select-none-check-box" type="checkbox">변경사항 없음</div>' 
+							
+							
+							v_modalCalList[0].innerHTML = v_alpha;
+							
+							// 체크박스
+							let v_checkBox = document.querySelectorAll('.sub-check-box');
+							let v_noneBox = document.querySelector('.select-none-check-box');
+							// #D0D0D0 #F0F0F0  #FAFAFA
+							
+							
+							let v_subInput = document.querySelectorAll('.sub-input');
+							let v_subResult = document.querySelectorAll('.sub-result');
+							
+							let v_gas = document.querySelectorAll('.cal-var-co2');
+							
+							let v_subCal = document.querySelectorAll('.cal-var');
+							
+							v_subInput.forEach((subI, k)=>{
+								
+								
+								subI.addEventListener('input',()=>{
 									
+									if(v_checkBox[k].checked){
+										console.log(v_subResult[k].getAttribute('data-value'));
+										if(v_subResult[k].getAttribute('data-value') == null){
+											total -= 0;
+											subMap.set(response[k].subNo, 0);
+										}else{
+											total -= parseFloat(v_subResult[k].getAttribute('data-value'));
+											subMap.set(response[k].subNo, subI.value);
+										}
+										v_subResult[k].setAttribute('data-value',Math.round(100 * subI.value *  v_gas[k].innerHTML) / 100);
+										total += parseFloat(v_subResult[k].getAttribute('data-value')); 
+										
+										subMap.set(response[k].subNo, subI.value)
+									}else{
+										total -= parseFloat(v_subResult[k].getAttribute('data-value'));
+										v_subResult[k].setAttribute('data-value', 0);
+										
+										subMap.set(response[k].subNo, 0)
+									}
+									v_resultCal.innerHTML = total;
 									
 								})
-								v_alpha += '<div class="select-none">변경사항 없음</div>'
+							})
+							
+							v_noneBox.addEventListener('change',()=>{
 								
-								
-								v_modalCalList[0].innerHTML = v_alpha; 
-								 
-								let v_subCal = document.querySelectorAll('.cal-var')
-								
-								
-								v_subCal.forEach((sc,i) =>{
-									let sc_status = false;
-									
-									sc.addEventListener('click',()=>{
-										if(!sc_status){
-											sc.style.backgroundColor = '#d0d0d0'; 
-											document.getElementsByClassName('abc')[i].style.display = "block";
-											sc_status = true;
-										}else{
-											sc.style.backgroundColor = '#f0f0f0'; 
-											document.getElementsByClassName('abc')[i].style.display = "none";
-											sc_status = false;
-										}
-										
+								if(v_noneBox.checked){
+									v_noneBox.parentElement.style.backgroundColor = "#D0D0D0";
+									v_checkBox.forEach((check, k)=>{
+										check.checked = false;
+										check.parentElement.style.backgroundColor = "#F0F0F0";
+									})
+									v_resultCal.innerHTML = 0;  
+									 
+									v_subInput.forEach((subI, k)=>{
+										subI.style.display = "none";
+									})
+									v_checkBox.forEach((cb)=>{
+										cb.style.display = "none";
 									})
 									
-								})
+									for(let index=0; index<response.length; index++){
+										subMap.set(response[index].subNo, 0)
+									}
+									
+								}else{ 
+									v_noneBox.parentElement.style.backgroundColor = "#F0F0F0";
+									v_resultCal.innerHTML = total;
+									
+									v_checkBox.forEach((cb)=>{
+										cb.style.display = "block";
+									})
+									
+									v_subResult.forEach((result,k)=>{
+										if(result.getAttribute('data-value')!= 0 && result.getAttribute('data-value')!= null){
+											v_checkBox[k].checked = true;
+											v_checkBox[k].dispatchEvent(event); 
+										}
+									})
+									
+								}
 								
-							}
-						}) 
-						
-						
-					}) // mat click 끝단
+							})
+							
+							v_checkBox.forEach((check,x)=>{
+								check.addEventListener('change',()=>{
+									
+									if(check.checked){
+										
+										v_noneBox.parentElement.style.backgroundColor = "#F0F0F0";
+										check.parentElement.style.backgroundColor = "#D0D0D0";
+										v_subInput[x].style.display = "block";
+										v_noneBox.checked = false;
+										 
+										subMap.set(response[x].subNo, v_subInput[x].value);
+										
+									}else{
+										check.parentElement.style.backgroundColor = "#F0F0F0";
+										v_subInput[x].style.display = "none";
+										
+										subMap.set(response[x].subNo, 0);
+										console.log(subMap);
+									}
+									v_subInput[x].dispatchEvent(Ievent);
+								})
+							})
+							
+							
+						}
+							
+							
+					}) // ajax 끝
 					
-				})
+				}) // mat click 끝
 				
-				// 다음 이전 버튼
-				v_nextBtn.addEventListener('click',()=>{
-					clickedMatVar = (clickedMatVar + 1) % v_matVar.length;
-					console.log(clickedMatVar); 
-					v_matVar[clickedMatVar].click();  
-				})
-				v_beforeBtn.addEventListener('click',()=>{
-					clickedMatVar = (clickedMatVar - 1) % v_matVar.length;
-					if(clickedMatVar < 0){
-						clickedMatVar += v_matVar.length;
-					} 
-					
-					console.log(clickedMatVar); 
-					v_matVar[clickedMatVar].click();  
-				})
+			}) // v_matVar forEach 끝
 				
-				// 리스트 controller로 보내기
-				let scId = "";	
+			// 다음버튼 (선택 없으면 안넘어가게, 기존 < 이후 이면 안넘어가게), 내용저장, total 초기화
+			let v_nextBtn = document.querySelector('#nextSub');
 			
-				v_registBtn = document.querySelector('#registCal');
+			v_nextBtn.addEventListener('click',()=>{
+				subMap.set(0, v_resultCal.innerHTML);
 				
-				// 등록 버튼
-				v_registBtn.addEventListener('click',()=>{
-					
-					v_overlay.style.display = "none";
-					document.getElementsByClassName('modal-box')[0].style.display = "none";
-					let noList = [];
-					let eaList = [];
-					
-					v_calVar = document.querySelectorAll('.cal-var');
-					
-					// 계산기 div들에 대해
-					v_calVar.forEach(cv =>{
-						let v_no = cv.querySelector('#hiddenMatNo').innerHTML.trim(); //String
-						let v_ea = parseFloat(cv.querySelector('.input-EA').value); // Float
-						 
-						if(v_ea <= 0 || isNaN(v_ea)){ 
-							return;   
-						}else{
-							v_ea = Math.floor(v_ea);
-							noList.push(v_no);
-							eaList.push(v_ea); 
-						}
-						
-						 
-					})
-					
-					let v_inputEA = document.querySelectorAll('.input-EA');
-					
-					let isYang = true;
-					v_inputEA.forEach(v_ea =>{
-						if(v_ea.value<0){
-							isYang = false;
-						}	
-					})
-					if(!isYang){
-						alert('음수불가');
-					}else{
-						let v_exBox = document.querySelector('#exampleBox'); 
-						
-						if(eaList.length == 0){
-							v_exBox.innerHTML = "아직 계산 내용 X"
-							document.getElementsByClassName('modal-box')[0].style.display = "none";
-							return;
-						}
-						
-						
-						let strNoList = noList.join(',');
-						let strEaList = eaList.join(',');
-						let v_alpha2 = "";
-						
-						
-						$.ajax({
-						    url: '${pageContext.request.contextPath}/registCal', 
-						    type: 'POST',
-						    contentType: 'application/json',
-						    data: JSON.stringify({
-						        no: strNoList,
-						        ea: strEaList
-						    }), 
-						    success: function(response) { 
-						    	
-						    	console.log(response.registList[0].materialImg);     
-						    	
-						    	for(let i=0; i<response['registList'].length; i++){
-						    		
-						    		v_alpha2 += '<div class="ex-box"><div class="ex-img"><img src="'+ response.registList[i].materialImg
-							    	v_alpha2 += '"></div><div class="ex-name">'+ response.registList[i].materialName 
-							    	v_alpha2 += '</div><div class="ex-EA">'+ eaList[i] +'</div></div>' 
-						    	}
-						    	
-						    	v_exBox.innerHTML = v_alpha2;
-						    	
-						    	scId = response['scId']; 
-						    	
-						    }
-						    
-						}); 
-						 
-					}
-					
-				}) 
+				let mat_no2 = parseInt(v_matVar[nextIdx % v_matVar.length].querySelector('.mat-no').innerHTML.trim());
+				matMap.set(mat_no2, subMap);
+				console.log(matMap)
+				subMap = new Map();
 				
-				// 답변 등록하고 실시간 띄우기
-				let v_replyBtn = document.querySelector('#replyWriteBtn');
-				let v_content = document.querySelector('#replyContent');
-				let b_no = document.querySelector('#boardNum');
-				     
+				nextIdx++;
+				v_matVar[nextIdx % v_matVar.length].click();
+			})
+			
+			// 등록버튼 (savesubcal 들 모아서 넘기기   기존 총합  이후 총합 차이)
+			let v_registBtn = document.querySelector('#registSub');
+			
+			v_registBtn.addEventListener('click',()=>{
 				
-				
-				v_replyBtn.addEventListener('click',()=>{
-					
-					if(!v_content.value.trim()){
-						alert('답변 comments를 입력해주세요');
-					}else if(scId == ""){
-						alert('답변에 견적 내용이 없습니다.')
-					}else{
-						
-						
-						$.ajax({
-							url: '${pageContext.request.contextPath}/replyWriteDo',
-							type: 'POST',
-							contentType: 'application/json',
-							data: JSON.stringify({
-								id: scId,
-								content: v_content.value,
-								no: b_no.innerHTML
-							}),
-							success: function(r){
-								console.log(r);
-								location.href = location.href;
-							}
-						})
+				$.ajax({
+					url: '${pageContext.request.contextPath}/saveSubCal',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						id : sscId,
+						matMap : matMap
+					}),
+					success: function(response){
+						console.log(response)
 					}
 				})
-			v_matVar[0].click()
+			})
+			
+			
+				
+			v_matVar[0].click();
 		}
 		
 		
