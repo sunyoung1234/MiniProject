@@ -243,7 +243,7 @@ public class HomeController {
 	    return "member/adminpage";
 	}
 
-	  @RequestMapping("/chart/gasChartView")
+	  @RequestMapping("/gasChartView")
 	    public String gasChartView(Model model, String regionCategory) throws Exception, ProtocolException {
 		  
 		// 광역시도별
@@ -315,7 +315,7 @@ public class HomeController {
 	        return "chart/gasChartView"; // gasChartView.jsp로 이동
 	    }
 
-	    @RequestMapping("/chart/cityChartView")
+	    @RequestMapping("/cityChartView")
 	    public String cityChartView(Model model, String regionCategory) throws Exception, ProtocolException {
 	    	// 광역시도별
 			ArrayList<Double> partList = new ArrayList<>();
