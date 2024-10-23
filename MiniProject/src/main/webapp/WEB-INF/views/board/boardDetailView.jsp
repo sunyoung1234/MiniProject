@@ -301,27 +301,11 @@
 			transform: scale(2);
 		}
 		
-
-		.mat-var {
-		    cursor: pointer;
-		    transition: background-color 0.3s;
-		}
-		
-		.mat-var:hover {
-		    background-color: #d0d0d0; /* 마우스 오버 시 색상 */
-		}
-				
-
 		.detail-title{
 			font-size: 40px;
 			margin-bottom: 20px;
 		}
 		
-		.detail-box{
-			margin-bottom: 20px;
-		}
-		
-
     
     </style>
 </head>
@@ -373,7 +357,7 @@
 							</table>
 							
 							<div class="content-box">
-								<div class="detail-box">
+								<div>
 									<div class="detail-title">테스트트트트(제목)</div>
 									<div class="detail-content">테스트 내용(내용)</div>
 								</div>
@@ -407,7 +391,7 @@
 									</tbody>
 								</table>
 								<p id="calcResult">
-									<span style="padding-right: 15px; font-weight: bold; color: blue;">총 탄소 배출량 : ${calcResult }</span>
+									<span style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult }</span>
 									<span style="font-weight: bold;">CO2/KG</span>
 								</p>
 								<h5>내용</h5>
@@ -444,8 +428,6 @@
 										<div id="resultCal">0 CO₂/kg</div>
 										<div id="btnBox">
 											<button id="closeCal" type="button">닫기</button>
-											<button id="beforeSub" type="button">이전</button>
-											<button id="nextSub" type="button">다음</button>
 											<button id="registCal" type="button">등록</button>
 										</div>
 									</div>
@@ -491,11 +473,6 @@
 				let v_name = document.querySelectorAll('.mat-var-name');
 				let v_co2 = document.querySelectorAll('.mat-var-co2');
 				
-				// 다음 버튼
-				let v_nextBtn = document.querySelector('#nextSub');
-				// 이전 버튼
-				let v_beforeBtn = document.querySelector('#beforeSub');
-				
 				let v_matVar = document.querySelectorAll('.mat-var');
 				
 				let v_resultCal = document.querySelector('#resultCal');
@@ -508,26 +485,12 @@
 				
 				let matBtnList = [];
 				
-				let clickedMatVar = 0;
-				
 				// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
-				v_matVar.forEach((mat,j) => {
+				v_matVar.forEach(mat => {
 					
 					let i = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
 					
 					mat.addEventListener('click',()=>{ 
-						 
-						v_matVar[j].style.backgroundColor = "black";
-						let x = (j-1) % v_matVar.length
-						let y = (j+1) % v_matVar.length
-						if( x<0 ){
-							x += v_matVar.length;
-						}
-						
-						v_matVar[x].style.backgroundColor = "white";
-						v_matVar[y].style.backgroundColor = "white";
-						
-						clickedMatVar = j; 
 						
 						$.ajax({
 							url: '${pageContext.request.contextPath}/findSub',
@@ -537,62 +500,28 @@
 								no: i
 							}),
 							success: function(response){
-								let v_alpha = "";   
+								let v_alpha = "";  
+								
 								response.forEach(r =>{
 									v_alpha += '<div class="cal-var"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
 									v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ i + '</div><div class="cal-var-co2">'
-									v_alpha += r.gasKg + '</div><input class="abc" style="display: none;" type="number"></div>'
-									
-									
-								})
-								v_alpha += '<div class="select-none">변경사항 없음</div>'
-								
-								
-								v_modalCalList[0].innerHTML = v_alpha; 
-								 
-								let v_subCal = document.querySelectorAll('.cal-var')
-								
-								
-								v_subCal.forEach((sc,i) =>{
-									let sc_status = false;
-									
-									sc.addEventListener('click',()=>{
-										if(!sc_status){
-											sc.style.backgroundColor = '#d0d0d0'; 
-											document.getElementsByClassName('abc')[i].style.display = "block";
-											sc_status = true;
-										}else{
-											sc.style.backgroundColor = '#f0f0f0'; 
-											document.getElementsByClassName('abc')[i].style.display = "none";
-											sc_status = false;
-										}
-										
-									})
+									v_alpha += r.gasKg + '</div><div class="cal-var-input"></div>'
 									
 								})
 								
+								v_modalCalList[0].innerHTML = v_alpha;
+								v_modalCalList[0].style.display = "block";
 							}
 						}) 
 						
 						
-					}) // mat click 끝단
-					
-				})
+					})
+					let v_delete = document.querySelectorAll('.delete-btn');
 				
-				// 다음 이전 버튼
-				v_nextBtn.addEventListener('click',()=>{
-					clickedMatVar = (clickedMatVar + 1) % v_matVar.length;
-					console.log(clickedMatVar); 
-					v_matVar[clickedMatVar].click();  
-				})
-				v_beforeBtn.addEventListener('click',()=>{
-					clickedMatVar = (clickedMatVar - 1) % v_matVar.length;
-					if(clickedMatVar < 0){
-						clickedMatVar += v_matVar.length;
-					} 
+					v_delete.forEach((delBtn,idx) =>{
+						console.log(delBtn.parentElement);
+					})
 					
-					console.log(clickedMatVar); 
-					v_matVar[clickedMatVar].click();  
 				})
 				
 				// 리스트 controller로 보내기
@@ -714,9 +643,7 @@
 						})
 					}
 				})
-			v_matVar[0].click()
 		}
-		
 		
 	</script>
 		
