@@ -15,125 +15,119 @@
 	href="${pageContext.request.contextPath}/resources/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+	rel="stylesheet">
 
 <style type="text/css">
 /* 기본 스타일 */
 body {
-    font-family: 'Noto Sans', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+	font-family: 'Poppins', sans-serif; /* 변경된 폰트 */
+	background-color: white; /* 밝은 배경색 */
+	color: #333;
 }
 
 h3 {
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-/* 비디오 섹션 */
-.video-section {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.video-section video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    font-size: 2em;
-    font-weight: bold;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* 카드 스타일 */
-.card {
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    margin-bottom: 40px;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.card-header, .card-body {
-    padding: 20px;
-    text-align: center;
-}
-
-.card-header {
-    background-color: #10bd66;
-    color: white;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.card-body {
-    color: #34495e;
+	font-weight: bold;
+	color: #2c3e50;
 }
 
 /* 차트 스타일 */
 .chart-box, .chart-box2 {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 20px;
 }
 
 canvas {
-    border-radius: 10px;
+	border-radius: 12px; /* 라운드 처리 */
 }
 
 /* 테이블 스타일 */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+	width: 100%;
+	border-collapse: collapse;
+	margin: 10px 0; /* 위아래 간격을 줄임 */
+	border-radius: 12px; /* 테이블 엣지 부드럽게 */
+	overflow: hidden; /* border-radius 적용을 위한 */
 }
 
 th, td {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
+	padding: 2px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #10bd66;
-    color: white;
-    font-weight: bold;
+	background-color: #10bd66;
+	color: white;
+	font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #f2f2f2; /* 줄무늬 효과 */
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+	background-color: #d1e7dd; /* 호버 효과 */
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
-    .card {
-        margin-bottom: 20px;
-    }
+@media ( max-width : 768px) {
+	.card {
+		margin-bottom: 20px;
+	}
+	.chart-box, .chart-box2 {
+		padding: 10px;
+	}
+	h3 {
+		font-size: 1.2em;
+	}
+}
 
-    .chart-box, .chart-box2 {
-        padding: 10px;
-    }
+/* 버튼 스타일 */
+select {
+	border: 1px solid #10bd66;
+	border-radius: 5px;
+	padding: 10px;
+	font-size: 1em;
+	transition: border-color 0.3s;
+}
 
-    h3 {
-        font-size: 1.2em;
-    }
+select:hover {
+	border-color: #08a95c; /* 호버 시 색상 변화 */
+}
+
+select:focus {
+	outline: none;
+	border-color: #007bff; /* 포커스 시 색상 변화 */
+}
+
+.solution-section {
+	background-color: white; /* 배경색 */
+	padding: 50px 20px; /* 상하 좌우 패딩 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	height: 200px;
+}
+
+.solution-content h2 {
+	color: #2c3e50; /* 제목 색상 */
+	font-weight: bold; /* 제목 두껍게 */
+}
+
+.solution-content p {
+	color: #34495e; /* 본문 색상 */
+	max-width: 800px; /* 최대 너비 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
+
+.solution-title h2 {
+	margin-left: 200px;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	font-size: 50px;
 }
 </style>
 
@@ -141,37 +135,30 @@ tbody tr:hover {
 </head>
 <body>
 
-    <%@ include file="/WEB-INF/inc/top.jsp"%>
+	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
+	<!-- 텍스트 섹션 -->
+	<section class="solution-section" id="section2">
+		<div class="solution-content">
+			<h2 style="margin: 0; font-size: 50px; text-align: center; margin-bottom: 15px;"> 탄소중립포인트 에너지 참여현황</h2>
+			<p style="font-size: 16px; text-align: center; margin-bottom: 55px;">탄소중립을
+				향한 여정은 지역별 에너지 참여를 통해 가속화됩니다. <br> 각
+				광역시도의 현황은 우리가 함께 나아가야 할 방향을 제시합니다. </p>
+
+		</div>
+	</section>
+
+
+	</section>
 	<!-- 세 번째 영역: 광역시도별 탄소중립포인트 에너지 참여현황 -->
 	<section id="section3" class="hidden">
 		<div class="container">
 			<div class="point-box mb-4">
 				<div class="point-title">
-					<h3>광역시도별 탄소중립포인트 에너지 참여현황</h3>
+					<h3>광역시도별 참여현황</h3>
 				</div>
-				<div>
-					<select id="category" name="regionCategory" onchange="f_change()">
-						<option value="강원" ${keyRegion == '강원' ? 'selected' : ''}>강원</option>
-						<option value="경기" ${keyRegion == '경기' ? 'selected' : ''}>경기</option>
-						<option value="경남" ${keyRegion == '경남' ? 'selected' : ''}>경남</option>
-						<option value="경북" ${keyRegion == '경북' ? 'selected' : ''}>경북</option>
-						<option value="광주" ${keyRegion == '광주' ? 'selected' : ''}>광주</option>
-						<option value="대구" ${keyRegion == '대구' ? 'selected' : ''}>대구</option>
-						<option value="대전" ${keyRegion == '대전' ? 'selected' : ''}>대전</option>
-						<option value="부산" ${keyRegion == '부산' ? 'selected' : ''}>부산</option>
-						<option value="세종" ${keyRegion == '세종' ? 'selected' : ''}>세종</option>
-						<option value="울산" ${keyRegion == '울산' ? 'selected' : ''}>울산</option>
-						<option value="인천" ${keyRegion == '인천' ? 'selected' : ''}>인천</option>
-						<option value="전남" ${keyRegion == '전남' ? 'selected' : ''}>전남</option>
-						<option value="전북" ${keyRegion == '전북' ? 'selected' : ''}>전북</option>
-						<option value="제주" ${keyRegion == '제주' ? 'selected' : ''}>제주</option>
-						<option value="충남" ${keyRegion == '충남' ? 'selected' : ''}>충남</option>
-						<option value="충북" ${keyRegion == '충북' ? 'selected' : ''}>충북</option>
-					</select>
-				</div>
-				<div class="d-flex justify-content-between">
-					<div class="table-box">
+				<div class="d-flex justify-content-between" style="flex-wrap: wrap;">
+					<div class="table-box" style="flex: 3;">
 						<table>
 							<colgroup>
 								<col width="11%">
@@ -198,8 +185,9 @@ tbody tr:hover {
 								</c:forEach>
 							</tbody>
 						</table>
+
 					</div>
-					<div class="chart-box">
+					<div class="chart-box" style="flex: 7;">
 						<canvas id="myChart"></canvas>
 					</div>
 				</div>
@@ -207,10 +195,31 @@ tbody tr:hover {
 
 			<div class="point-box mb-4">
 				<div class="point-title">
-					<h3>기초단체별 탄소중립포인트 에너지 참여현황</h3>
+					<h3>기초단체별 참여현황</h3>
 				</div>
-				<div class="d-flex justify-content-between">
-					<div class="table-box">
+				<div>
+					<select id="category" name="regionCategory" onchange="f_change()">
+						<option value="강원" ${keyRegion == '강원' ? 'selected' : ''}>강원</option>
+						<option value="경기" ${keyRegion == '경기' ? 'selected' : ''}>경기</option>
+						<option value="경남" ${keyRegion == '경남' ? 'selected' : ''}>경남</option>
+						<option value="경북" ${keyRegion == '경북' ? 'selected' : ''}>경북</option>
+						<option value="광주" ${keyRegion == '광주' ? 'selected' : ''}>광주</option>
+						<option value="대구" ${keyRegion == '대구' ? 'selected' : ''}>대구</option>
+						<option value="대전" ${keyRegion == '대전' ? 'selected' : ''}>대전</option>
+						<option value="부산" ${keyRegion == '부산' ? 'selected' : ''}>부산</option>
+						<option value="세종" ${keyRegion == '세종' ? 'selected' : ''}>세종</option>
+						<option value="울산" ${keyRegion == '울산' ? 'selected' : ''}>울산</option>
+						<option value="인천" ${keyRegion == '인천' ? 'selected' : ''}>인천</option>
+						<option value="전남" ${keyRegion == '전남' ? 'selected' : ''}>전남</option>
+						<option value="전북" ${keyRegion == '전북' ? 'selected' : ''}>전북</option>
+						<option value="제주" ${keyRegion == '제주' ? 'selected' : ''}>제주</option>
+						<option value="충남" ${keyRegion == '충남' ? 'selected' : ''}>충남</option>
+						<option value="충북" ${keyRegion == '충북' ? 'selected' : ''}>충북</option>
+					</select>
+				</div>
+
+				<div class="d-flex justify-content-between" style="flex-wrap: wrap;">
+					<div class="table-box" style="flex: 3;">
 						<table>
 							<colgroup>
 								<col width="13%">
@@ -238,11 +247,13 @@ tbody tr:hover {
 							</tbody>
 						</table>
 					</div>
-					<div class="chart-box2">
+					<div class="chart-box" style="flex: 7;">
 						<canvas id="myChart2"></canvas>
 					</div>
 				</div>
 			</div>
+
+		</div>
 		</div>
 	</section>
 
@@ -457,40 +468,8 @@ tbody tr:hover {
         	
         
         </script>
-	<script>
-document.addEventListener("DOMContentLoaded", function() {
-	const sections = document.querySelectorAll("section");
 
-	function checkVisibility() {
-		const triggerBottom = window.innerHeight / 5 * 4; // 스크롤이 화면의 80% 지점에 도달했을 때
-		sections.forEach(section => {
-			const sectionTop = section.getBoundingClientRect().top;
 
-			if (sectionTop < triggerBottom) {
-				section.classList.add("visible");
-			} else {
-				section.classList.remove("visible");
-			}
-		});
-	}
-
-	window.addEventListener("scroll", checkVisibility);
-	checkVisibility(); // 초기 호출
-});
-</script>
-
-	<script>
-    // 텍스트 표시 함수
-    function showOverlayText() {
-        const overlayText = document.querySelector('.overlay-text');
-        overlayText.style.opacity = 1; // 텍스트를 보이게 함
-    }
-
-    // 페이지 로드 후 비디오 위의 텍스트 나타나기
-    window.onload = function() {
-        showOverlayText(); // 비디오가 로드된 후 텍스트 보이기
-    };
-</script>
 
 
 </body>
