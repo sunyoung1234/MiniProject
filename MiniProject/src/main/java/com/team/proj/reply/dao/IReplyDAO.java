@@ -9,5 +9,7 @@ public interface IReplyDAO {
 	
 	// 답변 입력
 	int writeReply(ReplyDTO reply);
+	
+	
 }
  
