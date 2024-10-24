@@ -92,7 +92,7 @@
 						</div>
 					</form>
 
-					<div class="col-md-2">
+					<div class="col-md-2 mb-2">
 						<select class="form-select" name="feedbackYn" id="feedbackYn"
 							onchange="f_change()">
 							<option value=null selected>피드백여부</option>
@@ -220,6 +220,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script type="text/javascript">
+	
 		let v_option = '${pageSearch.searchOption}'
 		let v_search = '${pageSearch.searchWord}'
 		let v_page = '${pageSearch.pageNo}'
@@ -231,12 +232,14 @@
 		function f_change() {
 
 			console.log(event.target.value)
-
+			
+			v_page = 1
+		
 			let v_url = "${pageContext.request.contextPath}/boardViewAdmin";
-			let v_query = "?pageNo=${pageSearch.pageNo}"
+			let v_query = "?pageNo=" + v_page
 
 			if (event.target.value != 'null') {
-				v_query = "?pageNo=${pageSearch.pageNo}"
+				v_query = "?pageNo=" + v_page
 				v_query += "&feedbackYn=" + event.target.value;
 
 			}

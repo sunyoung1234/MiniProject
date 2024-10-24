@@ -260,7 +260,7 @@
 
 	<select id="getCalcResult" resultType="double" parameterType="String">
 		select 
-		sum(calc_result) as calc_result
+		NVL(sum(calc_result),0) as calc_result
 		from boards
 		where mem_id = #{memId}
 		and feedback_yn = 'Y'
