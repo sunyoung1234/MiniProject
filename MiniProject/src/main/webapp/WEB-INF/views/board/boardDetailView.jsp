@@ -544,6 +544,9 @@
 			// 모달 띄우기 버튼  
 			let v_modalBtn = document.querySelector('#modalBtn');
 			v_modalBtn.addEventListener('click',()=>{
+				document.querySelector('#registSub').style.display = "none";
+				document.querySelector('#nextSub').style.display = "block";
+				
 				nextIdx=0;
 				v_matVar[0].click();
 				document.getElementsByClassName('modal-box')[0].style.display = "flex";
@@ -788,12 +791,12 @@
 					alert('음수 사용 불가')
 				}
 				
-				if(nextIdx >= v_matVar.length){
+				if(nextIdx % v_matVar.length == 0){
 					// 등록버튼 나오게 다음버튼 없어지게
 					document.querySelector('#registSub').style.display = "block";
 					document.querySelector('#nextSub').style.display = "none";
 				}else{
-					v_matVar[nextIdx].click();
+					v_matVar[nextIdx % v_matVar.length].click();
 				} 
 				
 				
