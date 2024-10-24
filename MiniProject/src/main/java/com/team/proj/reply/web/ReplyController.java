@@ -16,6 +16,7 @@ import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
 import com.team.proj.reply.dto.ReplyDTO;
 import com.team.proj.reply.service.ReplyService;
+import com.team.proj.savesubcal.service.SaveSubcalService;
 
 @Controller
 public class ReplyController {
@@ -25,6 +26,9 @@ public class ReplyController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	SaveSubcalService subcalService;
 	
 	@ResponseBody
 	@RequestMapping("/replyWrite")
@@ -65,8 +69,12 @@ public class ReplyController {
 		 System.out.println(reply);
 		 
 		 replyService.writeReply(reply);
-		
-		
+		 
+		 boardService.updateFeedbackYN(bNo);
+		 
+		 subcalService.updateSubCal(sscId);
+		 
+		 subcalService.deleteSubCal();
 		
 		return "board/boardAdminView";
 	}

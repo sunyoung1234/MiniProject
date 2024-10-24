@@ -258,7 +258,13 @@
 		
 	</select>
 
-	
+	<select id="getCalcResult" resultType="double" parameterType="String">
+		select 
+		sum(calc_result) as calc_result
+		from boards
+		where mem_id = #{memId}
+		and feedback_yn = 'Y'
+	</select>
 	
 	
 	

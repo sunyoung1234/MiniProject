@@ -32,4 +32,6 @@ public interface BoardDAO {
     int updateFeedbackYN(int boardNo);
     
     int getBoardCountById(SearchVO search);
+    
+    double getCalcResult(String memId);
 }

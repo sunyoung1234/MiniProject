@@ -63,4 +63,9 @@ public class BoardService {
     	int result = boardDAO.getBoardCountById(search);
     	return result;
     }
+    
+    public double getCalcResult(String memId) {
+    	double result = boardDAO.getCalcResult(memId);
+    	return result;
+    }
 }

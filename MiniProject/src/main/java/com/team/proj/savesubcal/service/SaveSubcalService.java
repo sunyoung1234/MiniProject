@@ -23,5 +23,14 @@ public class SaveSubcalService {
 		List<SaveSubcalDTO> result = dao.findBySscId(sscId);
 		return result;
 	}
+	
+	public int updateSubCal(String sscId) {
+		int result = dao.updateSubCal(sscId);
+		return result;
+	}
 
+	public int deleteSubCal() {
+		int result = dao.deleteSubCal();
+		return result;
+	}
 }
