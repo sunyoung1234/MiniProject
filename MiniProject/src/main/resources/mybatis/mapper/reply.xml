@@ -34,7 +34,7 @@
 	
 	<select id="getReplyResult" parameterType="String" resultType="double">
 		SELECT
-		sum(reply_calc_result) as reply_calc_result
+		NVL(sum(reply_calc_result),0) as reply_calc_result
 		FROM REPLY
 		WHERE MEM_ID = #{memId}
 	</select>

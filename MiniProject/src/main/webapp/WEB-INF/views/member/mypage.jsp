@@ -320,7 +320,7 @@ th, td {
         new Chart(ctx,{
         		type:'bar',
         		data:{
-        			labels: [24],
+        			labels: ['오늘 하루'],
         			datasets:[{
         				label:'솔루션 전 탄소 배출량',
         				data: [v_boardResult*100000]
