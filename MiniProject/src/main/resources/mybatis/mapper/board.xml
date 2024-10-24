@@ -87,10 +87,57 @@
 		#{entpName}
 		)
 	</insert>
-
-	<!-- 회원아이디로 게시글 불러오기 -->
-	<select id="getBoardListById" parameterType="String"
+	
+	<!-- 게시글 목록 가져오기 -->
+	<select id="getBoardList"
+		parameterType="com.team.proj.board.vo.SearchVO"
 		resultType="com.team.proj.board.dto.BoardDTO">
+		SELECT * FROM (
+		SELECT
+		a.*
+		, ROWNUM AS RNUM
+		FROM (
+		SELECT
+		a.order_no
+		,
+		a.order_title
+		, a.mem_id
+		, b.entp_name
+		, a.order_content
+		, a.request_date
+		, a.feedback_yn
+		FROM boards a, members b
+		WHERE 1=1
+		AND a.mem_id =
+		b.mem_id
+		AND a.del_yn = 'N'
+		<if test="feedbackYn != null">
+			AND a.feedback_yn = #{feedbackYn}
+		</if>
+		<if test="searchWord != null">
+			<choose>
+				<when test="searchOption=='title'">AND a.order_title LIKE '%' || #{searchWord} || '%'
+				</when>
+				<when test="searchOption=='content'">AND a.order_content LIKE '%' || #{searchWord} || '%'
+				</when>
+				<when test="searchOption=='company'">AND a.entp_name LIKE '%' || #{searchWord} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY order_no DESC
+		) a
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 회원아이디로 게시글 불러오기 -->
+	<select id="getBoardListById" parameterType="com.team.proj.board.vo.SearchVO"
+		resultType="com.team.proj.board.dto.BoardDTO">
+				SELECT * FROM (
+		SELECT
+		a.*
+		, ROWNUM AS RNUM
+		FROM (
 		SELECT
 		board_id,
 		order_no,
@@ -110,6 +157,9 @@
 			AND MEM_ID = #{memId}
 		</if>
 		ORDER BY ORDER_NO DESC
+		) a
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
 
 	<select id="getBoardListByIdConfirm"
@@ -135,33 +185,36 @@
 		</if>
 		ORDER BY ORDER_NO DESC
 	</select>
-	
-	<select id="getBoardByNo" parameterType="int" resultType="com.team.proj.board.dto.BoardDTO">
+
+	<select id="getBoardByNo" parameterType="int"
+		resultType="com.team.proj.board.dto.BoardDTO">
 		SELECT
-			board_id,
-			order_no,      
-		    mem_id,       
-		    calc_id,       
-		    calc_result,       
-		    order_title,    
-		    order_content,    
-		    TO_CHAR(request_date, 'YYYY-MM-DD HH24:MI') AS request_date ,  
-		    feedback_yn,
-		    del_yn,
-		    entp_name
+		board_id,
+		order_no,
+		mem_id,
+		calc_id,
+		calc_result,
+		order_title,
+		order_content,
+		TO_CHAR(request_date, 'YYYY-MM-DD HH24:MI') AS request_date ,
+		feedback_yn,
+		del_yn,
+		entp_name
 		FROM BOARDS
 		WHERE 1=1
-		  AND ORDER_NO = #{boardNo}
+		AND ORDER_NO = #{boardNo}
 	</select>
-	
+
 	<update id="updateFeedbackYN" parameterType="int">
 		UPDATE BOARDS
-		SET feedback_yn = 'Y'
+		SET
+		feedback_yn = 'Y'
 		WHERE ORDER_NO = #{boardNo}
 	</update>
-	
+
 
 	<!-- totalRowCount에 대한 쿼리문 -->
+	<!-- 조건에 일치하는 게시물 불러오기 -->
 	<!-- 조건에 일치하는 게시물 불러오기 -->
 	<select id="getBoardCount"
 		parameterType="com.team.proj.board.vo.SearchVO" resultType="int">
@@ -172,44 +225,42 @@
 		AND a.mem_id = b.mem_id
 		AND a.del_yn = 'N'
 
-	</select>
+		<!-- 검색어가 있을 경우 검색 조건을 적용 -->
+		<if test="searchWord != null">
+			<choose>
+				<when test="searchOption == 'title'">
+					AND a.order_title LIKE '%' || #{searchWord} || '%'
+				</when>
+				<when test="searchOption == 'content'">
+					AND a.order_content LIKE '%' || #{searchWord} || '%'
+				</when>
+				<when test="searchOption == 'company'">
+					AND b.entp_name LIKE '%' || #{searchWord} || '%'
+				</when>
+			</choose>
+		</if>
 
-	<!-- 게시글 목록 가져오기 -->
-	<select id="getBoardList"
-		parameterType="com.team.proj.board.vo.SearchVO"
-		resultType="com.team.proj.board.dto.BoardDTO">
-		SELECT * FROM (
-		SELECT
-		a.*
-		, ROWNUM AS RNUM
-		FROM (
-		SELECT
-		a.order_no
-		, a.order_title
-		, a.mem_id
-		, b.entp_name
-		, a.order_content
-		, a.request_date
-		, a.feedback_yn
-		FROM boards a, members b
-		WHERE 1=1
-		AND a.mem_id = b.mem_id
-		AND a.del_yn = 'N'
+		<!-- feedbackYn 조건이 있을 경우 추가 -->
 		<if test="feedbackYn != null">
 			AND a.feedback_yn = #{feedbackYn}
 		</if>
-		<if test="searchWord != null">
-			<choose>
-				<when test="searchOption=='title'">AND a.order_title LIKE '%' || #{searchWord} || '%'</when>
-				<when test="searchOption=='content'">AND a.order_content LIKE '%' || #{searchWord} || '%'</when>
-				<when test="searchOption=='company'">AND a.entp_name LIKE '%' || #{searchWord} || '%'</when>
-			</choose>
-		</if>
-		
-		
-		ORDER BY order_no DESC
-		) a
-		)
-		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
+
+	<select id="getBoardCountById"
+		parameterType="com.team.proj.board.vo.SearchVO" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM boards
+		WHERE 1=1
+		AND mem_id = #{memId}
+		AND del_yn = 'N'
+		
+		
+	</select>
+
+	
+	
+	
+	
+	
 </mapper>

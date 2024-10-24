@@ -185,14 +185,25 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
+	public String mypage(HttpSession session, Model model, SearchVO pageSearch) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		 String memId = login.getMemId();
-	      
+		String memId = login.getMemId();
+		
+		pageSearch.setMemId(memId);
+		
+	    int totalRowCount = boardService.getBoardCountById(pageSearch);
+	    
+	    pageSearch.setBoardCount(totalRowCount);
+	    pageSearch.pageSetting();
+	    
+		 
 		 model.addAttribute("member",login);
-        List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+        List<BoardDTO> boardListById = boardService.getBoardListById(pageSearch);
         
+	    model.addAttribute("pageSearch", pageSearch);
+	    
+	    
         if(boardListById.size()>0) {
         	model.addAttribute("boardListById", boardListById);
         }else {
@@ -232,12 +243,6 @@ public class HomeController {
 	    // 회원 목록 가져오기
 	    List<MemberDTO> memberList = memberService.getMemberList();
 	    model.addAttribute("keyMemberList", memberList);
-
-//	    // 피드백이 "N"인 게시글 목록 가져오기
-//	    BoardDTO boardDTO = new BoardDTO();
-//	    boardDTO.setFeedbackYn("N");
-//	    List<BoardDTO> boardListByIdConfirm = boardService.getBoardListByIdConfirm(boardDTO);
-//	    model.addAttribute("boardListByIdConfirm", boardListByIdConfirm);
 
 	    // adminpage 뷰로 이동
 	    return "member/adminpage";

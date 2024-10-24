@@ -2,6 +2,7 @@ package com.team.proj.board.vo;
 
 public class SearchVO {
 	
+	private String memId;
 	private String feedbackYn;
     // 검색 옵션
     private String searchOption;  // 검색 종류 (제목: title, 내용: content, 업체명: company)
@@ -19,38 +20,45 @@ public class SearchVO {
     private int firstPage;            // 화면에 표시되는 페이지 번호의 첫 번째 숫자
     private int lastPage;             // 화면에 표시되는 페이지 번호의 마지막 숫자
     private int finalPage;            // 마지막 페이지 번호
-    
+
     // 페이징 메소드
     public void pageSetting() {
+        
+		start = rowSizePerPage * (pageNo - 1) + 1;
+		end = rowSizePerPage * pageNo;
+		
+        // 페이지 리스트의 첫 번째 페이지 번호
+		firstPage = ((pageNo-1) / 10) * 10 + 1;
+		lastPage = firstPage + 9;
+
         // 전체 페이지 수 계산
         finalPage = (int) Math.ceil((double) boardCount / rowSizePerPage);
-        
-        // 현재 페이지의 시작 글 번호
-        start = (pageNo - 1) * rowSizePerPage + 1;
-        
-        // 현재 페이지의 끝 글 번호
-        end = start + rowSizePerPage - 1;
         
         // 만약 끝 글 번호가 전체 글 수보다 크면, 끝 글 번호를 전체 글 수로 설정
         if (end > boardCount) {
             end = boardCount;
         }
         
-        // 페이지 리스트의 첫 번째 페이지 번호
-        firstPage = ((pageNo - 1) / pageSize) * pageSize + 1;
-        
-        // 페이지 리스트의 마지막 페이지 번호
-        lastPage = firstPage + pageSize - 1;
-        
         // 마지막 페이지가 전체 페이지 수보다 크면, 마지막 페이지를 전체 페이지 수로 설정
         if (lastPage > finalPage) {
             lastPage = finalPage;
         }
+        
+        // 현재 페이지가 마지막 페이지를 넘지 않도록 제한
+        if (pageNo > finalPage) {
+            pageNo = finalPage;
+        }
     }
 
-	public SearchVO(String feedbackYn, String searchOption, String searchWord, int pageNo, int rowSizePerPage,
-			int pageSize, int boardCount, int start, int end, int firstPage, int lastPage, int finalPage) {
+	public SearchVO() {
 		super();
+	}
+
+	public SearchVO(String memId, String feedbackYn, String searchOption, String searchWord, int pageNo,
+			int rowSizePerPage, int pageSize, int boardCount, int start, int end, int firstPage, int lastPage,
+			int finalPage) {
+		super();
+		this.memId = memId;
 		this.feedbackYn = feedbackYn;
 		this.searchOption = searchOption;
 		this.searchWord = searchWord;
@@ -65,9 +73,12 @@ public class SearchVO {
 		this.finalPage = finalPage;
 	}
 
+	public String getMemId() {
+		return memId;
+	}
 
-	public SearchVO() {
-		super();
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
 
 	public String getFeedbackYn() {
@@ -168,12 +179,13 @@ public class SearchVO {
 
 	@Override
 	public String toString() {
-		return "SearchVO [feedbackYn=" + feedbackYn + ", searchOption=" + searchOption + ", searchWord=" + searchWord
-				+ ", pageNo=" + pageNo + ", rowSizePerPage=" + rowSizePerPage + ", pageSize=" + pageSize
-				+ ", boardCount=" + boardCount + ", start=" + start + ", end=" + end + ", firstPage=" + firstPage
-				+ ", lastPage=" + lastPage + ", finalPage=" + finalPage + "]";
+		return "SearchVO [memId=" + memId + ", feedbackYn=" + feedbackYn + ", searchOption=" + searchOption
+				+ ", searchWord=" + searchWord + ", pageNo=" + pageNo + ", rowSizePerPage=" + rowSizePerPage
+				+ ", pageSize=" + pageSize + ", boardCount=" + boardCount + ", start=" + start + ", end=" + end
+				+ ", firstPage=" + firstPage + ", lastPage=" + lastPage + ", finalPage=" + finalPage + "]";
 	}
 
+	
 	
     
     

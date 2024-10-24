@@ -33,6 +33,7 @@
 .table-box {
 	width: 100%;
 	max-width: 1000px;
+	min-height: 400px;
 }
 
 .cur-poi {
@@ -106,6 +107,18 @@ th, td {
 	color: white;
 	text-decoration: none; /* 밑줄 제거 */
 }
+
+.col-6.bg-white {
+	min-height: 390px;
+	max-height: 800px;
+}
+
+.page-item.active .page-link {
+	background-color: #198754; /* 강조할 색상 */
+	color: white; /* 텍스트 색상 */
+	border-color: #198754; /* 테두리 색상 */
+}
+
 </style>
 
 </head>
@@ -202,7 +215,7 @@ th, td {
 						</div>
 
 						<!-- 견적내역 -> 미확인 견적내역으로 기능 변경. 메모. -->
-						<div class="col-6 bg-light rounded-4 py-3 border">
+						<div class="col-6 bg-white rounded-4 py-3 border">
 							<div class="row gx-5 justify-content-center">
 								<div class="col-lg-12 col-xl-12">
 									<table class="table table-bordered">
@@ -247,60 +260,50 @@ th, td {
 											</c:if>
 										</tbody>
 									</table>
-									<!-- Paging Bar  -->
-									<div class="d-flex justify-content-center">
-										<nav aria-label="Page navigation example">
-											<ul class="pagination">
-												<!-- 첫번째 페이지로 이동 -->
-												<!-- 관리자 페이지이므로, &searchWord=${pageSearch.searchWord } 이 부분은 제거하였음. -->
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='/adminpage?pageNo=1&searchOption=${pageSearch.searchOption}'/>"
-													aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-												</a></li>
-												<!-- 이전 페이지로 이동 -->
+									<!-- Paging Bar -->
+									<div class="d-flex justify-content-center mt-4"
+										style="height: 60px;">
+										<nav aria-label="Page navigation example" class="w-100">
+											<ul class="pagination justify-content-center">
+												<!-- 이전 페이지 버튼 -->
 												<li class="page-item"><c:if
-														test="${pageSearch.firstPage != 1 }">
+														test="${pageSearch.pageNo > 1}">
 														<a class="page-link"
-															href="<c:url value='/adminpage?pageNo=${pageSearch.firstPage - 1 }&searchOption=${pageSearch.searchOption}'/>"
+															href="<c:url value='/adminpage?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
 															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 														</a>
-													</c:if> <c:if test="${pageSearch.firstPage == 1 }">
-														<a class="page-link" href="#" aria-label="Previous"> <span
-															aria-hidden="true">&lt;</span>
-														</a>
-													</c:if></li>
-												<!-- 중앙 페이지 넘버들 -->
-												<c:forEach begin="${pageSearch.firstPage}"
-													end="${pageSearch.lastPage}" var="page">
-													<c:if test="${page != pageSearch.pageNo }">
-														<li class="page-item"><a class="page-link"
-															href="<c:url value='/adminpage?pageNo=${page }&searchOption=${pageSearch.searchOption}'/>"
-															aria-label="Previous">${page}</a></li>
-													</c:if>
-													<c:if test="${page == pageSearch.pageNo }">
-														<li class="page-item" aria-current="page"><span
-															class="page-link">${page}</span></li>
-													</c:if>
-												</c:forEach>
-												<!-- 다음 페이지로 이동 -->
-												<li class="page-item"><c:if
-														test="${pageSearch.lastPage != pageSearch.boardCount}">
-														<a class="page-link"
-															href="<c:url value='/adminpage?pageNo=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}'/>">
-															<span aria-hidden="true">&gt;</span>
-														</a>
-													</c:if> <c:if
-														test="${pageSearch.lastPage == pageSearch.boardCount}">
-														<a class="page-link" href="#" aria-label="Next"> <span
-															aria-hidden="true">&gt;</span>
+													</c:if> <c:if test="${pageSearch.pageNo == 1}">
+														<a class="page-link disabled" href="#"
+															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 														</a>
 													</c:if></li>
 
-												<!-- 마지막 페이지로 이동 -->
-												<li class="page-item"><a class="page-link"
-													href="<c:url value='/adminpage?pageNo=${pageSearch.boardCount }&searchOption=${pageSearch.searchOption }'/>">
-														<span aria-hidden="true">&raquo;</span>
-												</a></li>
+												<!-- 페이지 번호 링크 -->
+												<c:forEach begin="${pageSearch.firstPage}"
+													end="${pageSearch.lastPage}" var="page">
+													<c:if test="${page != pageSearch.pageNo}">
+														<li class="page-item"><a class="page-link"
+															href="<c:url value='/adminpage?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">${page}</a>
+														</li>
+													</c:if>
+													<c:if test="${page == pageSearch.pageNo}">
+														<li class="page-item active" aria-current="page"><span
+															class="page-link">${page}</span></li>
+													</c:if>
+												</c:forEach>
+
+												<!-- 다음 페이지 버튼 -->
+												<li class="page-item"><c:if
+														test="${pageSearch.pageNo < pageSearch.finalPage}">
+														<a class="page-link"
+															href="<c:url value='/adminpage?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+															aria-label="Next"> <span aria-hidden="true">&gt;</span>
+														</a>
+													</c:if> <c:if test="${pageSearch.pageNo >= pageSearch.finalPage}">
+														<a class="page-link disabled" href="#" aria-label="Next">
+															<span aria-hidden="true">&gt;</span>
+														</a>
+													</c:if></li>
 											</ul>
 										</nav>
 									</div>
@@ -314,10 +317,10 @@ th, td {
 				<!-- 차트 영역 시작 -->
 				<div class="row align-items-start">
 					<div class="col-6">
-						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border">차트1</div>
+						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border">차트1</div>
 					</div>
 					<div class="col-6">
-						<div class="bg-light rounded-4 py-5 px-4 px-md-5 border">차트2</div>
+						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border">차트2</div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->

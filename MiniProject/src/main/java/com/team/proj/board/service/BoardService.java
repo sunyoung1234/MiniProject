@@ -39,8 +39,8 @@ public class BoardService {
     	return result;
     }
     
-    public List<BoardDTO> getBoardListById(String memId){
-    	List<BoardDTO> result = boardDAO.getBoardListById(memId);
+    public List<BoardDTO> getBoardListById(SearchVO search){
+    	List<BoardDTO> result = boardDAO.getBoardListById(search);
     	return result;
     }
     
@@ -56,6 +56,11 @@ public class BoardService {
     
     public int updateFeedbackYN(int boardNo) {
     	int result = boardDAO.updateFeedbackYN(boardNo);
+    	return result;
+    }
+    
+    public int getBoardCountById(SearchVO search) {
+    	int result = boardDAO.getBoardCountById(search);
     	return result;
     }
 }
