@@ -14,5 +14,16 @@
 		ON a.sub_name = b.sub_name
 		WHERE mat_no = #{matNo}
 	</select>
+	
+	<select id="getSubByNo" parameterType="int" resultType="com.team.proj.substitute.dto.SubstituteDTO">
+		SELECT
+			sub_no,
+	        sub_name,        
+	        sub_img,
+	        gas_kg
+	    FROM SUBSTITUTE
+	    WHERE 1=1
+	      AND sub_no = #{subNo}
+	</select>
 
 </mapper>

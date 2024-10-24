@@ -21,7 +21,7 @@
 
 	body {
 	    font-family: Arial, sans-serif;
-	}
+ 	}
 	
 	button {
 	    background-color: #007bff;
@@ -333,12 +333,45 @@
 		.disabled {
             pointer-events: none; /* 클릭 이벤트 차단 */
         }
+        
+        .reply-mat-box{
+        	display: flex;
+        }
+        
+        .reply-mat-img{
+        	height: 50px;
+        }
+        .reply-mat-name{
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        }
+        .reply-mat-vol{
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        }
+        .sub-sub{
+        	display: flex;
+        }
+        .modal-2{
+		  width: 300px; /* 너비 설정 */
+		    height: 200px; /* 높이 설정 */
+		    background-color: lightblue; /* 배경색 */
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    border: 1px solid #000; /* 테두리 */
+		    text-align: center; /* 텍스트 중앙 정렬 */
+ 		   transform: translateY(-50px); /* 위로 띄우기 */
+        }
+        
 
     
     </style>
 </head>
 <body>
-
+		
 	<%@ include file="/WEB-INF/inc/top.jsp" %> 
 	
 	<main class="flex-shrink-0">
@@ -419,7 +452,7 @@
 									</tbody>
 								</table>
 								<p id="calcResult">
-									<span style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult }</span>
+									<span id="bef_result" style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult }</span>
 									<span style="font-weight: bold;">CO2/KG</span>
 								</p>
 								<h5>내용</h5>
@@ -431,8 +464,24 @@
 							<div id="exampleBox"></div>   
 							<c:if test="${sessionScope.login.getMemId() == 'admin' }">
 								<div id="overlay"></div>
-								<textarea id="replyContent" rows="15" cols="111"></textarea>
+								<div id="replyCal">
+									<c:forEach var="scv" items="${scVolList }">
+										
+											<div class="reply-line">
+												<div class="reply-mat-box">
+													<img class="reply-mat-img" src="${scv.materialImg }">
+													<div class="reply-mat-name">${scv.materialName}</div> <!-- 이름 -->
+													<div class="reply-mat-vol">${scv.materialVolume} kg</div> <!-- 이름 -->
+												</div>
+												<div class="reply-sub-box">
+													<div>변경 사항 없음</div>
+												</div> 
+											</div>
+											 
+									</c:forEach>
+								</div>
 								<button id="modalBtn" >계산기</button>
+								<textarea id="replyContent" rows="15" cols="111"></textarea> 
 								<button id="replyWriteBtn">답변작성</button>
 								
 								<div class="modal-box">
@@ -459,11 +508,13 @@
 										<div id="btnBox">
 											<button id="closeCal" type="button">닫기</button>
 											<button id="nextSub" type="button">다음</button>
-											<button id="registSub" type="button">등록</button>
+											<button id="registSub" type="button" style="display: none;">등록</button>
+											
 										</div>
-									</div>
+									</div> 
 							
 								</div>
+								
 							</c:if>
 							
 							
@@ -486,10 +537,15 @@
 			let matMap = new Map(); // matNo - Map(subNo - subVol)
 			let subMap = new Map(); // subNo - subVol
 			let final_result = 0;
+			let orderNo = ${board.orderNo};
+			 
+			console.log(sscId); 
 			
 			// 모달 띄우기 버튼  
 			let v_modalBtn = document.querySelector('#modalBtn');
 			v_modalBtn.addEventListener('click',()=>{
+				nextIdx=0;
+				v_matVar[0].click();
 				document.getElementsByClassName('modal-box')[0].style.display = "flex";
 				v_overlay.style.display = "block";
 				let current = Date.now();
@@ -501,6 +557,7 @@
 			v_closeModal.addEventListener('click',()=>{
 				document.getElementsByClassName('modal-box')[0].style.display = "none"; 
 				v_overlay.style.display = "none"; 
+				nextIdx = 0;
 			})
 				
 			    
@@ -526,20 +583,22 @@
 			
 		    const event = new Event('change');
 		    const Ievent = new Event('input');
-			
+			let cal_result = 0; // 이전 계산 결과 (mat당)
+			let v_befResult = document.querySelector('#bef_result');
+		    
 		    let noneCheck = 0;
-			
 			// 목록에서 자재 누르면 계산기에 뜨고  기능 구현
 			v_matVar.forEach((mat,j) => {
 				 
 				
 				let material_no = parseInt(mat.querySelector('.mat-no').innerHTML.trim());
-				let cal_result = parseFloat(document.querySelectorAll('.mat-cal-result')[j].innerHTML);  
+				  
 				let sub_total = 0;
 				
 				mat.addEventListener('click',()=>{ 
-					noneCheck = 0;
 					let total=0;
+					noneCheck = 0;
+					cal_result = parseFloat(document.querySelectorAll('.mat-cal-result')[j].innerHTML);
 					v_resultCal.innerHTML = Math.round(100*total)/100;
 					
 					for(let index=0; index < v_matVar.length; index++){
@@ -565,7 +624,7 @@
 								v_alpha += '<div class="cal-var"><input class="sub-check-box" type="checkbox"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
 								v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ material_no + '</div><div class="cal-var-co2">'
 								v_alpha += r.gasKg + '</div><input class="sub-input" style="display: none;" type="number">'
-								v_alpha += '<div class="sub-result" style="display: none;"></div></div>'
+								v_alpha += '<div class="sub-result"  style="display: none;"></div></div>'
 								subMap.set(r.subNo, 0);
 							})
 							v_alpha += '<div class="select-none"><input class="select-none-check-box" type="checkbox">변경사항 없음</div>' 
@@ -687,21 +746,31 @@
 			// 다음버튼 (선택 없으면 안넘어가게, 기존 < 이후 이면 안넘어가게), 내용저장, total 초기화
 			let v_nextBtn = document.querySelector('#nextSub');
 			
-			v_nextBtn.addEventListener('click',()=>{
+			
+			v_nextBtn.addEventListener('click',()=>{ 
+				
 				subMap.set(0, parseInt(100 * v_resultCal.innerHTML) / 100);
+				
+				let b_result = 0;
+				let v_resultBox = document.querySelectorAll('.sub-result');
+				
 				if(v_resultCal.innerHTML == null){
 					subMap.set(0, 0);
 				}
 				let keysArray = Array.from(subMap.keys());
 				let checkZero = 0; 
-				 
+				
 				for(let key = 0 ; key < keysArray.length - 1; key++){
-					if(subMap.get(keysArray[key]) == 0){
+					if(subMap.get(keysArray[key]) == 0 || isNaN(subMap.get(keysArray[key]))){
+						checkZero++;
+					}else if(subMap.get(keysArray[key])<0){
+						checkZero++;
 						checkZero++;
 					}
 				} 
 				
-				if(noneCheck != 0 || checkZero != 3 ){
+				
+				if(noneCheck != 0 || checkZero < 3 ){
 					
 					let mat_no2 = parseInt(v_matVar[nextIdx % v_matVar.length].querySelector('.mat-no').innerHTML.trim());
 					
@@ -712,22 +781,40 @@
 					subMap = new Map();
 					
 					nextIdx++;
-					v_matVar[nextIdx % v_matVar.length].click();
-				}else{
+					
+				}else if(checkZero == 3){
 					alert('변경사항이 없으면 변경사항 없음을 선택해주세요')
+				}else{
+					alert('음수 사용 불가')
 				}
+				
+				if(nextIdx >= v_matVar.length){
+					// 등록버튼 나오게 다음버튼 없어지게
+					document.querySelector('#registSub').style.display = "block";
+					document.querySelector('#nextSub').style.display = "none";
+				}else{
+					v_matVar[nextIdx].click();
+				} 
+				
+				
+				
 			}) 
 			
 			// 등록버튼 (savesubcal 들 모아서 넘기기   기존 총합  이후 총합 차이)
 			let v_registBtn = document.querySelector('#registSub');
+			let v_replyLine = document.querySelectorAll('.reply-sub-box');
+			
+			console.log(v_replyLine[0]) 
+			console.log(v_replyLine[1]) 
 			
 			v_registBtn.addEventListener('click',()=>{
 				
-				
 				const matObj = Object.fromEntries(matMap);
 				const strMap = JSON.stringify(matObj);
-				let orderNo = ${board.orderNo};
+				
 				console.log(orderNo);
+				let diff_total = 0;
+				
 				
 				$.ajax({
 					url: '${pageContext.request.contextPath}/saveSub',
@@ -735,18 +822,88 @@
 					contentType: 'application/json',
 					data: JSON.stringify({
 						b_id : orderNo + "",
-						id : sscId + "",
+						id : sscId + "", 
 						map : strMap  
 					}), 
 					success: function(response){
 						console.log(response)
+						document.getElementsByClassName('modal-box')[0].style.display = "none"; 
+						v_overlay.style.display = "none";
+						
+						let matEa = response['eaList'].length;;
+						console.log(matEa)
+						let idx = 0;
+						console.log(response['subList']);
+						
+						for(let i=0; i < matEa; i++){
+							
+							let v_beta = "";  
+							for(let j=0; j< response['eaList'][i]; j++){
+								diff_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
+								v_beta += '<div class="sub-sub"><div>' + response['subList'][idx].subName + '</div>'
+								v_beta += '<img src="' + response['subList'][idx].subImg + '">'
+								v_beta += '<div>' + response['sscList'][idx].subVol + '</div></div>'
+								
+								idx ++;
+							}
+							v_replyLine[i].innerHTML = v_beta;
+						}
+						final_result = (Math.round((v_befResult.innerHTML - diff_total)*100) /100)
+						
+						v_replyLine[matEa - 1].innerHTML += '<div>' + diff_total + '</div>'
+						v_replyLine[matEa - 1].innerHTML += '<div>' + (Math.round((v_befResult.innerHTML - diff_total)*100) /100) + '</div>'
 					}
+						})
+					
 				})
-			})
-			  
+			 
+			 
+			let v_replyWriteBtn = document.querySelector('#replyWriteBtn');
+			let rContent = document.querySelector('#replyContent');
+			
+			
+			 v_replyWriteBtn.addEventListener('click',()=>{
+				 
+				 sscId += "";
+				 
+				 console.log(typeof final_result)
+				 console.log(final_result)
+				 console.log(typeof sscId)
+				 console.log(sscId)
+				 console.log(typeof orderNo)
+				 console.log(orderNo)
+				 console.log(typeof rContent.value)
+				 console.log(rContent.value)
+				 
+				 let rv = rContent.value;
+				 
+				if(rContent.value.length < 1 ){ 
+					alert('내용을 입력하세요');
+				}else if(sscId == null || sscId.length < 5 ){ 
+					alert('견적 내용을 입력하세요');  
+				}else if(final_result < 0 ){
+					alert('견적 결과가 요청결과보다 큽니다') 
+				}else{
+					$.ajax({
+						url: '${pageContext.request.contextPath}/replyWrite',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({
+							b_no : orderNo + "",
+							id : sscId, 
+							result : final_result + "",
+							content : rv
+						}), 
+						success: function(response){
+							console.log(response);
+						}
+						
+					})
+				}
+			}) 
 			
 				
-			v_matVar[0].click();
+			 
 		}
 		
 		

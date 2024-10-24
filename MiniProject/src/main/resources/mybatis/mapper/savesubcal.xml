@@ -4,7 +4,7 @@
 	
 	<insert id="saveSubCal" parameterType="com.team.proj.savesubcal.dto.SaveSubcalDTO">
 		INSERT INTO SAVESUBCAL(
-				sub_cal_id,
+				subcal_id,
 				board_id,
 				mat_no,
 				sub_no,
@@ -12,16 +12,22 @@
 				different_co,
 				confirm_yn
 		)VALUES(
-				#{sub_cal_id},
-				#{board_id},
-				#{mat_no},
-				#{sub_no},
-				#{sub_vol},
-				#{different_co},
-				'N'		
+				#{subcalId},
+				#{boardId},
+				#{matNo},
+				#{subNo},
+				#{subVol},
+				#{differentCo},
+				#{confirmYn}	
 		)
 		
 	</insert>
+	
+	<select id="findBySscId" parameterType="String" resultType="com.team.proj.savesubcal.dto.SaveSubcalDTO">
+		SELECT * FROM SAVESUBCAL
+		WHERE 1=1
+		  AND subcal_id = #{subcalId}
+	</select>
 
 
 </mapper>
