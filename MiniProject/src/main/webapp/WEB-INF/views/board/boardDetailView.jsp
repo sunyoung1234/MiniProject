@@ -333,27 +333,96 @@
 		.disabled {
             pointer-events: none; /* 클릭 이벤트 차단 */
         }
-        
-        .reply-mat-box{
-        	display: flex;
-        }
-        
-        .reply-mat-img{
-        	height: 50px;
-        }
-        .reply-mat-name{
-        	display: flex;
-        	justify-content: center;
-        	align-items: center;
-        }
-        .reply-mat-vol{
-        	display: flex;
-        	justify-content: center;
-        	align-items: center;
-        }
-        .sub-sub{
-        	display: flex;
-        }
+ /* GPT GPT GPT GPT GPT GPT */       
+.reply-line {
+    display: flex;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 15px 0;
+    transition: transform 0.2s;
+}
+
+.reply-line:hover {
+    transform: scale(1.02);
+}
+
+.reply-mat-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.reply-mat-img {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3498db; /* 이미지 테두리 */
+}
+
+.reply-mat-name {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+}
+
+.reply-mat-vol {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.reply-sub-box {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    padding-left: 25px;
+}
+
+.sub-name {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.sub-name:hover {
+    background-color: #f0f8ff; /* 호버 시 배경색 변화 */
+}
+
+.sub-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sub-vol {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.sub-after {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #e74c3c; /* 빨간색 */
+}
+
+.sub-calc-result {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2ecc71; /* 초록색 */
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+/* GPT GPT GPT GPT GPT GPT */
         .modal-2{
 		  width: 300px; /* 너비 설정 */
 		    height: 200px; /* 높이 설정 */
@@ -860,6 +929,8 @@
 						after_total = (Math.round(after_total * 100)/100);
 						v_replyLine[matEa - 1].innerHTML += '<div class="sub-after">' + after_total + '</div>'
 						v_replyLine[matEa - 1].innerHTML += '<div class="sub-calc-result">' + (Math.round((v_befResult.innerHTML - after_total)*100) /100) + '</div>'
+						
+						console.log(v_replyLine[matEa - 1].parentElement.outerHTML);   
 					}
 						})
 					
