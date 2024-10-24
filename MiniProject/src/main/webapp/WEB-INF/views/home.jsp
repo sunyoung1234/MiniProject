@@ -239,7 +239,7 @@ font-bold {
 
 <!-- 메인 문구 타이틀 -->
 <div class="solution-content solution-title">
-	<h2>Our Vision</h2>
+	<h2>Our Enterprise</h2>
 </div>
 
 <!-- 텍스트 섹션 -->
@@ -254,7 +254,7 @@ font-bold {
 
 <!-- 캐러셀 타이틀 -->
 <div class="solution-content solution-title" style="margin-bottom: 50px">
-	<h2>About us</h2>
+	<h2>Vision</h2>
 </div>
 
 <!-- 캐러셀 메인 -->
@@ -296,22 +296,22 @@ font-bold {
 </div>
 
 <div class="solution-content solution-title">
-	<h2>What we do</h2>
+	<h2>Information</h2>
 </div>
 <!-- 카드 두개  -->
 <div class="card-container d-flex justify-content-center" style="margin-bottom: 150px;">
 	<div class="card me-3" style="flex: 1; max-width: 500px;">
 		<img src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png" class="card-img-top" alt="Nature Build" style="width: 100%; height: 300px;">
 		<div class="card-body">
-			<h3 class="card-title">온실가스 배출량 추이</h3>
-			<p class="card-text">1990년 ~ 2020년 차트</p>
+			<h3 class="card-title">온실가스 및 건축</h3>
+			<p class="card-text">온실가스 차트 & 건축 기사</p>
 			<a href="${pageContext.request.contextPath}/gasChartView" class="btn btn-success">더 알아보기</a>
 		</div>
 	</div>
 	<div class="card me-3" style="flex: 1; max-width: 500px;">
 		<img src="${pageContext.request.contextPath}/resources/image/nature_build.png" class="card-img-top" alt="Nature co2 image" style="width: 100%; height: 300px;">
 		<div class="card-body">
-			<h3 class="card-title">광역시도별 탄소중립포인트 참여현황</h3>
+			<h3 class="card-title">탄소중립포인트 참여현황</h3>
 			<p class="card-text">광역시도별 & 기초단체별 차트</p>
 			<a href="${pageContext.request.contextPath}/cityChartView" class="btn btn-success">더 알아보기</a>
 		</div>

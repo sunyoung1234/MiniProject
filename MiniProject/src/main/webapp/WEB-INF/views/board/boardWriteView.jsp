@@ -328,7 +328,6 @@ select {
 
 }
 
-
 .table-head{
 	border-bottom: 1px solid black;
 	text-align: center;
@@ -359,6 +358,10 @@ select {
 .sum-gas{
 	margin-left: 890px;
 	margin-bottom: 20px;
+}
+
+.text-margin{
+  border-bottom: 5px solid #fff;
 }
 
 
@@ -693,7 +696,7 @@ select {
 				    	
 						for(let i=0; i<response['registList'].length; i++){
 							
-				    		v_alpha2 += '<tr><th>'+ v_count + '</th>'
+				    		v_alpha2 += '<tr class="text-margin"><th>'+ v_count + '</th>'
 					    	v_alpha2 += '<td>'+ v_map[response.registList[i].materialCategory] +'</td>'
 					    	v_alpha2 += '<td>'+  response.registList[i].materialName  +'</td>'
 					    	v_alpha2 += '<td>' + eaList[i] +'</td></tr>' 
