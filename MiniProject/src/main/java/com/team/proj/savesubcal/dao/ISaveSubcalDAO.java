@@ -12,4 +12,8 @@ public interface ISaveSubcalDAO {
 	int saveSubCal(SaveSubcalDTO ssd);
 	
 	List<SaveSubcalDTO> findBySscId(String sscId);
+	
+	int updateSubCal(String sscId);
+	
+	int deleteSubCal();
 }

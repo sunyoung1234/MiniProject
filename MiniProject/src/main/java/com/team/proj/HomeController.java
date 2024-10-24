@@ -35,6 +35,8 @@ import com.team.proj.point.dto.PointDTO;
 import com.team.proj.point.service.PointService;
 import com.team.proj.region.dto.RegionDTO;
 import com.team.proj.region.service.RegionService;
+import com.team.proj.reply.dto.ReplyDTO;
+import com.team.proj.reply.service.ReplyService;
 
 /**
  * Handles requests for the application home page.
@@ -56,6 +58,9 @@ public class HomeController {
 	
 	@Autowired
 	GreenService greenService;
+	
+	@Autowired
+	ReplyService replyService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -209,6 +214,15 @@ public class HomeController {
         }else {
         	model.addAttribute("noList","작성한 글이 없습니다.");
         }
+        
+        double replyResult = replyService.getReplyResult(memId);
+        
+        model.addAttribute("getReplyResult",replyResult);
+        System.out.println(replyResult);
+        
+        double boardCalc = boardService.getCalcResult(memId);
+        
+        model.addAttribute("getBoardCalc",boardCalc);
 		
         
 		

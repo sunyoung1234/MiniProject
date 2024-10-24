@@ -28,6 +28,18 @@
 		WHERE 1=1
 		  AND subcal_id = #{subcalId}
 	</select>
+	
+	<update id="updateSubCal">
+		UPDATE SAVESUBCAL
+		set confirm_yn = "Y"
+		where 1=1
+		AND subcal_id = #{sscId}
+	
+	</update>
 
+	<delete id="deleteSubCal">
+		delete from SAVESUBCAL
+		WHERE confirm_yn = "N"
+	</delete>
 
 </mapper>

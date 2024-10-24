@@ -24,5 +24,19 @@
 			#{replyCalcResult}
 		)
 	</insert>
+	
+	<select id="getListReply" parameterType="String" resultType="com.team.proj.reply.dto.ReplyDTO">
+		SELECT
+		 *
+		FROM reply
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<select id="getReplyResult" parameterType="String" resultType="double">
+		SELECT
+		sum(reply_calc_result) as reply_calc_result
+		FROM REPLY
+		WHERE MEM_ID = #{memId}
+	</select>
 
 </mapper>
