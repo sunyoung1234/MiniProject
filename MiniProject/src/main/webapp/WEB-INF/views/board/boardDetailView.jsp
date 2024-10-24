@@ -461,7 +461,8 @@
 								</p> 
 							</div>
 							
-							<div id="exampleBox"></div>   
+							<div id="exampleBox"></div> 
+							  
 							<c:if test="${sessionScope.login.getMemId() == 'admin' }">
 								<div id="overlay"></div>
 								<div id="replyCal">
@@ -482,6 +483,7 @@
 								</div>
 								<button id="modalBtn" >계산기</button>
 								<textarea id="replyContent" rows="15" cols="111"></textarea> 
+								 <button id="goBackBtn">뒤로가기</button>
 								<button id="replyWriteBtn">답변작성</button>
 								
 								<div class="modal-box">
@@ -515,6 +517,9 @@
 							
 								</div>
 								
+							</c:if>
+							<c:if test="${sessionScope.login.getMemId() != 'admin' }">
+								<button id="goBackUserBtn">뒤로가기</button>
 							</c:if>
 							
 							
@@ -842,9 +847,9 @@
 							let v_beta = "";  
 							for(let j=0; j< response['eaList'][i]; j++){
 								after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
-								v_beta += '<div class="sub-sub"><div>' + response['subList'][idx].subName + '</div>'
-								v_beta += '<img src="' + response['subList'][idx].subImg + '">'
-								v_beta += '<div>' + response['sscList'][idx].subVol + '</div></div>'
+								v_beta += '<div class="sub-name"><div>' + response['subList'][idx].subName + '</div>'
+								v_beta += '<img class="sub-img" src="' + response['subList'][idx].subImg + '">'
+								v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + '</div></div>'
 								
 								idx ++;
 							}
@@ -853,8 +858,8 @@
 						
 						final_result = (Math.round((v_befResult.innerHTML - after_total)*100) /100)
 						after_total = (Math.round(after_total * 100)/100);
-						v_replyLine[matEa - 1].innerHTML += '<div>' + after_total + '</div>'
-						v_replyLine[matEa - 1].innerHTML += '<div>' + (Math.round((v_befResult.innerHTML - after_total)*100) /100) + '</div>'
+						v_replyLine[matEa - 1].innerHTML += '<div class="sub-after">' + after_total + '</div>'
+						v_replyLine[matEa - 1].innerHTML += '<div class="sub-calc-result">' + (Math.round((v_befResult.innerHTML - after_total)*100) /100) + '</div>'
 					}
 						})
 					
@@ -891,15 +896,27 @@
 						}), 
 						success: function(response){
 							console.log(response);
+							document.querySelector('#modalBtn').style.display = "none";
+							document.querySelector('#replyContent').style.display = "none";
+							document.querySelector('#replyWriteBtn').style.display = "none";
 						}
 						
 					})
 				}
 			}) 
 			
+			document.querySelector('#goBackBtn').addEventListener('click',()=>{
+				location.href = "${pageContext.request.contextPath}/boardViewAdmin";
+			})
+			
 				
 			 
+		}else{
+			document.querySelector('#goBackUserBtn').addEventListener('click',()=>{
+				location.href = "${pageContext.request.contextPath}/boardView";
+			})
 		}
+		
 		
 		
 	</script>
