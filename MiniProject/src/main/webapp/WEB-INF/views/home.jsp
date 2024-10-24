@@ -110,7 +110,7 @@ font-bold {
 
 
 .carousel-item {
-	height: 400px; /* 카드 높이에 맞게 조정 */
+	height: 500px; /* 카드 높이에 맞게 조정 */
 	position: relative; /* 자식 요소의 절대 위치를 위한 기준 설정 */
 	overflow: hidden; /* 자식 요소가 범위를 벗어날 경우 숨기기 */
 	transition: opacity 0.5s ease-in-out; /* opacity 전환 설정 */
@@ -123,14 +123,15 @@ font-bold {
 }
 
 .carousel-item img {
-	height: 100%; /* 이미지가 높이에 맞게 조정 */
+	height: 90%; /* 이미지가 높이에 맞게 조정 */
 	object-fit: cover; /* 이미지 비율 유지 */
+	background-color: white;
 }
 
 .carousel-overlay-text {
 	position: absolute;
 	top: 20%;
-	left: 40%;
+	left: 45%;
 	transform: translate(-50%, -50%);
 	color: black;
 	font-size: 30px; /* 텍스트 크기 조정 */
@@ -269,7 +270,7 @@ font-bold {
 			<div class="position-relative text-center">
 				<img src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지1.jpg" class="custom-carousel-image" alt="자연 건축">
 				<div class="carousel-overlay-text solution-content"
-					style="color: white; font-size: 26px; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+					style="color: white; font-size: 26px;/*  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
 					자연을 품은 건축,<br> 우리의 미래를 설계합니다.
 				</div>
 			</div>
@@ -278,16 +279,16 @@ font-bold {
 			<div class="position-relative text-center">
 				<img src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지2.jpg" class="custom-carousel-image" alt="환경 건축">
 				<div class="carousel-overlay-text solution-content"
-					style="color: white; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+					style="color: white; /* text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
 					환경을 생각하는 설계,<br> GreenSolution의 약속입니다.
 				</div>
 			</div>
 		</div>
 		<div class="carousel-item">
 			<div class="position-relative text-center">
-				<img src="${pageContext.request.contextPath}/resources/image/jpg3캐러셀이미지3.jpg" class="custom-carousel-image" alt="탄소 절감">
+				<img src="${pageContext.request.contextPath}/resources/image/캘셀3.jpg" class="custom-carousel-image" alt="탄소 절감">
 				<div class="carousel-overlay-text solution-content"
-					style="color: white; text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+					style="color: white;/*  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
 					탄소 중립을 향한 작은 실천,<br> 큰 변화를 이룹니다.
 				</div>
 			</div>
