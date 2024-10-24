@@ -43,22 +43,71 @@ public class BoardController {
 	ReplyService replyService;
 
 	@RequestMapping("/boardView")
-	public String boardView(Model model, SearchVO search, HttpSession session) {
+	public String boardView(Model model, SearchVO pageSearch, HttpSession session) {
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		String memId = login.getMemId();
+		
+		pageSearch.setMemId(memId);
+		// 페이징 처리
+	    int totalRowCount = boardService.getBoardCountById(pageSearch);
+	    System.out.println(pageSearch);
+	    pageSearch.setBoardCount(totalRowCount);
+	    
+	    pageSearch.pageSetting();
+	    
+	    System.out.println(pageSearch.getBoardCount());
 
-		List<BoardDTO> boardListById = boardService.getBoardListById(memId);
+		List<BoardDTO> boardListById = boardService.getBoardListById(pageSearch);
+		
+		System.out.println(boardListById);
 
 		if (boardListById.size() > 0) {
 			model.addAttribute("boardListById", boardListById);
 		} else {
 			model.addAttribute("noList", "작성한 글이 없습니다.");
 		}
-
+		model.addAttribute("pageSearch", pageSearch);
 		System.out.println(boardListById);
 
 		return "board/boardView";
 	}
+	
+	
+	@RequestMapping("/boardViewAdmin")
+	public String boardViewAdmin(HttpSession session, Model model, SearchVO pageSearch) {
+	    // 로그인 정보 가져오기
+	    MemberDTO login = (MemberDTO) session.getAttribute("login");
+	    String memId = login.getMemId();
+	    
+
+	    // 로그인 정보가 없거나, 관리자가 아닐 경우 로그인 페이지로 되돌아가기
+	    if (login == null || !"admin".equals(login.getMemId())) {
+	        return "redirect:/loginView";
+	    }
+	    
+	    System.out.println("페이지 서치: " + pageSearch);
+	    
+	    // 게시글 확인을 위한 조건 설정
+	    
+
+	    // 페이징 처리
+	    int totalRowCount = boardService.getBoardCount(pageSearch);
+	    System.out.println(pageSearch);
+	    pageSearch.setBoardCount(totalRowCount);
+	    pageSearch.pageSetting();
+
+	    // 게시글 목록 가져오기
+	    List<BoardDTO> boardList = boardService.getBoardList(pageSearch);
+	    model.addAttribute("boardList", boardList);
+	    model.addAttribute("pageSearch", pageSearch);
+	    model.addAttribute("member", login);
+	    System.out.println("보드리스트" + boardList);
+
+	    // adminpage 뷰로 이동
+	    return "board/boardViewAdmin";
+	}
+	
+	
 
 	@RequestMapping("/boardWriteView")
 	public String boardWriteView(Model model, HttpSession session) {
@@ -153,43 +202,6 @@ public class BoardController {
 
 		return "board/boardView";
 	}
-
-	
-	
-	@RequestMapping("/boardViewAdmin")
-	public String boardViewAdmin(HttpSession session, Model model, SearchVO pageSearch) {
-	    // 로그인 정보 가져오기
-	    MemberDTO login = (MemberDTO) session.getAttribute("login");
-	    String memId = login.getMemId();
-	    
-
-	    // 로그인 정보가 없거나, 관리자가 아닐 경우 로그인 페이지로 되돌아가기
-	    if (login == null || !"admin".equals(login.getMemId())) {
-	        return "redirect:/loginView";
-	    }
-	    
-	    System.out.println("페이지 서치: " + pageSearch);
-	    
-	    // 게시글 확인을 위한 조건 설정
-	    
-
-	    // 페이징 처리
-	    int totalRowCount = boardService.getBoardCount(pageSearch);
-	    System.out.println(pageSearch);
-	    pageSearch.setBoardCount(totalRowCount);
-	    pageSearch.pageSetting();
-
-	    // 게시글 목록 가져오기
-	    List<BoardDTO> boardList = boardService.getBoardList(pageSearch);
-	    model.addAttribute("boardList", boardList);
-	    model.addAttribute("pageSearch", pageSearch);
-	    model.addAttribute("member", login);
-	    System.out.println("보드리스트" + boardList);
-
-	    // adminpage 뷰로 이동
-	    return "board/boardViewAdmin";
-	}
-
 
 	 @ResponseBody
 	 @RequestMapping("/replyWriteDo") 

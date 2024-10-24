@@ -66,7 +66,8 @@
 						<h1 class="fw-bolder">견적 내역 (관리자)</h1>
 					</div>
 					<!-- 검색 바 -->
-					<form method="get" action="${pageContext.request.contextPath}/boardViewAdmin">
+					<form method="get"
+						action="${pageContext.request.contextPath}/boardViewAdmin">
 						<div class="row mb-4 align-items-end">
 							<div class="col-md-2">
 								<select class="form-select" name="searchOption"
@@ -84,14 +85,16 @@
 									value="${param.searchWord}" placeholder="검색어를 입력하세요" />
 							</div>
 							<div class="col-md-2">
-								<button id="searchBtn" type="submit" class="btn btn-success w-100">검색</button>
+								<button id="searchBtn" type="submit"
+									class="btn btn-success w-100">검색</button>
 							</div>
-							
+
 						</div>
 					</form>
-					
+
 					<div class="col-md-2">
-						<select class="form-select" name="feedbackYn" id="feedbackYn" onchange="f_change()">
+						<select class="form-select" name="feedbackYn" id="feedbackYn"
+							onchange="f_change()">
 							<option value=null selected>피드백여부</option>
 							<option value="Y" ${param.feedbackYn == 'Y' ? 'selected' : ''}>확인</option>
 							<option value="N" ${param.feedbackYn == 'N' ? 'selected' : ''}>미확인</option>
@@ -104,10 +107,15 @@
 								<!-- 각 열의 너비 설정 -->
 								<colgroup>
 									<col style="width: 7%;" />
+									<!-- 번호  -->
 									<col style="width: 50%;" />
+									<!-- 제목  -->
 									<col style="width: 15%;" />
+									<!-- 날짜  -->
 									<col style="width: 15%;" />
+									<!-- 업체명  -->
 									<col style="width: 13%;" />
+									<!-- 피드백 여부  -->
 								</colgroup>
 								<thead class="thead-light">
 									<tr>
@@ -142,25 +150,26 @@
 							<div class="d-flex justify-content-center mt-4">
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link"
-											href="<c:url value='/boardViewAdmin?pageNo=1&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord}'/>"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+										<!-- 이전 페이지 버튼 -->
 										<li class="page-item"><c:if
-												test="${pageSearch.firstPage != 1}">
+												test="${pageSearch.pageNo > 1}">
 												<a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.firstPage - 1 }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
-													aria-label="Previous"> <span aria-hidden="true">&lt;</span></a>
-											</c:if> <c:if test="${pageSearch.firstPage == 1}">
-												<a class="page-link" href="#" aria-label="Previous"> <span
-													aria-hidden="true">&lt;</span></a>
+													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+													aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+												</a>
+											</c:if> <c:if test="${pageSearch.pageNo == 1}">
+												<a class="page-link disabled" href="#" aria-label="Previous">
+													<span aria-hidden="true">&lt;</span>
+												</a>
 											</c:if></li>
 
+										<!-- 페이지 번호 링크 -->
 										<c:forEach begin="${pageSearch.firstPage}"
 											end="${pageSearch.lastPage}" var="page">
 											<c:if test="${page != pageSearch.pageNo}">
 												<li class="page-item"><a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
-													aria-label="Previous">${page}</a></li>
+													href="<c:url value='/boardViewAdmin?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
+														${page} </a></li>
 											</c:if>
 											<c:if test="${page == pageSearch.pageNo}">
 												<li class="page-item active" aria-current="page"><span
@@ -168,22 +177,24 @@
 											</c:if>
 										</c:forEach>
 
+										<!-- 다음 페이지 버튼 -->
 										<li class="page-item"><c:if
-												test="${pageSearch.lastPage != pageSearch.boardCount}">
+												test="${pageSearch.pageNo < pageSearch.finalPage}">
 												<a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.lastPage + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"><span
-													aria-hidden="true">&gt;</span></a>
-											</c:if> <c:if test="${pageSearch.lastPage == pageSearch.boardCount}">
-												<a class="page-link" href="#" aria-label="Next"> <span
-													aria-hidden="true">&gt;</span></a>
+													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+													aria-label="Next"> <span aria-hidden="true">&gt;</span>
+												</a>
+											</c:if> <c:if test="${pageSearch.pageNo >= pageSearch.finalPage}">
+												<a class="page-link disabled" href="#" aria-label="Next">
+													<span aria-hidden="true">&gt;</span>
+												</a>
 											</c:if></li>
-
-										<li class="page-item"><a class="page-link"
-											href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.boardCount }&searchOption=${pageSearch.searchOption }&searchWord=${pageSearch.searchWord }'/>"><span
-												aria-hidden="true">&raquo;</span></a></li>
 									</ul>
 								</nav>
 							</div>
+
+
+
 						</div>
 					</div>
 				</div>
@@ -209,41 +220,35 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script type="text/javascript">
-	
 		let v_option = '${pageSearch.searchOption}'
-      	let v_search = '${pageSearch.searchWord}'
-      	let v_page = '${pageSearch.pageNo}'
-      	console.log(v_option)
-      	console.log(v_search)
-      	
-      	let v_category = document.getElementById('feedbackYn').value
-      	
-		
-      	function f_change(){
-      		
-      		console.log(event.target.value)
-      		
-      		let v_url = "${pageContext.request.contextPath}/boardViewAdmin";
-      		let v_query = "?pageNo=${pageSearch.pageNo}"
-      		
-      		if(event.target.value != 'null'){
-      			v_query = "?pageNo=${pageSearch.pageNo}"
-    			v_query += "&feedbackYn=" + event.target.value;
-      			
-      		}
-      		
-						
-			if(v_search){
+		let v_search = '${pageSearch.searchWord}'
+		let v_page = '${pageSearch.pageNo}'
+		console.log(v_option)
+		console.log(v_search)
+
+		let v_category = document.getElementById('feedbackYn').value
+
+		function f_change() {
+
+			console.log(event.target.value)
+
+			let v_url = "${pageContext.request.contextPath}/boardViewAdmin";
+			let v_query = "?pageNo=${pageSearch.pageNo}"
+
+			if (event.target.value != 'null') {
+				v_query = "?pageNo=${pageSearch.pageNo}"
+				v_query += "&feedbackYn=" + event.target.value;
+
+			}
+
+			if (v_search) {
 				v_query += "&searchOption=${pageSearch.searchOption}"
 				v_query += "&searchWord=${pageSearch.searchWord}"
 			}
-			
-			location.href =  v_url + v_query;
-      		
-      	}
-      	
-		
-		
+
+			location.href = v_url + v_query;
+
+		}
 	</script>
 
 

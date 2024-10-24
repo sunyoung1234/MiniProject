@@ -38,6 +38,12 @@
 .write-box{
 	height:750px;
 }
+
+.page-item.active .page-link {
+	background-color: #198754; /* 강조할 색상 */
+	color: white; /* 텍스트 색상 */
+	border-color: #198754; /* 테두리 색상 */
+}
 </style>
 
 
@@ -54,7 +60,6 @@
 						<h1 class="fw-bolder">견 적 내 역</h1>
 					</div>
 
-
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
 							<table class="table table-bordered">
@@ -64,7 +69,6 @@
 									<!-- 번호  -->
 									<col style="width: 50%;" />
 									<!-- 제목  -->
-									<%-- <col style="width: 40%;" /> <!-- 내용  -->  --%>
 									<col style="width: 15%;" />
 									<!-- 날짜  -->
 									<col style="width: 15%;" />
@@ -77,7 +81,6 @@
 										<th scope="col" class="text-center">번호</th>
 										<th scope="col" class="text-center">제목</th>
 										<th scope="col" class="text-center">날짜</th>
-										<!-- <th scope="col" class="text-center">내용</th>     내용을 내역에서 보여줄 필요가 있을지?. 일단 제외-->
 										<th scope="col" class="text-center">업체명</th>
 										<th scope="col" class="text-center">피드백 여부</th>
 									</tr>
@@ -89,14 +92,11 @@
 												<th scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
 												<td class="text-center"><a href="${pageContext.request.contextPath}/boardDetailView?orderNo=${board.orderNo}">${board.orderTitle}</a></td> <!-- 제목 -->
 												<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
-												<%-- <td class="text-center">${board.orderContent}</td>   내용부분 일단 제외 --%>
 												<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
 												<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
 											</tr>
 										</c:forEach>
 									</c:if>
-									
-									
 									<c:if test="${empty boardListById}">
 										<tr>
 											<td colspan="6" class="text-center">게시물이 없습니다.</td>
@@ -111,7 +111,52 @@
 									href="${pageContext.request.contextPath}/boardWriteView">요청서
 									작성</a>
 							</div>
+									<!-- Paging Bar -->
+									<div class="d-flex justify-content-center mt-4">
+										<nav aria-label="Page navigation example">
+											<ul class="pagination">
+												<!-- 이전 페이지 버튼 -->
+												<li class="page-item"><c:if
+														test="${pageSearch.pageNo > 1}">
+														<a class="page-link"
+															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+														</a>
+													</c:if> <c:if test="${pageSearch.pageNo == 1}">
+														<a class="page-link disabled" href="#"
+															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+														</a>
+													</c:if></li>
 
+												<!-- 페이지 번호 링크 -->
+												<c:forEach begin="${pageSearch.firstPage}"
+													end="${pageSearch.lastPage}" var="page">
+													<c:if test="${page != pageSearch.pageNo}">
+														<li class="page-item"><a class="page-link"
+															href="<c:url value='/boardView?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
+																${page} </a></li>
+													</c:if>
+													<c:if test="${page == pageSearch.pageNo}">
+														<li class="page-item active" aria-current="page"><span
+															class="page-link">${page}</span></li>
+													</c:if>
+												</c:forEach>
+
+												<!-- 다음 페이지 버튼 -->
+												<li class="page-item"><c:if
+														test="${pageSearch.pageNo < pageSearch.finalPage}">
+														<a class="page-link"
+															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+															aria-label="Next"> <span aria-hidden="true">&gt;</span>
+														</a>
+													</c:if> <c:if test="${pageSearch.pageNo >= pageSearch.finalPage}">
+														<a class="page-link disabled" href="#" aria-label="Next">
+															<span aria-hidden="true">&gt;</span>
+														</a>
+													</c:if></li>
+											</ul>
+										</nav>
+									</div>
 						</div>
 					</div>
 
