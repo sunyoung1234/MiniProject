@@ -3,22 +3,24 @@
 <mapper namespace="com.team.proj.reply.dao.IReplyDAO">
 	
 	<!-- 답변추가 -->
-	<insert id="replyWrite" parameterType="com.team.proj.reply.dto.ReplyDTO">
-	INSERT REPLY(
-		reply_id,
-		board_id,
-		reply_content,
-		reply_calc_id,
-		reply_date,
-		reply_calc_result
-	)VALUES(
-		#{replyId},
-		#{boardId},
-		#{replyContent},
-		#{replyCalcId},
-		SYSDATE,
-		#{replyCalcResult}
-	);
+	<insert id="writeReply" parameterType="com.team.proj.reply.dto.ReplyDTO">
+		INSERT INTO REPLY(
+			mem_id,
+			reply_id,
+			board_id,
+			reply_content,
+			reply_calc_id,
+			reply_date,
+			reply_calc_result
+		)VALUES(
+			#{memId},
+			#{replyId},
+			#{boardId},
+			#{replyContent},
+			#{replyCalcId},
+			SYSDATE,
+			#{replyCalcResult}
+		)
 	</insert>
 
 </mapper>

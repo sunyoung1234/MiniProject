@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.proj.substitute.dao.ISubDAO;
 import com.team.proj.substitute.dto.SubJoinDTO;
+import com.team.proj.substitute.dto.SubstituteDTO;
 
 @Service
 public class SubService {
@@ -18,4 +19,9 @@ public class SubService {
 		List<SubJoinDTO> result = dao.getSubInfo(matNo);
 		return result;
 	} 
+	
+	public SubstituteDTO getSubByNo(int subNo){
+		SubstituteDTO result = dao.getSubByNo(subNo);
+		return result;
+	}
 }
