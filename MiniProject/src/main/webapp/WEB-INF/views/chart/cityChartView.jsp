@@ -57,11 +57,11 @@ table {
 th, td {
 	padding: 2px;
 	text-align: center;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ddd; /* 기존: #ddd */
 }
 
 th {
-	background-color: #10bd66;
+	background-color: #198754; /* 변경: #10bd66 -> #198754 */
 	color: white;
 	font-weight: bold;
 }
@@ -89,7 +89,7 @@ tbody tr:hover {
 
 /* 버튼 스타일 */
 select {
-	border: 1px solid #10bd66;
+	border: 1px solid #198754; /* 변경: #10bd66 -> #198754 */
 	border-radius: 5px;
 	padding: 10px;
 	font-size: 1em;
@@ -97,12 +97,12 @@ select {
 }
 
 select:hover {
-	border-color: #08a95c; /* 호버 시 색상 변화 */
+	border-color: #08a95c; /* 기존: #08a95c (변경하지 않음) */
 }
 
 select:focus {
 	outline: none;
-	border-color: #007bff; /* 포커스 시 색상 변화 */
+	border-color: #007bff; /* 포커스 시 색상 변화 (변경하지 않음) */
 }
 
 .solution-section {
@@ -130,6 +130,7 @@ select:focus {
 	font-size: 50px;
 }
 </style>
+
 
 
 </head>
