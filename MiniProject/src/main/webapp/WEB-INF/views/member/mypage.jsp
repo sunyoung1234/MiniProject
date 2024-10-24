@@ -245,8 +245,9 @@ th, td {
 												</c:forEach>
 
 												<!-- 다음 페이지 버튼 -->
-												<li class="page-item"><c:if
-														test="${pageSearch.pageNo < pageSearch.finalPage}">
+												<li class="page-item">
+												<c:if test="${pageSearch.finalPage != 0  }">
+													<c:if test="${pageSearch.pageNo< pageSearch.finalPage}">
 														<a class="page-link"
 															href="<c:url value='/mypage?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
 															aria-label="Next"> <span aria-hidden="true">&gt;</span>
@@ -255,7 +256,9 @@ th, td {
 														<a class="page-link disabled" href="#" aria-label="Next">
 															<span aria-hidden="true">&gt;</span>
 														</a>
-													</c:if></li>
+													</c:if>
+												</c:if>
+												</li>
 											</ul>
 										</nav>
 									</div>
@@ -320,7 +323,7 @@ th, td {
         new Chart(ctx,{
         		type:'bar',
         		data:{
-        			labels: ['오늘 하루'],
+        			labels: ['솔루션'],
         			datasets:[{
         				label:'솔루션 전 탄소 배출량',
         				data: [v_boardResult*100000]

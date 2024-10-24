@@ -116,8 +116,15 @@
 										<nav aria-label="Page navigation example">
 											<ul class="pagination">
 												<!-- 이전 페이지 버튼 -->
-												<li class="page-item"><c:if
-														test="${pageSearch.pageNo > 1}">
+												<li class="page-item">
+													
+													<c:if test="${pageSearch.pageNo == 0}">
+														<a class="page-link disabled" href="#"
+															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+														</a>
+													</c:if>
+													
+													<c:if test="${pageSearch.pageNo > 1}">
 														<a class="page-link"
 															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
 															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
@@ -129,6 +136,12 @@
 													</c:if></li>
 
 												<!-- 페이지 번호 링크 -->
+												<c:if test="${pageSearch.pageNo == 0}">
+													<li class="page-item"><a class="page-link"
+															href="<c:url value='/boardView?pageNo=1&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
+																1 </a></li>
+												</c:if>
+												
 												<c:forEach begin="${pageSearch.firstPage}"
 													end="${pageSearch.lastPage}" var="page">
 													<c:if test="${page != pageSearch.pageNo}">
