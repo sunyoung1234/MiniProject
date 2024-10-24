@@ -203,48 +203,7 @@ public class BoardController {
 		return "board/boardView";
 	}
 
-	 @ResponseBody
-	 @RequestMapping("/replyWriteDo") 
-	 public ReplyDTO replyWriteDo(@RequestBody Map<String,String> data, HttpSession session) {
-		 int b_no = Integer.parseInt(data.get("no"));
-		 String b_content = data.get("content");
-		 String calc_id = data.get("id");
-		 MemberDTO mem = (MemberDTO) session.getAttribute("login");
-		 String mem_id = mem.getMemId();
-		 
-		 BoardDTO board = boardService.getBoardByNo(b_no);
-		 String board_id = board.getBoardId();
-		 
-		 List<SavecalDTO> scList = scService.findById(calc_id);
-		 
-		 double result = 0;
-		 
-		 for(SavecalDTO sc : scList) {
-			 int no = sc.getMaterialNo();
-			 int vol = sc.getMaterialVolume();
-			 MaterialsDTO mat = matService.getByMatNo(no);
-			 double gasKg = mat.getGasKg();
-			 double res = gasKg * vol;
-			 
-			 result += res;
-		 }
-		 
-		 Date date = new Date();
-		 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSSS");
-		 String unique = sdf.format(date);
-		 unique += "reply" + data.get("no");
-		 
-		 ReplyDTO rep = new ReplyDTO(unique, board_id, b_content, calc_id, result);
-		
-		 // Board 피드백 여부 변경 
-		 boardService.updateFeedbackYN(b_no);
-		 // CONFIRM YN Y로 변경
-		 scService.updateConfirm(calc_id);
-		 // CONFIRM YN N인 것들 삭제
-		 scService.deleteConfirmN();
-		 
-		 return rep;
-	 }
+	
 	 
 
 }
