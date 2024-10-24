@@ -850,6 +850,7 @@
 							}
 							v_replyLine[i].innerHTML = v_beta;
 						}
+						
 						final_result = (Math.round((v_befResult.innerHTML - after_total)*100) /100)
 						after_total = (Math.round(after_total * 100)/100);
 						v_replyLine[matEa - 1].innerHTML += '<div>' + after_total + '</div>'
