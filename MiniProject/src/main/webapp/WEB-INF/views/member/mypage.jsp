@@ -291,8 +291,8 @@ th, td {
 	<script type="text/javascript">
         console.log(document.querySelector('#imgBox').src)
         
-        let v_result = '${getReplyResult}'
-        let v_boardResult = '${getBoardCalc}'
+        let v_result = 0;
+        let v_boardResult = 0;
         
         console.log(v_result)
         console.log(v_boardResult)
@@ -300,9 +300,22 @@ th, td {
         // 피드백 탄소 배출량
        	console.log(typeof v_result)
        	console.log(typeof v_boardResult)
+       	 
+       	if(${getReplyResult} == null){
+       		v_result = 0
+       	}else{
+       	 	v_result = '${getReplyResult}'
+       	}
         
+        if(${getBoardCalc} == null){
+       		v_result = 0
+       	}else{
+       		v_boardResult = '${getBoardCalc}'
+       	}
         
         let ctx = document.getElementById("myChart")
+        
+        console.log("나무 : " + (v_boardResult*100000 - v_result)/20 + "그루")
         
         new Chart(ctx,{
         		type:'bar',
@@ -310,7 +323,7 @@ th, td {
         			labels: [24],
         			datasets:[{
         				label:'솔루션 전 탄소 배출량',
-        				data: [v_boardResult*1000]
+        				data: [v_boardResult*100000]
         			},{
         				label:'솔루션 후 탄소 배출량',
         				data: [v_result]

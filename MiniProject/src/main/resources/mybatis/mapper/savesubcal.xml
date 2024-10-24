@@ -31,15 +31,15 @@
 	
 	<update id="updateSubCal">
 		UPDATE SAVESUBCAL
-		set confirm_yn = "Y"
+		set confirm_yn = 'Y'
 		where 1=1
-		AND subcal_id = #{sscId}
+		AND subcal_id = #{subcalId}
 	
 	</update>
 
 	<delete id="deleteSubCal">
 		delete from SAVESUBCAL
-		WHERE confirm_yn = "N"
+		WHERE confirm_yn = 'N'
 	</delete>
 
 </mapper>

@@ -75,6 +75,7 @@ public class ReplyController {
 		 subcalService.updateSubCal(sscId);
 		 
 		 subcalService.deleteSubCal();
+		 
 		
 		return "board/boardAdminView";
 	}
