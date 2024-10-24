@@ -36,6 +36,7 @@ public class ReplyController {
 		 String boardNo = (String) data.get("b_no");
 		 String result = (String) data.get("result");
 		 String content = (String) data.get("content");
+		 String after = (String) data.get("after"); 
 		 
 		 
 		 int bNo = Integer.parseInt(boardNo);
@@ -44,12 +45,14 @@ public class ReplyController {
 		 String memId = board.getMemId();
 		 
 		 double r_result = Double.parseDouble(result);
+		 double r_after = Double.parseDouble(after);
 		 
 		 reply.setReplyCalcId(sscId);
 		 reply.setBoardId(boardNo);
 		 reply.setReplyCalcResult(r_result);
 		 reply.setReplyContent(content);
 		 reply.setMemId(memId);
+		 reply.setAfterCalcResult(r_after);
 		 
 		 
 		 

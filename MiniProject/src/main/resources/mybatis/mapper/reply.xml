@@ -11,6 +11,7 @@
 			reply_content,
 			reply_calc_id,
 			reply_date,
+			after_calc_result,
 			reply_calc_result
 		)VALUES(
 			#{memId},
@@ -19,6 +20,7 @@
 			#{replyContent},
 			#{replyCalcId},
 			SYSDATE,
+			#{afterCalcResult},
 			#{replyCalcResult}
 		)
 	</insert>

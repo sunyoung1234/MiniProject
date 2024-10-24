@@ -538,6 +538,7 @@
 			let subMap = new Map(); // subNo - subVol
 			let final_result = 0;
 			let orderNo = ${board.orderNo};
+			let after_total = 0; 
 			 
 			console.log(sscId); 
 			
@@ -816,7 +817,7 @@
 				const strMap = JSON.stringify(matObj);
 				
 				console.log(orderNo);
-				let diff_total = 0;
+				after_total = 0;
 				
 				
 				$.ajax({
@@ -834,15 +835,13 @@
 						v_overlay.style.display = "none";
 						
 						let matEa = response['eaList'].length;;
-						console.log(matEa)
 						let idx = 0;
-						console.log(response['subList']);
 						
 						for(let i=0; i < matEa; i++){
 							
 							let v_beta = "";  
 							for(let j=0; j< response['eaList'][i]; j++){
-								diff_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
+								after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
 								v_beta += '<div class="sub-sub"><div>' + response['subList'][idx].subName + '</div>'
 								v_beta += '<img src="' + response['subList'][idx].subImg + '">'
 								v_beta += '<div>' + response['sscList'][idx].subVol + '</div></div>'
@@ -851,10 +850,11 @@
 							}
 							v_replyLine[i].innerHTML = v_beta;
 						}
-						final_result = (Math.round((v_befResult.innerHTML - diff_total)*100) /100)
 						
-						v_replyLine[matEa - 1].innerHTML += '<div>' + diff_total + '</div>'
-						v_replyLine[matEa - 1].innerHTML += '<div>' + (Math.round((v_befResult.innerHTML - diff_total)*100) /100) + '</div>'
+						final_result = (Math.round((v_befResult.innerHTML - after_total)*100) /100)
+						after_total = (Math.round(after_total * 100)/100);
+						v_replyLine[matEa - 1].innerHTML += '<div>' + after_total + '</div>'
+						v_replyLine[matEa - 1].innerHTML += '<div>' + (Math.round((v_befResult.innerHTML - after_total)*100) /100) + '</div>'
 					}
 						})
 					
@@ -868,15 +868,6 @@
 			 v_replyWriteBtn.addEventListener('click',()=>{
 				 
 				 sscId += "";
-				 
-				 console.log(typeof final_result)
-				 console.log(final_result)
-				 console.log(typeof sscId)
-				 console.log(sscId)
-				 console.log(typeof orderNo)
-				 console.log(orderNo)
-				 console.log(typeof rContent.value)
-				 console.log(rContent.value)
 				 
 				 let rv = rContent.value;
 				 
@@ -892,6 +883,7 @@
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({
+							after : after_total + "", 
 							b_no : orderNo + "",
 							id : sscId, 
 							result : final_result + "",
