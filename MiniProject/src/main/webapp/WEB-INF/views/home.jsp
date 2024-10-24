@@ -283,7 +283,7 @@ font-bold {
 					환경을 생각하는 설계,<br> GreenSolution의 약속입니다.
 				</div>
 			</div>
-		</div>
+		</div> 
 		<div class="carousel-item">
 			<div class="position-relative text-center">
 				<img src="${pageContext.request.contextPath}/resources/image/캘셀3.jpg" class="custom-carousel-image" alt="탄소 절감">
@@ -291,6 +291,7 @@ font-bold {
 					style="color: white;/*  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
 					탄소 중립을 향한 작은 실천,<br> 큰 변화를 이룹니다.
 				</div>
+				
 			</div>
 		</div>
 	</div>

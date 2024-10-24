@@ -405,7 +405,10 @@ public class HomeController {
 	        return "chart/cityChartView"; // cityChartView.jsp∑Œ ¿Ãµø
 	    }
 	
-	
+	    @RequestMapping("/errPage")
+	    public String errPage() {
+	    	return "errPage";
+	    }
 	
 	
 	

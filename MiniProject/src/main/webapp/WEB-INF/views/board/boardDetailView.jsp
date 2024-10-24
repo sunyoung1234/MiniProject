@@ -632,7 +632,7 @@
 							response.forEach(r =>{
 								v_alpha += '<div class="cal-var"><input class="sub-check-box" type="checkbox"><div class="cal-var-img"><img class="cal-img" src="'+ r.subImg +'"></div><div class="cal-var-name">'
 								v_alpha += r.subName + '</div><div id="hiddenMatNo" style="display: none;">'+ material_no + '</div><div class="cal-var-co2">'
-								v_alpha += r.gasKg + '</div><input class="sub-input" style="display: none;" type="number">'
+								v_alpha += r.gasKg + '</div><input value="0" min="0" max="1000000000000"  class="sub-input" style="display: none;" type="number">'
 								v_alpha += '<div class="sub-result"  style="display: none;"></div></div>'
 								subMap.set(r.subNo, 0);
 							})
