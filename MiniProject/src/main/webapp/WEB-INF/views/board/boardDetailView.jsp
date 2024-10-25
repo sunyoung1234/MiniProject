@@ -1,448 +1,521 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${board.orderTitle}</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>견적서 상세페이지</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
-    
-    <style type="text/css">
-    	* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-	}
 
-	body {
-	    font-family: Arial, sans-serif;
- 	}
-	
-	button {
-	    background-color: #007bff;
-	    color: white;
-	    border: none;
-	    padding: 10px 15px;
-	    border-radius: 5px;
-	    cursor: pointer;
-	    transition: background-color 0.3s;
-	}
-	
-	button:hover {
-	    background-color: #0056b3;
-	}
-	
-	#overlay {
-	    display: none; /* 기본적으로 숨김 */
-	    position: fixed;
-	    top: 0;
-	    left: 0;
-	    width: 100%;
-	    height: 100%;
-	    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-	    z-index: 99; /* 모달보다 낮은 z-index */
-	}
-	
-	.modal-box {
-	    z-index: 100;
-	    width: 90%;
-	    max-width: 1200px;
-	    height: 80%;
-	    display: none;
-	    justify-content: center;
-	    align-items: flex-start; /* Align items at the top */
-	    position: fixed;
-	    top: 50%;
-	    left: 50%;
-	    transform: translate(-50%, -50%);
-	    background-color: white;
-	    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	    border-radius: 10px;
-	    overflow: hidden; /* Hide overflow of modal box */
-	}
-	
-	.modal-mat-list, .modal-cal {
-	    padding: 20px;
-	    height: calc(100% - 60px); /* Adjust height to accommodate buttons */
-	    overflow-y: auto; /* Enable vertical scroll */
-	}
-	
-	.material-list {
-	    padding: 10px;
-	    border: 1px solid #ddd;
-	    border-radius: 5px;
-	    background-color: #fafafa;
-	}
-	
-	.mat-var {
-	    padding: 10px;
-	    border-bottom: 1px solid #ddd;
-	    display: flex;
-	    align-items: center;
-	}
-	
-	.mat-var:last-child {
-	    border-bottom: none;
-	}
-	
-	.cal-var, .cal-var-input {
-	    padding: 10px;
-	    margin-bottom: 10px;
-	    display: flex;
-	    align-items: center;
-	    background-color: #f0f0f0;
-	    border-radius: 5px;
-	}
-	
-	#resultCal {
-	    margin-top: 20px;
-	    text-align: right;
-	    color: #333;
-	    font-size: 24px;
-	    font-weight: bold;
-	}
-	
-	#btnBox {
-	    display: flex;
-	    justify-content: space-between;
-	    margin-top: 20px;
-	}
-	
-	input[type='number'] {
-	    width: 80px;
-	    margin-left: 10px;
-	    padding: 5px;
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	}
-	
-	input[type='text'], textarea, select {
-	    padding: 5px;
-	    margin-right: 10px;
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	}
-	
-	textarea {
-	    resize: none; /* Prevent resizing */
-	}
-	
-	select {
-	    width: auto;
-	}
-	
-	.material-list img.mat-img {
-	    width: 50px;
-	    height: auto;
-	    margin-right: 10px;
-	}
-	
-	.cal-var-img img.cal-img {
-	    width: 30px;
-	    height: auto;
-	}
-	
-	.select-none{
-	    height: auto;
-	    padding: 10px;
-	    margin-bottom: 10px;
-	    display: flex;
-	    align-items: center;
-	    background-color: #f0f0f0;
-	    border-radius: 5px; 	 
-	}
-	
-	#exampleBox {
-	    border: 1px solid #ddd;
-	    border-radius: 8px;
-	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	    overflow: hidden;
-	    margin: 20px;
-	    width: 1100px;
-	    transition: transform 0.2s;
-	}
-	
-	#exampleBox:hover {
-	    transform: scale(1.05); /* 호버 시 크기 증가 */
-	}
-	
-	.ex-img img {
-	    width: 70px;
-	    height: auto;
-	    border-bottom: 1px solid #ddd;
-	}
-	
-	.ex-name {
-	    font-size: 15px;
-	    font-weight: bold;
-	    margin: 10px 0;
-	    text-align: center;
-	    color: #333;
-	}
-	
-	.ex-EA {
-	    font-size: 1em;
-	    color: #666;
-	    text-align: center;
-	    padding: 0 10px;
-	    margin-bottom: 10px;
-	}
-	
-	.write-overview {
-	    display: flex;
-	    width: 1200px;
-	    height: 30px;
-	    border: 1px solid black;
-	}
-	
-	.write-container {
-	    width: 1200px;
-	    border: 1px solid black;
-	}
-	
-	.application {
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    width: calc(100% / 3 - 2px);
-	    height: 30px;
-	}
-	
-	.application1 {
-	    display: flex;
-	    justify-content: space-around;
-	    align-items: center;
-	    width: calc(100% / 3 - 2px);
-	    height: 30px;
-	}
-	
-	.write-title-box {
-	    display: flex;
-	    width: 100%;
-	    height: 70px;
-	    margin-top: 40px;
-	}
-	
-	.write-title {
-	    display: flex;
-	    justify-content: center;
-	    width: 33%;
-	    height: 40px;
-	}
-	
-	.write-title-input {
-	    width: 66%;
-	    height: 40px;
-	    padding-right: 20px;
-	}
-	
-	.write-content-box {
-	    display: flex;
-	    width: 100%;
-	    height: 200px;
-	    margin-top: 40px;
-	}
-	
-	.write-content {
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    width: 33%;
-	    height: 200px;
-	}
-	
-	.write-content-input {
-	    width: 66%;
-	    height: 200px;
-	    padding-right: 20px;
-	}
-	
-	.write-click-btn {
-	    display: flex;
-	    justify-content: end;
-	}
-	
-	.ex-box {
-	    display: flex;
-	    width: calc(100% / 5 - 10px);
-	    height: 50px;
-	}
-	    	
-	    
-    	.content-box{
-    		width:100%;
-    		height:600px;
-    		margin-bottom: 100px;
-    	}
-    	
-    	.reply-box{
-    		width:100%;
-    		height:500px;
-    		border: 1px solid black;
-    	}
-    	
-    	#fixedHeight {
-        	height: 15px; 
-        	overflow: hidden; 
-  		}
-  		  
-		
-		.material-img {
-		    height: 100%; 
-		    width: 25%; 
-		}
-		
-		.fixedHeight td, .fixedHeight th {
-		    height: 100%; 
-		}
-		
-		#calcResult{
-			display: flex;
-			justify-content: flex-end;
-			padding-right: 20px;
-		}
-		
-		.material-img:hover{ 
-			transform: scale(2);
-		}
-		
+<style type="text/css">
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 
-		.mat-var {
-		    cursor: pointer;
-		    transition: background-color 0.3s;
-		}
-		
-		.mat-var:hover {
-		    background-color: #d0d0d0; /* 마우스 오버 시 색상 */
-		}
-				
+body {
+	font-family: Arial, sans-serif;
+}
 
-		.detail-title{
-			font-size: 40px;
-			margin-bottom: 20px;
-		}
-		
-		.sub-check-box{
-			margin-right: 5px; 
-		}
-		.disabled {
-            pointer-events: none; /* 클릭 이벤트 차단 */
-        }
- /* GPT GPT GPT GPT GPT GPT */       
+button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+#overlay {
+	display: none; /* 기본적으로 숨김 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+	z-index: 99; /* 모달보다 낮은 z-index */
+}
+
+.modal-box {
+	z-index: 100;
+	width: 90%;
+	max-width: 1200px;
+	height: 80%;
+	display: none;
+	justify-content: center;
+	align-items: flex-start; /* Align items at the top */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	border-radius: 10px;
+	overflow: hidden; /* Hide overflow of modal box */
+}
+
+.modal-mat-list, .modal-cal {
+	padding: 20px;
+	height: calc(100% - 60px); /* Adjust height to accommodate buttons */
+	overflow-y: auto; /* Enable vertical scroll */
+}
+
+.material-list {
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fafafa;
+}
+
+.mat-var {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	align-items: center;
+}
+
+.mat-var:last-child {
+	border-bottom: none;
+}
+
+.cal-var, .cal-var-input {
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
+#resultCal {
+	margin-top: 20px;
+	text-align: right;
+	color: #333;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#btnBox {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+input[type='number'] {
+	width: 80px;
+	margin-left: 10px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+input[type='text'], textarea, select {
+	padding: 5px;
+	margin-right: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+textarea {
+	resize: none; /* Prevent resizing */
+}
+
+select {
+	width: auto;
+}
+
+.material-list img.mat-img {
+	width: 50px;
+	height: auto;
+	margin-right: 10px;
+}
+
+.cal-var-img img.cal-img {
+	width: 30px;
+	height: auto;
+}
+
+.select-none {
+	height: auto;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
+#exampleBox {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	margin: 20px;
+	width: 1100px;
+	transition: transform 0.2s;
+}
+
+#exampleBox:hover {
+	transform: scale(1.05); /* 호버 시 크기 증가 */
+}
+
+.ex-img img {
+	width: 70px;
+	height: auto;
+	border-bottom: 1px solid #ddd;
+}
+
+.ex-name {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 10px 0;
+	text-align: center;
+	color: #333;
+}
+
+.ex-EA {
+	font-size: 1em;
+	color: #666;
+	text-align: center;
+	padding: 0 10px;
+	margin-bottom: 10px;
+}
+
+.write-overview {
+	display: flex;
+	width: 1200px;
+	height: 30px;
+	border: 1px solid black;
+}
+
+.write-container {
+	width: 1200px;
+	border: 1px solid black;
+}
+
+.application {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(100%/ 3 - 2px);
+	height: 30px;
+}
+
+.application1 {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: calc(100%/ 3 - 2px);
+	height: 30px;
+}
+
+.write-title-box {
+	display: flex;
+	width: 100%;
+	height: 70px;
+	margin-top: 40px;
+}
+
+.write-title {
+	display: flex;
+	justify-content: center;
+	width: 33%;
+	height: 40px;
+}
+
+.write-title-input {
+	width: 66%;
+	height: 40px;
+	padding-right: 20px;
+}
+
+.write-content-box {
+	display: flex;
+	width: 100%;
+	height: 200px;
+	margin-top: 40px;
+}
+
+.write-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 33%;
+	height: 200px;
+}
+
+.write-content-input {
+	width: 66%;
+	height: 200px;
+	padding-right: 20px;
+}
+
+.write-click-btn {
+	display: flex;
+	justify-content: end;
+}
+
+.ex-box {
+	display: flex;
+	width: calc(100%/ 5 - 10px);
+	height: 50px;
+}
+
+.content-box {
+	width: 100%;
+	height: auto;
+	margin: auto;
+	margin-bottom: 100px;
+}
+
+.reply-box {
+	width: 100%;
+	height: 500px;
+	border: 1px solid black;
+}
+
+#fixedHeight {
+	height: 15px;
+	overflow: hidden;
+}
+
+.material-img {
+	height: 100%;
+	width: 25%;
+}
+
+.fixedHeight td, .fixedHeight th {
+	height: 100%;
+}
+
+#calcResult {
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 20px;
+}
+
+.material-img:hover {
+	transform: scale(2);
+}
+
+.mat-var {
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.mat-var:hover {
+	background-color: #d0d0d0; /* 마우스 오버 시 색상 */
+}
+
+.detail-title {
+	font-size: 40px;
+	margin-bottom: 20px;
+}
+
+.sub-check-box {
+	margin-right: 5px;
+}
+
+.disabled {
+	pointer-events: none; /* 클릭 이벤트 차단 */
+}
+/* GPT GPT GPT GPT GPT GPT */
 .reply-line {
-    display: flex;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 15px 0;
-    transition: transform 0.2s;
+	display: flex;
+	padding: 15px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	background-color: #ffffff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	margin: 15px 0;
+	transition: transform 0.2s;
 }
 
 .reply-line:hover {
-    transform: scale(1.02);
+	transform: scale(1.02);
 }
 
 .reply-mat-box {
-    flex: 1;
-    display: flex;
-    align-items: center;
+	flex: 1;
+	display: flex;
+	align-items: center;
 }
 
 .reply-mat-img {
-    width: 60px;
-    height: 60px;
-    margin-right: 15px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #3498db; /* 이미지 테두리 */
+	width: 60px;
+	height: 60px;
+	margin-right: 15px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #3498db; /* 이미지 테두리 */
 }
 
 .reply-mat-name {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #333;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #333;
 }
 
 .reply-mat-vol {
-    font-size: 0.9em;
-    color: #777;
+	font-size: 0.9em;
+	color: #777;
 }
 
 .reply-sub-box {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    padding-left: 25px;
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	padding-left: 25px;
 }
 
 .sub-name {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    padding: 8px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
+	display: flex;
+	align-items: center;
+	margin: 8px 0;
+	padding: 8px;
+	border-radius: 5px;
+	transition: background-color 0.2s;
 }
 
 .sub-name:hover {
-    background-color: #f0f8ff; /* 호버 시 배경색 변화 */
+	background-color: #f0f8ff; /* 호버 시 배경색 변화 */
 }
 
 .sub-img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 50%;
-    object-fit: cover;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .sub-vol {
-    font-size: 1.1em;
-    color: #555;
+	font-size: 1.1em;
+	color: #555;
 }
 
 .sub-after {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #e74c3c; /* 빨간색 */
+	font-size: 1.4em;
+	font-weight: bold;
+	color: #e74c3c; /* 빨간색 */
 }
 
 .sub-calc-result {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #2ecc71; /* 초록색 */
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
+	font-size: 1.4em;
+	font-weight: bold;
+	color: #2ecc71; /* 초록색 */
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
 }
 /* GPT GPT GPT GPT GPT GPT */
-        .modal-2{
-		  width: 300px; /* 너비 설정 */
-		    height: 200px; /* 높이 설정 */
-		    background-color: lightblue; /* 배경색 */
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    border: 1px solid #000; /* 테두리 */
-		    text-align: center; /* 텍스트 중앙 정렬 */
- 		   transform: translateY(-50px); /* 위로 띄우기 */
-        }
-        
+.modal-2 {
+	width: 300px; /* 너비 설정 */
+	height: 200px; /* 높이 설정 */
+	background-color: lightblue; /* 배경색 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #000; /* 테두리 */
+	text-align: center; /* 텍스트 중앙 정렬 */
+	transform: translateY(-50px); /* 위로 띄우기 */
+}
 
-    
-    </style>
+#buttonContainer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px; /* 텍스트 영역과 버튼들 사이의 간격 */
+	align-items: center; /* 버튼들이 같은 높이에 있도록 정렬 */
+}
+
+#rightButtons {
+	display: flex;
+}
+
+#replyWriteBtn, #goBackBtn {
+	margin-left: 10px; /* 두 버튼 사이 간격 */
+}
+
+.content-box {
+	background-color: white; /* 전체 배경 색 통일 */
+	padding: 20px;
+	border-radius: 10px;
+	margin-bottom: 20px; /* reply와 간격 조정 */
+}
+
+/* .detail-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.detail-title-box {
+	display: flex;
+	flex-direction: column;
+}
+
+.detail-title {
+	font-weight: bold;
+	font-size: 1.5rem;
+	margin-bottom: 10px;
+}
+
+.detail-content {
+	font-size: 1rem;
+	color: #6c757d;
+} */
+
+/* 자재 테이블 통일 */
+.table {
+	margin-top: 20px;
+}
+
+#calcResult {
+	text-align: right; /* 결과를 오른쪽 정렬 */
+	margin-top: 15px;
+	font-size: 1.2rem;
+}
+
+.table td, .table th {
+	vertical-align: middle; /* 수직 방향 중앙 정렬 */
+}
+
+#replyContent {
+	width: 98%; /* 양옆 1%씩 줄임 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
+
+#buttonContainer {
+	display: flex; /* 버튼들을 가로로 나열 */
+	justify-content: flex-end; /* 우측 정렬 */
+	margin-top: 10px; /* 버튼과 textarea 간 간격 */
+}
+
+#rightButtons {
+	display: flex;
+	gap: 10px; /* 버튼 간 간격 */
+}
+</style>
 </head>
 <body>
-		
-	<%@ include file="/WEB-INF/inc/top.jsp" %> 
-	
+
+	<%@ include file="/WEB-INF/inc/top.jsp"%>
+
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
@@ -451,22 +524,33 @@
 						<h1 class="fw-bolder">견 적 내 역</h1>
 					</div>
 
-
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
-							
-						
+
+							<!-- 제목과 내용 추가 부분 -->
+							<table class="table table-bordered" style="margin-top: 20px;">
+								<tbody>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; font-weight: bold; color: #333; letter-spacing: 5px; padding: 15px 0;">
+											제 목 <!-- 설명용 텍스트 -->
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; font-weight: bold; color: #333; padding: 15px 0; min-height: 90px;">
+											${board.orderTitle} <!-- 동적으로 제목 가져오기 -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 							<table class="table table-bordered">
-								<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
 								<colgroup>
 									<col style="width: 25%;" />
-									<!-- 번호  -->
 									<col style="width: 25%;" />
-									<!-- 날짜  -->
 									<col style="width: 25%;" />
-									<!-- 업체명  -->
 									<col style="width: 25%;" />
-									<!-- 피드백 여부  -->
 								</colgroup>
 								<thead class="thead-light">
 									<tr>
@@ -477,28 +561,24 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr> 
-										<th id="boardNum" scope="row" class="text-center">${board.orderNo}</th> <!-- 번호 -->
-										<td class="text-center">${board.requestDate}</td> <!-- 날짜 -->
-										<td class="text-center">${board.entpName}</td> <!-- 업체명 -->
-										<td class="text-center">${board.feedbackYn}</td> <!-- 피드백여부 -->
+									<tr>
+										<th id="boardNum" scope="row" class="text-center">${board.orderNo}</th>
+										<td class="text-center">${board.requestDate}</td>
+										<td class="text-center">${board.entpName}</td>
+										<td class="text-center">${board.feedbackYn}</td>
 									</tr>
 								</tbody>
 							</table>
-							
+
+							<!-- content-box 추가 -->
 							<div class="content-box">
-								<div>
-									<div class="detail-title">테스트트트트(제목)</div>
-									<div class="detail-content">테스트 내용(내용)</div>
-								</div>
-								 
-								<table style="background-color: white;" class="table table-bordered">
-									<!-- 각 열의 너비 설정 및 가운데 정렬 적용 -->
+								<table style="background-color: white;"
+									class="table table-bordered">
 									<colgroup>
-										<col style="width: 35%; " /> 
+										<col style="width: 35%;" />
 										<col style="width: 40%;" />
-										<col style="width: 25%;" /> 
-									</colgroup> 
+										<col style="width: 25%;" />
+									</colgroup>
 									<thead class="thead-light">
 										<tr>
 											<th scope="col" class="text-center">자재 사진</th>
@@ -507,102 +587,125 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="scv" items="${scVolList }">
-										
-											<tr id="fixedHeight">  
-												<th scope="row" class="text-center">
-													<img class="material-img" src="${scv.materialImg }">
-												</th> 
-												<td class="text-center">${scv.materialName}</td> <!-- 이름 -->
-												<td class="text-center">${scv.materialVolume} kg</td> <!-- 이름 -->
+										<c:forEach var="scv" items="${scVolList}">
+											<tr id="fixedHeight">
+												<th scope="row" class="text-center"><img
+													class="reply-mat-img" src="${scv.materialImg}"></th>
+												<td class="text-center reply-mat-name">${scv.materialName}</td>
+												<td class="text-center reply-mat-vol">${scv.materialVolume}kg</td>
 											</tr>
-											 
-										</c:forEach>	
+										</c:forEach>
 									</tbody>
 								</table>
 								<p id="calcResult">
-									<span id="bef_result" style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult }</span>
-									<span style="font-weight: bold;">CO2/KG</span>
+									<span> 총 탄소 배출량 : &nbsp; </span>
+									<span id="bef_result"
+										style="padding-right: 15px; font-weight: bold; color: blue;">${calcResult}</span>
+									<span style="font-weight: bold;">CO₂/kg</span>
 								</p>
-								<h5>내용</h5>
-								<p>
-									${board.orderContent}
-								</p> 
 							</div>
-							
-							<div id="exampleBox"></div> 
-							  
-							<c:if test="${sessionScope.login.getMemId() == 'admin' }">
-								<div id="overlay"></div>
-								<div id="replyCal">
-									<c:forEach var="scv" items="${scVolList }">
-										
-											<div class="reply-line">
-												<div class="reply-mat-box">
-													<img class="reply-mat-img" src="${scv.materialImg }">
-													<div class="reply-mat-name">${scv.materialName}</div> <!-- 이름 -->
-													<div class="reply-mat-vol">${scv.materialVolume} kg</div> <!-- 이름 -->
-												</div>
-												<div class="reply-sub-box">
-													<div>변경 사항 없음</div>
-												</div> 
-											</div>
-											 
-									</c:forEach>
-								</div>
-								<button id="modalBtn" >계산기</button>
-								<textarea id="replyContent" rows="15" cols="111"></textarea> 
-								 <button id="goBackBtn">뒤로가기</button>
-								<button id="replyWriteBtn">답변작성</button>
-								
-								<div class="modal-box">
-									<div class="modal-mat-list">
-										<div class="material-list">
-											<c:forEach items="${scmList }" var="scm">
-												<div class="mat-var disabled">
-													<div class="mat-no" style="display: none;">${scm.materialNo }</div>
-													<div class="mat-var-img">
-														<img class="mat-img" src="${scm.materialImg }">
-													</div>
-													
-													<div class="mat-var-name">${scm.materialName}</div> 
-													<div style="padding-left: 15px" class="mat-var-vol">${scm.materialVolume}kg</div>
-													<div style="padding-left: 20px" class="mat-cal-result" >${Math.round(scm.gasKg * scm.materialVolume)}</div>
-												</div>
-											</c:forEach>
-										</div>
-									</div>
-									
-									<div class="modal-cal">
-										<div class="modal-cal-list"></div>
-										<div id="resultCal">0 CO₂/kg</div>
-										<div id="btnBox">
-											<button id="closeCal" type="button">닫기</button>
-											<button id="nextSub" type="button">다음</button>
-											<button id="registSub" type="button" style="display: none;">등록</button>
-											
-										</div>
-									</div> 
-							
-								</div>
-								
-							</c:if>
-							<c:if test="${sessionScope.login.getMemId() != 'admin' }">
-								<button id="goBackUserBtn">뒤로가기</button>
-							</c:if>
-							
-							
+
+
+							<table class="table table-bordered" style="margin-top: 20px; width:97%; margin-left: 15px;">
+								<tbody>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; font-weight: bold; color: #333; letter-spacing: 5px; padding: 15px 0;">
+											내 용 <!-- 설명용 텍스트 -->
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; color: #555; padding: 15px 0; min-height: 90px;">
+											${board.orderContent} <!-- 동적으로 내용 가져오기 -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 
 						</div>
-					</div>
 
+						<div id="exampleBox"></div>
+
+						<c:if test="${sessionScope.login.getMemId() == 'admin' }">
+							<div id="overlay"></div>
+							<div  style="width:80%;"id="replyCal">
+								<c:forEach var="scv" items="${scVolList }">
+									<div class="reply-line">
+										<div class="reply-mat-box">
+											<img class="reply-mat-img" src="${scv.materialImg }">
+											<div class="reply-mat-name">${scv.materialName}</div>
+											<!-- 이름 -->
+											<div class="reply-mat-vol">${scv.materialVolume}kg</div>
+											<!-- 이름 -->
+										</div>
+										<div class="reply-sub-box">
+											<div>변경 사항 없음</div>
+										</div>
+									</div>
+
+								</c:forEach>
+							</div>
+							<div id="buttonContainer">
+								<button id="modalBtn" class="mb-3">계산기</button>
+							</div>
+							<textarea id="replyContent" rows="15" cols="130"></textarea>
+							<div id="buttonContainer">
+								<div id="rightButtons">
+									<button id="replyWriteBtn">답변작성</button>
+									<button id="goBackBtn">뒤로가기</button>
+								</div>
+							</div>>
+
+							<div class="modal-box">
+								<div class="modal-mat-list">
+									<div class="material-list">
+										<c:forEach items="${scmList }" var="scm">
+											<div class="mat-var disabled">
+												<div class="mat-no" style="display: none;">${scm.materialNo }</div>
+												<div class="mat-var-img">
+													<img class="mat-img" src="${scm.materialImg }">
+												</div>
+
+												<div class="mat-var-name">${scm.materialName}</div>
+												<div style="padding-left: 15px" class="mat-var-vol">${scm.materialVolume}kg</div>
+												<div style="padding-left: 20px" class="mat-cal-result">${Math.round(scm.gasKg * scm.materialVolume)}</div>
+											</div>
+										</c:forEach>
+									</div>
+								</div>
+
+								<div class="modal-cal">
+									<div class="modal-cal-list"></div>
+									<div id="resultCal">0 CO₂/kg</div>
+									<div id="btnBox">
+										<button id="closeCal" type="button">닫기</button>
+										<button id="nextSub" type="button">다음</button>
+										<button id="registSub" type="button" style="display: none;">등록</button>
+
+									</div>
+								</div>
+
+							</div>
+
+						</c:if>
+						<c:if test="${sessionScope.login.getMemId() != 'admin' }">
+							<button id="goBackUserBtn">뒤로가기</button>
+						</c:if>
+
+
+
+					</div>
 				</div>
+
+			</div>
 			</div>
 		</section>
 	</main>
-	
+
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
-	
+
 	<script type="text/javascript">
 	
 	
@@ -883,6 +986,8 @@
 			// 등록버튼 (savesubcal 들 모아서 넘기기   기존 총합  이후 총합 차이)
 			let v_registBtn = document.querySelector('#registSub');
 			let v_replyLine = document.querySelectorAll('.reply-sub-box');
+			let v_replyLine2 = document.querySelectorAll('.reply-line');
+			let v_replyCal2 = document.querySelector('#replyCal');
 			
 			console.log(v_replyLine[0]) 
 			console.log(v_replyLine[1]) 
@@ -920,19 +1025,19 @@
 								after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
 								v_beta += '<div class="sub-name"><div>' + response['subList'][idx].subName + '</div>'
 								v_beta += '<img class="sub-img" src="' + response['subList'][idx].subImg + '">'
-								v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + '</div></div>'
+								v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + ' &nbsp; CO₂/kg</div></div>'
 								
 								idx ++;
 							}
 							v_replyLine[i].innerHTML = v_beta;
 						}
 						
-						final_result = (Math.round((v_befResult.innerHTML - after_total)*100) /100)
-						after_total = (Math.round(after_total * 100)/100);
-						v_replyLine[matEa - 1].innerHTML += '<div class="sub-after">' + after_total + '</div>'
-						v_replyLine[matEa - 1].innerHTML += '<div class="sub-calc-result">' + (Math.round((v_befResult.innerHTML - after_total)*100) /100) + '</div>'
-						
-						console.log(v_replyLine[matEa - 1].parentElement.outerHTML);   
+						final_result = (Math.round((v_befResult.innerHTML - after_total) * 100) / 100);
+						after_total = (Math.round(after_total * 100) / 100);
+						v_replyCal2.innerHTML += '<div><div class="sub-after">' + after_total + ' &nbsp; CO₂/kg</div>';
+						v_replyCal2.innerHTML += '<div class="sub-calc-result">' + (Math.round((v_befResult.innerHTML - after_total) * 100) / 100) + ' CO₂/kg</div></div>';
+
+						console.log(v_replyLine[matEa - 1].parentElement.outerHTML);  
 					}
 						})
 					
@@ -993,7 +1098,7 @@
 		
 		
 	</script>
-		
-	
+
+
 </body>
 </html>
