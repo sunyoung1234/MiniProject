@@ -1,7 +1,7 @@
 package com.team.proj.member.web;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +11,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.proj.FileUpload;
 import com.team.proj.attach.dto.AttachDTO;
 import com.team.proj.attach.service.AttachService;
 import com.team.proj.board.service.BoardService;
-import com.team.proj.materials.dto.MaterialsDTO;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.member.service.MemberService;
 
@@ -184,6 +185,16 @@ public class MemberController {
 	@RequestMapping("/boardWriteView2")
 	public String boardWriteView2(Model model, HttpSession session) {
 		return "board/boardWriteView2";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/idCheck")
+	public int idCheck(@RequestBody Map<String, String> data) {
+		
+		String id = data.get("id");
+		int check = memberService.checkId(id);
+		
+		return check;
 	}
 
 }

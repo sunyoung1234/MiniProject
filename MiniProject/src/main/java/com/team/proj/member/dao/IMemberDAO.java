@@ -23,5 +23,5 @@ public interface IMemberDAO {
 	
 	int deleteMember(String memId);
 	
-	
+	int checkId(String id);
 }

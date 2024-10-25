@@ -71,5 +71,11 @@
     	WHERE mem_id = #{memId}
     </delete>
     
+    <select id="checkId" parameterType="String" resultType="int">
+   		SELECT COUNT(*)
+		FROM MEMBERS
+		WHERE MEM_ID =#{id}
+    </select>
+    
     
 </mapper>
