@@ -119,9 +119,38 @@ th, td {
 	border-color: #198754; /* 테두리 색상 */
 }
 
-.main-height{
-	height:900px;
+.chart-text-box{
+	display: flex;
+	justify-content: start;
+	font-size: 10px;
 }
+
+.chart-height1{
+	height: 400px;
+}
+
+.chart-height2{
+	height: 400px;
+}
+
+.reduce-text-box{
+	display: flex;
+	align-items: center;
+	padding-left: 40px;
+}
+
+.tree-img-size{
+	width: 170px;
+}
+
+.co2-text{
+	color: blue;
+}
+
+.co2-reduce-text{
+	color:green;
+}
+
 
 </style>
 
@@ -321,10 +350,10 @@ th, td {
 				<!-- 차트 영역 시작 -->
 				<div class="row align-items-start mb-2">
 					<div class="col-6">
-						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
+						<div class="bg-white rounded-4 py-4 px-4 px-md-5 border chart-height1"><canvas id="myChart"></canvas></div>
 					</div>
 					<div class="col-6">
-						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border" id="reduceTree"></div>
+						<div class="d-flex bg-white rounded-4 py-5 px-4 px-md-5 border chart-height2" id="reduceTree"></div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
@@ -375,12 +404,26 @@ th, td {
 	    let ctx = document.getElementById("myChart")
 	    
 	    let v_reduceTree = document.getElementById("reduceTree")
-	    
-	    let v_tree = "나무 : " + (v_boardResultAll - v_resultAll)/20 + "그루";
-	    
-	    v_reduceTree.innerHTML += v_tree
-	    
-	    console.log("나무 : " + (v_boardResultAll - v_resultAll)/20 + "그루")
+        
+        let v_treeResult =  Math.round((v_boardResultAll*100000 - v_resultAll)/6.6)
+        let v_CO2Result = Math.round(v_boardResultAll - v_resultAll)
+        
+        
+        if(v_treeResult > 10000){
+        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무4.png">'
+        	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
+        }else if(v_treeResult > 5000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무3.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult > 3000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무2.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult < 1000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무1.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult == 0){
+        	v_reduceTree.innerHTML += ""
+        }
 	    
 	    new Chart(ctx,{
 	    		type:'bar',
