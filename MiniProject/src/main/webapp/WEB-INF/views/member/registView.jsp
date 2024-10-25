@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
-                            <form id="contactForm" action="${pageContext.request.contextPath }/registDo" method="POST" enctype="multipart/form-data">
+                            <form id="registForm" action="${pageContext.request.contextPath }/registDo" method="POST" enctype="multipart/form-data">
                                 <!-- profile input-->
                                 <div class="form-floating mb-3">
                                     <div class="d-flex justify-content-center">
@@ -80,8 +80,11 @@
 
                                 <!-- id input-->
                                 <div class="form-floating mb-3">
-                                    <input name="id" class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
-                                    <label for="registId">아이디</label>
+                                	<div style="display: flex;">  
+	                                    <input name="id" class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
+	                                    <button id="idCheck" type="button">ID 중복체크</button>
+                                	</div>
+                                	<div class="invalid-feedback" id="checkIdLength">아이디는 4자리 이상</div>
                                     <div class="invalid-feedback" data-sb-feedback="registId:required">아이디를 입력해주세요.</div>
                                 </div>
 
@@ -149,6 +152,84 @@
         $("#backBtn").click(function(){
             window.history.back();
         });
+        
+        let idValid = false;
+        
+        let v_registForm = document.querySelector('#registForm');
+		let v_submitBtn = document.querySelector('#submitButton');
+		let v_idCheck = document.querySelector('#idCheck');
+		
+		let v_id = document.querySelector('#registId');
+		let v_pw = document.querySelector('#registPw');
+		let v_email = document.querySelector('#registEmail');
+		let v_phone = document.querySelector('#registPhone');
+		let v_entp = document.querySelector('#registEntp');
+		
+		v_id.addEventListener('input',()=>{
+			if(v_id.value.length < 4){
+				document.querySelector('#checkIdLength').style.display = "block";
+			}else{
+				document.querySelector('#checkIdLength').style.display = "none";
+			}
+		})
+		
+		v_idCheck.addEventListener('click',()=>{
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/idCheck',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					id : v_id.value.trim()
+				}), 
+				success: function(response){
+					
+					if(response == 1){
+						alert('중복된 아이디가 존재합니다!');
+					}else{
+						alert('사용가능한 아이디 입니다.')
+						idValid = true;
+					}
+				}
+			})
+		})
+		
+		v_submitBtn.addEventListener('click',()=>{
+			if(!idValid){
+				alert('ID 중복체크를 해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_pw.value){
+				alert('비밀번호를 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_email.value){
+				alert('이메일을 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_phone.value){
+				alert('전화번호를 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_entp.value){
+				alert('업체명을 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+		})
+		
+		
+		
+        
+        
     </script>
 </body>
 </html>

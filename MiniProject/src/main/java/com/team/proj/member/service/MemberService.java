@@ -36,4 +36,9 @@ public class MemberService {
 		return result;
 	}
 	
+	public int checkId(String id) {
+		int result = dao.checkId(id);
+		return result;
+	}
+	
 }
