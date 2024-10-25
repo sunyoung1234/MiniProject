@@ -85,6 +85,7 @@
 	                                    <button id="idCheck" type="button">ID 중복체크</button>
                                 	</div>
                                 	<div class="invalid-feedback" id="checkIdLength">아이디는 4자리 이상</div>
+                                	<div class="invalid-feedback" id="idOkay" style="color: green;">사용가능 ID 입니다</div>
                                     <div class="invalid-feedback" data-sb-feedback="registId:required">아이디를 입력해주세요.</div>
                                 </div>
 
@@ -93,6 +94,13 @@
                                     <input name="pw" class="form-control" id="registPw" type="password" placeholder="비밀번호(4자리 이상)" data-sb-validations="required" />
                                     <label for="registPw">비밀번호(4자리 이상)</label>
                                     <div class="invalid-feedback" data-sb-feedback="registPw:required">비밀번호를 입력해주세요.</div>
+                                </div>
+                                <!-- 비밀번호 확인 -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="confirmPw" type="password" placeholder="비밀번호 확인" data-sb-validations="required" />
+                                    <label for="confirmPw">비밀번호 확인</label>
+                                    <div class="invalid-feedback" id="checkPwFalse" >비밀번호가 일치하지 않습니다.</div>
+                                    <div class="invalid-feedback" id="checkPwTrue" style="color: yellowGreen;">비밀번호가 일치합니다.</div>
                                 </div>
 
                                 <!-- Email address input-->
@@ -153,7 +161,9 @@
             window.history.back();
         });
         
+        let idLength = false;
         let idValid = false;
+        let checkPw = false;
         
         let v_registForm = document.querySelector('#registForm');
 		let v_submitBtn = document.querySelector('#submitButton');
@@ -165,38 +175,68 @@
 		let v_phone = document.querySelector('#registPhone');
 		let v_entp = document.querySelector('#registEntp');
 		
+		let v_confirmPw = document.querySelector('#confirmPw');
+		
+		
 		v_id.addEventListener('input',()=>{
 			if(v_id.value.length < 4){
 				document.querySelector('#checkIdLength').style.display = "block";
+				idLength = false;
 			}else{
 				document.querySelector('#checkIdLength').style.display = "none";
+				idLength = true;
+			}
+		})
+		
+		v_confirmPw.addEventListener('input',()=>{
+			
+			if(v_confirmPw.value != v_pw.value){
+				document.querySelector('#checkPwTrue').style.display = "none";
+				document.querySelector('#checkPwFalse').style.display = "block";
+				checkPw = false;
+			}else{
+				document.querySelector('#checkPwTrue').style.display = "block";
+				document.querySelector('#checkPwFalse').style.display = "none";
+				checkPw = true;
 			}
 		})
 		
 		v_idCheck.addEventListener('click',()=>{
-			
-			$.ajax({
-				url: '${pageContext.request.contextPath}/idCheck',
-				type: 'POST',
-				contentType: 'application/json',
-				data: JSON.stringify({
-					id : v_id.value.trim()
-				}), 
-				success: function(response){
-					
-					if(response == 1){
-						alert('중복된 아이디가 존재합니다!');
-					}else{
-						alert('사용가능한 아이디 입니다.')
-						idValid = true;
+			if(!idLength){
+				alert('ID 4자리 이상 입력해주세요');
+			}else{
+				$.ajax({
+					url: '${pageContext.request.contextPath}/idCheck',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						id : v_id.value.trim()
+					}), 
+					success: function(response){
+						
+						if(response == 1){
+							alert('중복된 아이디가 존재합니다!');
+							idValid = false;
+							document.querySelector('#idOkay').style.display = "none";
+						}else{
+							alert('사용가능한 아이디 입니다.')
+							idValid = true;
+							document.querySelector('#idOkay').style.display = "block";
+						}
 					}
-				}
-			})
+				})
+			}
 		})
 		
 		v_submitBtn.addEventListener('click',()=>{
 			if(!idValid){
 				alert('ID 중복체크를 해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!checkPw){
+				alert('비밀번호 확인이 일치하지 않습니다');
 				event.preventDefault();
 				return;
 			}
@@ -224,8 +264,9 @@
 				event.preventDefault();
 				return;
 			}
+			
+			alert('회원가입을 축하드립니다.')
 		})
-		
 		
 		
         
