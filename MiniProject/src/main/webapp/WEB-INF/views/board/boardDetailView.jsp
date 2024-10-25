@@ -496,7 +496,7 @@ select {
 }
 
 #replyContent {
-	width: 98%; /* 양옆 1%씩 줄임 */
+	width: 77%; /* 양옆 1%씩 줄임 */
 	margin: 0 auto; /* 가운데 정렬 */
 }
 
@@ -510,6 +510,15 @@ select {
 	display: flex;
 	gap: 10px; /* 버튼 간 간격 */
 }
+
+    #buttonContainer,
+    #modalBtn,
+    #replyWriteBtn,
+    #goBackBtn,
+    #rightButtons {
+        margin-right: 15px;
+    }
+
 </style>
 </head>
 <body>
@@ -570,6 +579,24 @@ select {
 								</tbody>
 							</table>
 
+							<table class="table table-bordered" style="margin-top: 20px;">
+								<tbody>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; font-weight: bold; color: #333; letter-spacing: 5px; padding: 15px 0;">
+											내 용 <!-- 설명용 텍스트 -->
+										</td>
+									</tr>
+									<tr>
+										<td class="text-center" colspan="2"
+											style="font-size: 1.2rem; color: #555; padding: 15px 0; min-height: 90px;">
+											${board.orderContent} <!-- 동적으로 내용 가져오기 -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+
 							<!-- content-box 추가 -->
 							<div class="content-box">
 								<table style="background-color: white;"
@@ -606,24 +633,6 @@ select {
 							</div>
 
 
-							<table class="table table-bordered" style="margin-top: 20px; width:97%; margin-left: 15px;">
-								<tbody>
-									<tr>
-										<td class="text-center" colspan="2"
-											style="font-size: 1.2rem; font-weight: bold; color: #333; letter-spacing: 5px; padding: 15px 0;">
-											내 용 <!-- 설명용 텍스트 -->
-										</td>
-									</tr>
-									<tr>
-										<td class="text-center" colspan="2"
-											style="font-size: 1.2rem; color: #555; padding: 15px 0; min-height: 90px;">
-											${board.orderContent} <!-- 동적으로 내용 가져오기 -->
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-
 						</div>
 
 						<div id="exampleBox"></div>
@@ -644,20 +653,19 @@ select {
 											<div>변경 사항 없음</div>
 										</div>
 									</div>
-
 								</c:forEach>
 							</div>
 							<div id="buttonContainer">
 								<button id="modalBtn" class="mb-3">계산기</button>
 							</div>
-							<textarea id="replyContent" rows="15" cols="130"></textarea>
+							<textarea id="replyContent" rows="8" cols="30"></textarea>
 							<div id="buttonContainer">
 								<div id="rightButtons">
 									<button id="replyWriteBtn">답변작성</button>
 									<button id="goBackBtn">뒤로가기</button>
 								</div>
-							</div>>
-
+							</div>
+							<!-- 모달 영역  -->
 							<div class="modal-box">
 								<div class="modal-mat-list">
 									<div class="material-list">
