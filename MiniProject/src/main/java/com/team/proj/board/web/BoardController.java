@@ -1,7 +1,9 @@
 package com.team.proj.board.web;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
@@ -26,6 +27,10 @@ import com.team.proj.savecal.dto.SavecalDTO;
 import com.team.proj.savecal.dto.SavecalMatDTO;
 import com.team.proj.savecal.dto.SavecalVolDTO;
 import com.team.proj.savecal.service.SavecalService;
+import com.team.proj.savesubcal.dto.SaveSubcalDTO;
+import com.team.proj.savesubcal.service.SaveSubcalService;
+import com.team.proj.substitute.dto.SubstituteDTO;
+import com.team.proj.substitute.service.SubService;
 
 @Controller
 public class BoardController {
@@ -41,6 +46,12 @@ public class BoardController {
 	
 	@Autowired
 	ReplyService replyService;
+	
+	@Autowired
+	SaveSubcalService saveSubService;
+	
+	@Autowired
+	SubService subService;
 
 	@RequestMapping("/boardView")
 	public String boardView(Model model, SearchVO pageSearch, HttpSession session) {
@@ -127,18 +138,75 @@ public class BoardController {
 		MemberDTO mem = (MemberDTO) session.getAttribute("login");
 
 		// 게시글 정보를 가져옴
-		System.out.println(orderNo);
 		BoardDTO boardDetail = boardService.getBoard(orderNo);
 		model.addAttribute("board", boardDetail);
 
 		String calcId = boardDetail.getCalcId();
 		double calcResult = boardDetail.getCalcResult();
 		
+		
+		
 		// 회원이 올린 자재
 		List<SavecalMatDTO> scmList = scService.getScmList(calcId);
 		
 		model.addAttribute("scmList", scmList);
 		
+		// 관리자가 올린 대체 자재
+		ReplyDTO reply = replyService.getReplyByBoardId(orderNo);
+		System.out.println(reply);
+		
+		
+		if(reply != null) {
+			
+			double current =  reply.getAfterCalcResult();
+			double differ = reply.getReplyCalcResult(); // 아낀양
+			
+			model.addAttribute("current", current);
+			model.addAttribute("differ", differ);
+			
+			List<Integer> noList = new ArrayList<>(); // 15 15 61 120
+			List<Integer> eaList = new ArrayList<>();
+			
+			List<String> imgList = new ArrayList<>();
+			List<String> nameList = new ArrayList<>();
+			
+			
+			String replyCalcId = reply.getReplyCalcId();
+			replyCalcId += "admin";
+			List<SaveSubcalDTO> saveSubList = saveSubService.findBySscId(replyCalcId);
+			model.addAttribute("saveSubList",saveSubList);
+			
+			for(SaveSubcalDTO ss : saveSubList) {
+				int matNo = ss.getMatNo();
+				noList.add(matNo); 
+				int subNo = ss.getSubNo();
+				SubstituteDTO sub = subService.getSubByNo(subNo);
+				String subImg = sub.getSubImg();
+				String subName = sub.getSubName();
+				imgList.add(subImg);
+				nameList.add(subName);
+			}
+			
+			HashMap<Integer, Integer> countMap = new HashMap<>();
+
+	        for (int no : noList) {
+	            countMap.put(no, countMap.getOrDefault(no, 0) + 1);
+	        }
+
+	        for (int num : countMap.keySet()) {
+	            eaList.add(countMap.get(num));
+	        }
+	        
+	        model.addAttribute("eaList", eaList);
+	        model.addAttribute("noList", noList);
+	        model.addAttribute("imgList", imgList);
+	        model.addAttribute("nameList", nameList);
+	        
+	        System.out.println(noList);
+	        System.out.println(eaList);
+	        System.out.println(imgList);
+	        System.out.println(nameList);
+		}
 		
 
 		List<SavecalVolDTO> scVolList = scService.getScVol(calcId);
@@ -146,7 +214,6 @@ public class BoardController {
 		model.addAttribute("scVolList", scVolList);
 		model.addAttribute("calcResult", calcResult);
 
-		System.out.println(scVolList);
 		
 		
 		

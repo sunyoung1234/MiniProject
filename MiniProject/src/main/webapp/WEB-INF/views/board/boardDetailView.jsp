@@ -448,6 +448,7 @@ select {
 
 #replyWriteBtn, #goBackBtn {
 	margin-left: 10px; /* 두 버튼 사이 간격 */
+	margin-top: 15px;
 }
 
 .content-box {
@@ -518,6 +519,14 @@ select {
     #rightButtons {
         margin-right: 15px;
     }
+    
+    #goBackUserBtn{
+    	width: 100px;
+    	height: 50px;
+    	margin-left: 120px;
+    	margin-top: 15px;
+    	 
+    }
 
 </style>
 </head>
@@ -574,7 +583,7 @@ select {
 										<th id="boardNum" scope="row" class="text-center">${board.orderNo}</th>
 										<td class="text-center">${board.requestDate}</td>
 										<td class="text-center">${board.entpName}</td>
-										<td class="text-center">${board.feedbackYn}</td>
+										<td class="text-center" id="feedbackYN">${board.feedbackYn}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -637,7 +646,7 @@ select {
 
 						<div id="exampleBox"></div>
 
-						<c:if test="${sessionScope.login.getMemId() == 'admin' }">
+						<c:if test="${sessionScope.login.getMemId() == 'admin' && board.getFeedbackYn() == 'N' }">
 							<div id="overlay"></div>
 							<div  style="width:80%;"id="replyCal">
 								<c:forEach var="scv" items="${scVolList }">
@@ -654,6 +663,7 @@ select {
 										</div>
 									</div>
 								</c:forEach>
+								<div id="resultResult"></div>
 							</div>
 							<div id="buttonContainer">
 								<button id="modalBtn" class="mb-3">계산기</button>
@@ -698,13 +708,51 @@ select {
 							</div>
 
 						</c:if>
-						<c:if test="${sessionScope.login.getMemId() != 'admin' }">
-							<button id="goBackUserBtn">뒤로가기</button>
+						
+						<c:if test="${board.getFeedbackYn() == 'Y' }">
+							<div  style="width:80%;"id="replyResultCal">
+								<c:forEach var="scv" items="${scVolList }">
+									<div class="reply-line">
+										<div class="reply-mat-box">
+											<img class="reply-mat-img" src="${scv.materialImg }">
+											<div class="reply-mat-name">${scv.materialName}</div>
+											<!-- 이름 -->
+											<div class="reply-mat-vol">${scv.materialVolume}kg </div>
+											<!-- 이름 -->
+										</div>
+										<div class="reply-sub-box">   
+											<c:forEach var="no" items="${noList }" varStatus="status"> 
+												<c:if test="${no == scv.materialNo }">
+													<div class="sub-name">
+														<div>${nameList[status.index] }</div>
+														<img class="sub-img" src="${imgList[status.index] }">
+														<div class="sub-vol">${saveSubList[status.index].subVol }CO₂/kg</div>
+													</div> 
+												</c:if>
+											</c:forEach>
+										</div>
+									</div>
+								</c:forEach>
+								
+								<div>
+									<div class="sub-after"> <span style="color: black; font-size: 18px;">대체 자제 탄소 배출량 : </span>${current }CO₂/kg</div> 
+									<div class="sub-calc-result"> <span style="color: black;  font-size: 18px;">탄소 절감량 : </span>${differ }CO₂/kg</div>
+								</div>
+								
+								<c:if test="${sessionScope.login.getMemId() == 'admin' }">
+									<button id="goBackBtn">뒤로가기</button>
+								</c:if>
+							</div>
 						</c:if>
+						
+						
 
 
 
 					</div>
+						<c:if test="${sessionScope.login.getMemId() != 'admin' }">
+							<button id="goBackUserBtn">뒤로가기</button>
+						</c:if>
 				</div>
 
 			</div>
@@ -717,7 +765,7 @@ select {
 	<script type="text/javascript">
 	
 	
-		if(${sessionScope.login.getMemId() == 'admin'}){
+		if(${sessionScope.login.getMemId() == 'admin' && board.getFeedbackYn() == 'N'}){
 			let v_overlay = document.getElementById('overlay');
 			let sscId = "";	
 			let nextIdx = 0;
@@ -726,6 +774,7 @@ select {
 			let final_result = 0;
 			let orderNo = ${board.orderNo};
 			let after_total = 0; 
+			let reply_result = "";
 			 
 			console.log(sscId); 
 			
@@ -996,6 +1045,7 @@ select {
 			let v_replyLine = document.querySelectorAll('.reply-sub-box');
 			let v_replyLine2 = document.querySelectorAll('.reply-line');
 			let v_replyCal2 = document.querySelector('#replyCal');
+			let resultResult = document.querySelector('#resultResult');
 			
 			console.log(v_replyLine[0]) 
 			console.log(v_replyLine[1]) 
@@ -1028,24 +1078,29 @@ select {
 						
 						for(let i=0; i < matEa; i++){
 							
-							let v_beta = "";  
-							for(let j=0; j< response['eaList'][i]; j++){
-								after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
-								v_beta += '<div class="sub-name"><div>' + response['subList'][idx].subName + '</div>'
-								v_beta += '<img class="sub-img" src="' + response['subList'][idx].subImg + '">'
-								v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + ' &nbsp; CO₂/kg</div></div>'
-								
-								idx ++;
+							let v_beta = "";
+							if(response['eaList'][i] != 0){
+								for(let j=0; j< response['eaList'][i]; j++){
+									after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
+									v_beta += '<div class="sub-name"><div>' + response['subList'][idx].subName + '</div>'
+									v_beta += '<img class="sub-img" src="' + response['subList'][idx].subImg + '">'
+									v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + ' &nbsp; CO₂/kg</div></div>'
+									
+									idx ++;
+								}
+								v_replyLine[i].innerHTML = v_beta;
+							}else{
+								v_replyLine[i].innerHTML = '<span> 변경사항 없음</span>';
 							}
-							v_replyLine[i].innerHTML = v_beta;
 						}
 						
 						final_result = (Math.round((v_befResult.innerHTML - after_total) * 100) / 100);
 						after_total = (Math.round(after_total * 100) / 100);
-						v_replyCal2.innerHTML += '<div><div class="sub-after">' + after_total + ' &nbsp; CO₂/kg</div>';
-						v_replyCal2.innerHTML += '<div class="sub-calc-result">' + (Math.round((v_befResult.innerHTML - after_total) * 100) / 100) + ' CO₂/kg</div></div>';
-
-						console.log(v_replyLine[matEa - 1].parentElement.outerHTML);  
+						
+						let v_delta = ""
+							v_delta += '<div class="sub-after"><span style="color: black; font-size: 18px;">대체 자제 탄소 배출량 : </span>' + after_total + ' &nbsp; CO₂/kg</div>';
+							v_delta += '<div class="sub-calc-result"><span style="color: black; font-size: 18px;">탄소 절감량 : </span>' + (Math.round((v_befResult.innerHTML - after_total) * 100) / 100) + ' CO₂/kg</div>';
+						resultResult.innerHTML = v_delta;
 					}
 						})
 					
@@ -1078,13 +1133,15 @@ select {
 							b_no : orderNo + "",
 							id : sscId, 
 							result : final_result + "",
-							content : rv
+							content : rv,
+							reply_result : reply_result
 						}), 
 						success: function(response){
 							console.log(response);
 							document.querySelector('#modalBtn').style.display = "none";
 							document.querySelector('#replyContent').style.display = "none";
 							document.querySelector('#replyWriteBtn').style.display = "none";
+							document.querySelector('#feedbackYN').innerHTML = 'Y';
 						}
 						
 					})
@@ -1097,6 +1154,12 @@ select {
 			
 				
 			 
+		}else if(${sessionScope.login.getMemId() == 'admin' && board.getFeedbackYn() == 'Y'}){
+			
+			
+			document.querySelector('#goBackBtn').addEventListener('click',()=>{
+				location.href = "${pageContext.request.contextPath}/boardViewAdmin";
+			})
 		}else{
 			document.querySelector('#goBackUserBtn').addEventListener('click',()=>{
 				location.href = "${pageContext.request.contextPath}/boardView";

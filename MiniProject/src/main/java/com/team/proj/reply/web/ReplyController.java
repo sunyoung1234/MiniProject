@@ -58,7 +58,7 @@ public class ReplyController {
 		 reply.setMemId(memId);
 		 reply.setAfterCalcResult(r_after);
 		 
-		 
+		 System.out.println(sscId);
 		 
 		 Date date = new Date();
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -72,7 +72,7 @@ public class ReplyController {
 		 
 		 boardService.updateFeedbackYN(bNo);
 		 
-		 subcalService.updateSubCal(sscId);
+		 subcalService.updateSubCal(sscId + "admin");
 		 
 		 subcalService.deleteSubCal();
 		 

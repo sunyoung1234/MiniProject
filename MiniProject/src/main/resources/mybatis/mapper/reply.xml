@@ -45,6 +45,11 @@
 		FROM REPLY
 	</select>
 	
+	<select id="getReplyByBoardId" parameterType="int" resultType="com.team.proj.reply.dto.ReplyDTO">
+		SELECT * FROM REPLY
+		WHERE board_id = #{boardId}
+	</select>
+	
 	
 
 </mapper>

@@ -33,4 +33,9 @@ public class ReplyService {
 		double result = dao.getReplyResultAll();
 		return result;
 	}
+	
+	public ReplyDTO getReplyByBoardId(int boardNo) {
+		ReplyDTO result = dao.getReplyByBoardId(boardNo);
+		return result;
+	}
 }
