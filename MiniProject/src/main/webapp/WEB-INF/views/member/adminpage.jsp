@@ -405,24 +405,22 @@ th, td {
 	    
 	    let v_reduceTree = document.getElementById("reduceTree")
         
-        let v_treeResult =  Math.round((v_boardResultAll*100000 - v_resultAll)/6.6)
+        let v_treeResult =  Math.round((v_boardResultAll - v_resultAll)/6.6)
         let v_CO2Result = Math.round(v_boardResultAll - v_resultAll)
         
         
-        if(v_treeResult > 10000){
+        if(v_treeResult > 500000){
         	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무4.png">'
         	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
-        }else if(v_treeResult > 5000){
-        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무3.png">'
-           	v_reduceTree.innerHTML += v_tree
-        }else if(v_treeResult > 3000){
-        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무2.png">'
-           	v_reduceTree.innerHTML += v_tree
-        }else if(v_treeResult < 1000){
-        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무1.png">'
-           	v_reduceTree.innerHTML += v_tree
-        }else if(v_treeResult == 0){
-        	v_reduceTree.innerHTML += ""
+        }else if(v_treeResult > 100000){
+        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무3.png">'
+            	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
+        }else if(v_treeResult > 500000){
+        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무2.png">'
+            	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
+        }else if(v_treeResult < 30000){
+        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무1.png">'
+            v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
         }
 	    
 	    new Chart(ctx,{
