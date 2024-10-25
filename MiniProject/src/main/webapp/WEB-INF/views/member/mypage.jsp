@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>로그인 - Green Solution</title>
+<title>마이 페이지</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -117,6 +117,17 @@ th, td {
 	color: white; /* 텍스트 색상 */
 	border-color: #198754; /* 테두리 색상 */
 }
+
+.chart-text-box{
+	display: flex;
+	justify-content: start;
+	font-size: 10px;
+}
+
+.chart-height{
+	height: 400px;
+}
+
 </style>
 
 </head>
@@ -270,18 +281,26 @@ th, td {
 				</div>
 				<!-- 차트 영역 시작 -->
 				<div class="row align-items-start">
-					<div class="col-6">
-						<div class="rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
+					<div class="col-6 ">
+						<div class="rounded-4 py-4 px-4 px-md-5 border chart-height" >
+							<div class="chart-text-box">
+								 ※ 솔루션 완료 후 차트 기입됩니다.
+							</div>
+							<canvas id="myChart"></canvas>
+						</div>
 					</div>
-					<div class="col-6">
-						<div class="rounded-4 py-5 px-4 px-md-5 border">차트2</div>
+					<div class="col-6 ">
+						<div class="rounded-4 py-5 px-4 px-md-5 border chart-height" id="reduceTree"></div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
 			</div>
 		</section>
 	</main>
-
+	
+	<div>
+		<img class="tree-img" src="${pageContext.request.contextPath}/resources/img/나무4">
+	</div>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
@@ -318,6 +337,30 @@ th, td {
         
         let ctx = document.getElementById("myChart")
         
+        let v_reduceTree = document.getElementById("reduceTree")
+        
+        let v_treeResult = (v_boardResult*100000 - v_result)/6.6
+        
+        let v_tree = "나무 : " + Math.round(v_treeResult) + "그루";
+	    
+       
+        
+        if(v_treeResult > 10000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무4.png">'
+        	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult > 5000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무3.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult > 3000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무2.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult < 1000){
+        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무1.png">'
+           	v_reduceTree.innerHTML += v_tree
+        }
+        
+	    
+        
         console.log("나무 : " + (v_boardResult*100000 - v_result)/20 + "그루")
         
         new Chart(ctx,{
@@ -325,24 +368,30 @@ th, td {
         		data:{
         			labels: ['솔루션'],
         			datasets:[{
-        				label:'솔루션 전 탄소 배출량',
-        				data: [v_boardResult*100000]
+        				label:'Before',
+        				data: [v_boardResult]
         			},{
-        				label:'솔루션 후 탄소 배출량',
+        				label:'After',
         				data: [v_result]
         			}]
         		},
         		 options: {
+		      		    plugins: {
+		      	            title: {
+		      	                display: true,
+		      	                text: '탄소 배출량'
+		      	            }
+		      	        },
                      scales: {
                          x: {
                              ticks: {
                                  autoSkip: false
-                                 
                              }
                          },
                          y: {
                              beginAtZero: true
                              }
+                         
                      }
                  }
              });

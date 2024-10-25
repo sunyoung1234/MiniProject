@@ -170,9 +170,15 @@ public class MemberController {
 	public String deleteMember(HttpSession session) {
 
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		String id = login.getMemId();
+		String memId = login.getMemId();
 
-		return "home";
+		boardService.deleteUpdateBoard(memId);
+		
+		memberService.deleteMember(memId);
+		
+		session.invalidate();
+
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/boardWriteView2")

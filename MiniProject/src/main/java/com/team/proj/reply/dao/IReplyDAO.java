@@ -18,6 +18,9 @@ public interface IReplyDAO {
 	// 결과값만 가져오기
 	double getReplyResult(String memId);
 	
+	// 결과값만 가져오기(회원 전부)
+	double getReplyResultAll();
+	
 	
 }
  

@@ -31,4 +31,9 @@ public class MemberService {
 		return result;
 	}
 	
+	public int deleteMember(String memId) {
+		int result = dao.deleteMember(memId);
+		return result;
+	}
+	
 }

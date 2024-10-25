@@ -34,4 +34,8 @@ public interface BoardDAO {
     int getBoardCountById(SearchVO search);
     
     double getCalcResult(String memId);
+    
+    double getCalcResultAll();
+    
+    int deleteUpdateBoard(String memId);
 }

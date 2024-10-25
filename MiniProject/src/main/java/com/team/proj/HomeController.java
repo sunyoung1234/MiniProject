@@ -70,101 +70,9 @@ public class HomeController {
 	 */
 	
 	@RequestMapping("/")
-	public String home(Model model, String regionCategory) throws Exception, ProtocolException {
-		
-		// 광역시도별
-		ArrayList<Double> partList = new ArrayList<>();
-		ArrayList<String> regionName = new ArrayList<>();
-		ArrayList<String> name = new ArrayList<>();
-		
-		ArrayList<String> region = new ArrayList<>();
-		ArrayList<Double> regionValue = new ArrayList<>();
-		
-		ArrayList<String> year = new ArrayList<>();
-		ArrayList<Double> gas = new ArrayList<>();
-		
-		List<PointDTO> pointList = pointService.getPointList();
-		
-		System.out.println(pointList);
-		
-		model.addAttribute("keyPointList", pointList);
-		
-		for(PointDTO pd : pointList) {
-			System.out.println(pd.getParticipation());
-			partList.add(pd.getParticipation());
-		}
-		
-		for(PointDTO pd : pointList) {
-			System.out.println(pd.getParticipation());
-			regionName.add(pd.getPointRegion());
-		}
+	public String home(Model model, String regionCategory) {
 		
 		
-		
-		String gangwon = "강원";
-		List<RegionDTO> city = regionservice.getCityPoint(gangwon);
-		model.addAttribute("keyGangwan",city);
-		
-		for(RegionDTO pd : city) {
-			System.out.println(pd.getPointCity());
-			region.add(pd.getPointCity());
-		}
-		
-		for(RegionDTO pd : city) {
-			System.out.println(pd.getCityParticipation());
-			regionValue.add(pd.getCityParticipation());
-		}
-		
-		// 광역시도별
-		model.addAttribute("keyPartList",partList);
-		model.addAttribute("keyRegionName",regionName);
-		
-		// 기초 단체별(강원)
-		model.addAttribute("keyRegion",region);
-		model.addAttribute("keyRegionValue",regionValue);
-		
-		List<GreenDTO> greenList = greenService.getListGreen();
-		
-		for(GreenDTO pd : greenList) {
-			System.out.println(pd.getYearMonth());
-			year.add(pd.getYearMonth());
-		}
-		
-		for(GreenDTO pd : greenList) {
-			System.out.println(pd.getGas());
-			gas.add(pd.getGas());
-		}
-		
-		model.addAttribute("getGreenYear",year);
-		model.addAttribute("getGreenGas",gas);
-		
-		
-		/**
-		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/data"); 
-	    URL url = new URL(urlBuilder.toString());
-	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        while (true) {
-        	String line = rd.readLine();
-        	if(line == null) {
-        		break;
-        	}
-            sb.append(line);
-        }
-        
-        rd.close();
-        conn.disconnect();
-      	**/
 		
 		return "home";
 	}
@@ -257,6 +165,18 @@ public class HomeController {
 	    // 회원 목록 가져오기
 	    List<MemberDTO> memberList = memberService.getMemberList();
 	    model.addAttribute("keyMemberList", memberList);
+	    
+	    double boardResultAll = boardService.getCalcResultAll();
+	    
+	    double replyResultAll = replyService.getReplyResultAll();
+	    
+	    System.out.println(boardResultAll);
+	    System.out.println(replyResultAll);
+	    
+	    model.addAttribute("getBoardResultAll",boardResultAll);
+	    model.addAttribute("getReplyResultAll",replyResultAll);
+	    
+	    
 
 	    // adminpage 뷰로 이동
 	    return "member/adminpage";
@@ -265,56 +185,9 @@ public class HomeController {
 	  @RequestMapping("/gasChartView")
 	    public String gasChartView(Model model, String regionCategory) throws Exception, ProtocolException {
 		  
-		// 광역시도별
-			ArrayList<Double> partList = new ArrayList<>();
-			ArrayList<String> regionName = new ArrayList<>();
-			ArrayList<String> name = new ArrayList<>();
-			
-			ArrayList<String> region = new ArrayList<>();
-			ArrayList<Double> regionValue = new ArrayList<>();
-			
+		
 			ArrayList<String> year = new ArrayList<>();
 			ArrayList<Double> gas = new ArrayList<>();
-			
-			List<PointDTO> pointList = pointService.getPointList();
-			
-			System.out.println(pointList);
-			
-			model.addAttribute("keyPointList", pointList);
-			
-			for(PointDTO pd : pointList) {
-				System.out.println(pd.getParticipation());
-				partList.add(pd.getParticipation());
-			}
-			
-			for(PointDTO pd : pointList) {
-				System.out.println(pd.getParticipation());
-				regionName.add(pd.getPointRegion());
-			}
-			
-			
-			
-			String gangwon = "강원";
-			List<RegionDTO> city = regionservice.getCityPoint(gangwon);
-			model.addAttribute("keyGangwan",city);
-			
-			for(RegionDTO pd : city) {
-				System.out.println(pd.getPointCity());
-				region.add(pd.getPointCity());
-			}
-			
-			for(RegionDTO pd : city) {
-				System.out.println(pd.getCityParticipation());
-				regionValue.add(pd.getCityParticipation());
-			}
-			
-			// 광역시도별
-			model.addAttribute("keyPartList",partList);
-			model.addAttribute("keyRegionName",regionName);
-			
-			// 기초 단체별(강원)
-			model.addAttribute("keyRegion",region);
-			model.addAttribute("keyRegionValue",regionValue);
 			
 			List<GreenDTO> greenList = greenService.getListGreen();
 			
@@ -387,20 +260,7 @@ public class HomeController {
 			model.addAttribute("keyRegion",region);
 			model.addAttribute("keyRegionValue",regionValue);
 			
-			List<GreenDTO> greenList = greenService.getListGreen();
 			
-			for(GreenDTO pd : greenList) {
-				System.out.println(pd.getYearMonth());
-				year.add(pd.getYearMonth());
-			}
-			
-			for(GreenDTO pd : greenList) {
-				System.out.println(pd.getGas());
-				gas.add(pd.getGas());
-			}
-			
-			model.addAttribute("getGreenYear",year);
-			model.addAttribute("getGreenGas",gas);
 	    	
 	        return "chart/cityChartView"; // cityChartView.jsp로 이동
 	    }

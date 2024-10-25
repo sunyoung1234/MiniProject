@@ -38,5 +38,13 @@
 		FROM REPLY
 		WHERE MEM_ID = #{memId}
 	</select>
+	
+	<select id="getReplyResultAll" resultType="double">
+		SELECT
+		    NVL(sum(reply_calc_result),0) as reply_calc_result
+		FROM REPLY
+	</select>
+	
+	
 
 </mapper>
