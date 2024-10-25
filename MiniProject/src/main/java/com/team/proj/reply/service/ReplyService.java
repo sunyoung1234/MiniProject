@@ -28,4 +28,9 @@ public class ReplyService {
 		double result = dao.getReplyResult(memId);
 		return result;
 	}
+	
+	public double getReplyResultAll() {
+		double result = dao.getReplyResultAll();
+		return result;
+	}
 }

@@ -21,4 +21,7 @@ public interface IMemberDAO {
 	List<MemberDTO> getMemberList();
 	
 	
+	int deleteMember(String memId);
+	
+	
 }

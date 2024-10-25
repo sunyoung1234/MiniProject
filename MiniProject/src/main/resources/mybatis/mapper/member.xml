@@ -66,6 +66,10 @@
         WHERE mem_id != 'admin'
     </select>
     
-    <!-- 20241021 0933 test -->
+    <delete id="deleteMember" parameterType="String">
+    	DELETE FROM MEMBERS
+    	WHERE mem_id = #{memId}
+    </delete>
+    
     
 </mapper>

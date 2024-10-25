@@ -262,9 +262,6 @@
         	            title: {
         	                display: true,
         	                text: '년도별 온실가스 총 배출량'
-        	            },
-        	            labels:{
-        	            	
         	            }
         	        },
                      scales: {

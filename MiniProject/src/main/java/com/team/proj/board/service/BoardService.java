@@ -68,4 +68,14 @@ public class BoardService {
     	double result = boardDAO.getCalcResult(memId);
     	return result;
     }
+    
+    public double getCalcResultAll() {
+    	double result = boardDAO.getCalcResultAll();
+    	return result;
+    }
+    
+    public int deleteUpdateBoard(String memId) {
+    	int result = boardDAO.deleteUpdateBoard(memId);
+    	return result;
+    }
 }

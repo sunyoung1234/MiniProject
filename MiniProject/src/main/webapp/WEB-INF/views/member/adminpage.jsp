@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>로그인 - Green Solution</title>
+<title>관리자페이지</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -319,12 +319,12 @@ th, td {
 					</div>
 				</div>
 				<!-- 차트 영역 시작 -->
-				<div class="row align-items-start">
+				<div class="row align-items-start mb-2">
 					<div class="col-6">
-						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border">차트1</div>
+						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border"><canvas id="myChart"></canvas></div>
 					</div>
 					<div class="col-6">
-						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border">차트2</div>
+						<div class="bg-white rounded-4 py-5 px-4 px-md-5 border" id="reduceTree"></div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
@@ -341,10 +341,83 @@ th, td {
 	<!-- Bootstrap core JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	
 	<script src="js/scripts.js"></script>
-
+	
 	<script type="text/javascript">
 		console.log(document.querySelector('#imgBox').src)
 	</script>
+	
+	<script type="text/javascript">
+		
+		let v_resultAll = 0;
+	    let v_boardResultAll = 0;
+	    
+	    console.log(v_resultAll)
+	    console.log(v_boardResultAll)
+	    
+	    // 피드백 탄소 배출량
+	   	console.log(typeof v_boardResultAll)
+	   	console.log(typeof v_boardResultAll)
+	   	 
+	   	if(${getReplyResultAll} == null){
+	   		v_resultAll = 0
+	   	}else{
+	   		v_resultAll = '${getReplyResultAll}'
+	   	}
+	    
+	    if(${getBoardResultAll} == null){
+	    	v_boardResultAll = 0
+	   	}else{
+	   		v_boardResultAll = '${getBoardResultAll}'
+	   	}
+	    
+	    let ctx = document.getElementById("myChart")
+	    
+	    let v_reduceTree = document.getElementById("reduceTree")
+	    
+	    let v_tree = "나무 : " + (v_boardResultAll - v_resultAll)/20 + "그루";
+	    
+	    v_reduceTree.innerHTML += v_tree
+	    
+	    console.log("나무 : " + (v_boardResultAll - v_resultAll)/20 + "그루")
+	    
+	    new Chart(ctx,{
+	    		type:'bar',
+	    		data:{
+	    			labels: ['솔루션'],
+	    			datasets:[{
+	    				label:'Before',
+	    				data: [v_boardResultAll]
+	    			},{
+	    				label:'After',
+	    				data: [v_resultAll]
+	    			}]
+	    		},
+	    		 options: {
+	    			 plugins:{
+	    				title:{
+	    					display:true,
+	    					text:'솔루션 후 탄소 배출량'
+	    				} 
+	    			 },
+	                 scales: {
+	                     x: {
+	                         ticks: {
+	                             autoSkip: false
+	                             
+	                         }
+	                     },
+	                     y: {
+	                         beginAtZero: true
+	                         }
+	                 }
+	             }
+	         });
+		
+	
+	</script>
+	
+	
 </body>
 </html>

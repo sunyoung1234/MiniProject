@@ -107,10 +107,11 @@
 							<div class="d-grid">
 								<button class="btn mb-2 btn-secondary btn-lg" id="backBtn">뒤로가기</button>
 							</div>
-							
-							<div class="d-grid"> 
-								<button class="btn btn-secondary btn-lg" style="color: white; background-color: red;">회원탈퇴</button>
-							</div>
+							<form action="${pageContext.request.contextPath }/deleteMember" method="POST">
+								<div class="d-grid"> 
+									<button class="btn btn-secondary btn-lg" style="color: white; background-color: red;">회원탈퇴</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

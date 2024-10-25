@@ -266,6 +266,19 @@
 		and feedback_yn = 'Y'
 	</select>
 	
+	<select id="getCalcResultAll" resultType="double">
+		SELECT
+			NVL(sum(calc_result),0) as calc_result
+			FROM BOARDS
+		WHERE 1=1
+			AND feedback_yn = 'Y'
+	</select>
+	
+	<update id="deleteUpdateBoard" parameterType="String">
+		UPDATE BOARDS
+		SET del_yn = 'Y'
+		WHERE mem_id = #{memId}
+	</update>
 	
 	
 	
