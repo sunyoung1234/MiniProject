@@ -128,6 +128,12 @@ th, td {
 	height: 400px;
 }
 
+.chart-height2{
+	height: 400px;
+}
+
+
+
 </style>
 
 </head>
@@ -290,7 +296,20 @@ th, td {
 						</div>
 					</div>
 					<div class="col-6 ">
-						<div class="rounded-4 py-5 px-4 px-md-5 border chart-height" id="reduceTree"></div>
+						<div class="d-flex rounded-4 py-5 px-4 px-md-5 border chart-height2" id="reduceTree">
+							<div class="d-flex">
+								<div>
+								 	<div class="">
+								 		<div>절감한 탄소 배출량</div>
+								 		<p>12312312 CO2/kg</p>
+								 	</div>
+								 	<div class="">
+								 		<div>12312312그루</div>
+								 		<p> 와 같습니다</p>
+								 	</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
@@ -298,9 +317,7 @@ th, td {
 		</section>
 	</main>
 	
-	<div>
-		<img class="tree-img" src="${pageContext.request.contextPath}/resources/img/나무4">
-	</div>
+	
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
@@ -339,15 +356,15 @@ th, td {
         
         let v_reduceTree = document.getElementById("reduceTree")
         
-        let v_treeResult = (v_boardResult*100000 - v_result)/6.6
+        let v_treeResult =  Math.round((v_boardResult*100000 - v_result)/6.6)
+        let v_CO2Result = Math.round(v_boardResult - v_result)
         
-        let v_tree = "나무 : " + Math.round(v_treeResult) + "그루";
+        let v_tree = "절감한 탄소 배출량 " + v_CO2Result + " CO₂/kg 는 연간 소나무 " + v_treeResult + " 그루 가 흡수한 양과 같습니다";
 	    
-       
+
         
         if(v_treeResult > 10000){
         	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무4.png">'
-        	v_reduceTree.innerHTML += v_tree
         }else if(v_treeResult > 5000){
         	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무3.png">'
            	v_reduceTree.innerHTML += v_tree
@@ -357,6 +374,8 @@ th, td {
         }else if(v_treeResult < 1000){
         	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무1.png">'
            	v_reduceTree.innerHTML += v_tree
+        }else if(v_treeResult == 0){
+        	v_reduceTree.innerHTML += ""
         }
         
 	    
