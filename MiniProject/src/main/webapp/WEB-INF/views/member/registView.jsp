@@ -179,6 +179,9 @@
 		
 		
 		v_id.addEventListener('input',()=>{
+			
+			idValid = false;
+			document.querySelector('#idOkay').style.display = "none";
 			if(v_id.value.length < 4){
 				document.querySelector('#checkIdLength').style.display = "block";
 				idLength = false;

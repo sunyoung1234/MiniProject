@@ -29,11 +29,19 @@
 		  AND subcal_id = #{subcalId}
 	</select>
 	
+	<select id="countByMatNo" parameterType="com.team.proj.savesubcal.dto.SaveSubcalDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM SAVESUBCAL
+		WHERE 1=1
+		  AND subcal_id = #{subcalId}
+		  AND mat_no = #{matNo}
+	</select>
+	
 	<update id="updateSubCal">
 		UPDATE SAVESUBCAL
 		set confirm_yn = 'Y'
 		where 1=1
-		AND subcal_id = #{subcalId}
+		  AND subcal_id = #{subcalId}
 	
 	</update>
 
