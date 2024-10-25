@@ -132,6 +132,24 @@ th, td {
 	height: 400px;
 }
 
+.reduce-text-box{
+	display: flex;
+	align-items: center;
+	padding-left: 40px;
+}
+
+.tree-img-size{
+	width: 170px;
+}
+
+.co2-text{
+	color: blue;
+}
+
+.co2-reduce-text{
+	color:green;
+}
+
 
 
 </style>
@@ -295,21 +313,9 @@ th, td {
 							<canvas id="myChart"></canvas>
 						</div>
 					</div>
-					<div class="col-6 ">
+					<div class="col-6">
 						<div class="d-flex rounded-4 py-5 px-4 px-md-5 border chart-height2" id="reduceTree">
-							<div class="d-flex">
-								<div>
-								 	<div class="">
-								 		<div>절감한 탄소 배출량</div>
-								 		<p>12312312 CO2/kg</p>
-								 	</div>
-								 	<div class="">
-								 		<div>12312312그루</div>
-								 		<p> 와 같습니다</p>
-								 	</div>
-								</div>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 				<!-- 차트 영역 끝 -->
@@ -364,7 +370,8 @@ th, td {
 
         
         if(v_treeResult > 10000){
-        	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무4.png">'
+        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무4.png">'
+        	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
         }else if(v_treeResult > 5000){
         	v_reduceTree.innerHTML += '<img src="${pageContext.request.contextPath}/resources/image/나무3.png">'
            	v_reduceTree.innerHTML += v_tree
