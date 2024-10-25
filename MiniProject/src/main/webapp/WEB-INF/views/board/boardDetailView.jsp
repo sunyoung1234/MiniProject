@@ -601,6 +601,8 @@
 		</section>
 	</main>
 	
+	<%@ include file="/WEB-INF/inc/footer.jsp"%>
+	
 	<script type="text/javascript">
 	
 	

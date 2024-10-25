@@ -305,7 +305,7 @@ select {
 
 .write-click-btn {
 	margin-top:50px;
-    margin-left:1480px;
+    margin-left:1470px;
 }
 
 .ex-box {
@@ -356,7 +356,7 @@ select {
 }
 
 .sum-gas{
-	margin-left: 890px;
+	margin-left: 950px;
 	margin-bottom: 20px;
 }
 
@@ -441,7 +441,7 @@ select {
 		<div class="sum-gas" id ="sumGas">총 탄소 배출량 : 0</div>
 	</div>
 	
-	<div class="write-click-btn">
+	<div class="write-click-btn mb-3">
 		<button id="boardWriteBtn">글 등록</button>
 	</div>
 
@@ -486,6 +486,8 @@ select {
 		</div>
 
 	</div>
+	
+	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
 
 

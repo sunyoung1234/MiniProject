@@ -36,6 +36,11 @@
 	color: white; /* 텍스트 색상 */
 	border-color: #198754; /* 테두리 색상 */
 }
+
+.main-height{
+	height:900px;
+}
+
 </style>
 
 
@@ -58,7 +63,7 @@
 <body class="d-flex flex-column">
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<main class="flex-shrink-0">
+	<main class="main-height flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
 				<div class="py-5 px-4 px-md-5">
@@ -203,17 +208,7 @@
 	</main>
 
 
-	<!-- Footer -->
-	<footer class="bg-white py-4 mt-auto">
-		<div class="container px-5">
-			<div
-				class="row align-items-center justify-content-between flex-column flex-sm-row">
-				<div class="col-sm-4 text-center text-sm-start">
-					<div class="small m-0 text-muted">© 2024 Your Company</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
 	<!-- Bootstrap core JS -->
 	<script
