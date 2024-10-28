@@ -96,6 +96,8 @@
 
 						</div>
 					</form>
+					
+					
 
 					<div class="col-md-2 mb-2">
 						<select class="form-select" name="feedbackYn" id="feedbackYn"
@@ -159,7 +161,7 @@
 										<li class="page-item"><c:if
 												test="${pageSearch.pageNo > 1}">
 												<a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }&feedbackYn=${pageSearch.feedbackYn }'/>"
 													aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 												</a>
 											</c:if> <c:if test="${pageSearch.pageNo == 1}">
@@ -171,11 +173,20 @@
 										<!-- 페이지 번호 링크 -->
 										<c:forEach begin="${pageSearch.firstPage}"
 											end="${pageSearch.lastPage}" var="page">
-											<c:if test="${page != pageSearch.pageNo}">
+											
+											<c:if test="${page != pageSearch.pageNo && pageSearch.feedbackYn == null}">
 												<li class="page-item"><a class="page-link"
 													href="<c:url value='/boardViewAdmin?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
 														${page} </a></li>
 											</c:if>
+											
+											<c:if test="${page != pageSearch.pageNo && pageSearch.feedbackYn != null}">
+												
+												<li class="page-item"><a class="page-link"
+													href="<c:url value='/boardViewAdmin?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }&feedbackYn=${pageSearch.feedbackYn }'/>">
+														${page} </a></li>
+											</c:if>
+											
 											<c:if test="${page == pageSearch.pageNo}">
 												<li class="page-item active" aria-current="page"><span
 													class="page-link">${page}</span></li>
@@ -186,7 +197,7 @@
 										<li class="page-item"><c:if
 												test="${pageSearch.pageNo < pageSearch.finalPage}">
 												<a class="page-link"
-													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+													href="<c:url value='/boardViewAdmin?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }&feedbackYn=${pageSearch.feedbackYn }'/>"
 													aria-label="Next"> <span aria-hidden="true">&gt;</span>
 												</a>
 											</c:if> <c:if test="${pageSearch.pageNo >= pageSearch.finalPage}">

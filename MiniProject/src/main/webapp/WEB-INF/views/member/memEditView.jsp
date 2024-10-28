@@ -142,7 +142,9 @@
         document.querySelector('#backBtn').addEventListener('click', () => {
             location.href = "${pageContext.request.contextPath}/"; // home으로 돌아가기
         });
-        console.log(document.querySelector('#imgBox').src)
+        
+        
+        
     </script>
 </body>
 </html>

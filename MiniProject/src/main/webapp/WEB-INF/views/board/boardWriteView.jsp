@@ -709,7 +709,7 @@ select {
 				    	
 				    	scId = response['scId']; 
 				    	
-				    	v_sumGas.innerHTML = "총 탄소 배출량 : " + total + " CO₂/kg"
+				    	v_sumGas.innerHTML = "총 탄소 배출량 : " + Math.round(total,2) + " CO₂/kg"
 				    	
 				    }
 				    

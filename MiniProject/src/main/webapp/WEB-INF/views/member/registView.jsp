@@ -50,6 +50,13 @@
             background-color: #0a994c;
             border-color: #0a994c;
         }
+        
+        .idBtn{
+        	width:150px;
+        	height:60px;
+        	border-radius: 5px;
+        }
+        
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
@@ -82,7 +89,7 @@
                                 <div class="form-floating mb-3">
                                 	<div style="display: flex;">  
 	                                    <input name="id" class="form-control" id="registId" type="text" placeholder="아이디" data-sb-validations="required" />
-	                                    <button id="idCheck" type="button">ID 중복체크</button>
+	                                    <button id="idCheck" class="idBtn" type="button">ID 중복체크</button>
                                 	</div>
                                 	<div class="invalid-feedback" id="checkIdLength">아이디는 4자리 이상</div>
                                 	<div class="invalid-feedback" id="idOkay" style="color: green;">사용가능 ID 입니다</div>
