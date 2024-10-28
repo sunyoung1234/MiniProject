@@ -26,8 +26,7 @@
 		FROM BOARDS b, MEMBERS a
 		WHERE
 		b.mem_id = a.mem_id(+)
-		AND b.order_no =
-		#{orderNo}
+		AND b.order_no = #{orderNo}
 	</select>
 
 	<!-- 글쓰기 (INSERT) -->

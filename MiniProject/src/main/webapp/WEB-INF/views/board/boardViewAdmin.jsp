@@ -38,7 +38,7 @@
 }
 
 .main-height{
-	height:900px;
+	height:1000px;
 }
 
 </style>
