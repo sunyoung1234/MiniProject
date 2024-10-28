@@ -263,50 +263,8 @@ select:focus {
 
 	<script type="text/javascript">
         
-        	let v_yearMonth = '${getGreenYear}'
-        	let v_gas = '${getGreenGas}'
-        	
-        	v_yearMonth = v_yearMonth.replace('[', '')
-        	v_yearMonth = v_yearMonth.replace(']', '')
-         		
-         	v_gas = v_gas.replace('[', '')
-         	v_gas = v_gas.replace(']', '')
-          	
-         	v_yearMonth = v_yearMonth.split(',')
-            v_gas = v_gas.split(',')
-        	
-        	console.log(v_yearMonth)
-        	console.log(v_gas)
-        	
-        	let gasChart = document.getElementById("gasChart")
-        	
-        	new Chart(gasChart,{
-        		type:'line',
-        		data:{
-        			labels: v_yearMonth,
-        			datasets:[{
-        				label:'온실가스 총배출량',
-        				data: v_gas
-        			},{
-        				label:'온실가스 총배출량',
-        				data: v_gas
-        			}]
-        		},
-        		 options: {
-                     scales: {
-                         x: {
-                             ticks: {
-                                 autoSkip: true,
-                                 maxRotation: 45,
-                                 minRotation: 45
-                             }
-                         },
-                         y: {
-                             beginAtZero: true
-                             }
-                     }
-                 }
-             });
+  
+        
         
         	let v_partList = '${keyPartList}'
         	let v_regionName = "${keyRegionName}"
@@ -326,12 +284,16 @@ select:focus {
           	v_gangwon = v_gangwon.replace('[', '')
             v_gangwonValue = v_gangwonValue.replace('[', '')
               		
-            v_gangwon = v_gangwon.replace('[', '')
+            v_gangwon = v_gangwon.replace(']', '')
             v_gangwonValue = v_gangwonValue.replace(']', '')
-               	
+            
+            console.log(v_gangwon)
+            
             v_gangwon = v_gangwon.split(',')
             v_gangwonValue = v_gangwonValue.split(',')
         	
+            
+            
         	let v_temp = {}
         	v_temp['name'] = v_regionName
         	v_temp['num'] = v_partList
