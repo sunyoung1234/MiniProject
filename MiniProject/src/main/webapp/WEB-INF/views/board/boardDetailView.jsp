@@ -525,10 +525,14 @@ select {
 
     #buttonContainer,
     #modalBtn,
-    #replyWriteBtn,
+    #replyWriteBtn
+     {
+        margin-right: 80px;
+    }
+    
     #goBackBtn,
     #rightButtons {
-        margin-right: 15px;
+        margin-right: 40px;
     }
     
     #goBackUserBtn{
