@@ -44,6 +44,11 @@
 	color: white; /* 텍스트 색상 */
 	border-color: #198754; /* 테두리 색상 */
 }
+
+.main-height{
+	height:1000px;
+
+}
 </style>
 
 
@@ -52,7 +57,7 @@
 <body class="d-flex flex-column">
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<main class="flex-shrink-0">
+	<main class="main-height flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
 				<div class="write-box rounded-4 py-5 px-4 px-md-5">
