@@ -538,6 +538,12 @@ select {
     	margin-top: 15px;
     	 
     }
+    
+    .reply-content{
+    	height:100px;
+    	display: flex;
+    	align-items: center;
+    }
 
 </style>
 </head>
@@ -744,6 +750,8 @@ select {
 										</div>
 									</div>
 								</c:forEach>
+								
+								<div class="reply-content">${replyContent.getReplyContent() }</div>
 								
 								<div>
 									<div class="sub-after"> <span style="color: black; font-size: 18px;">대체 자제 탄소 배출량 : </span>${current }CO₂/kg</div> 
