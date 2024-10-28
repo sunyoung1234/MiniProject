@@ -1156,6 +1156,7 @@ select {
 							reply_result : reply_result
 						}), 
 						success: function(response){
+							
 							console.log(response);
 							document.querySelector('#modalBtn').style.display = "none";
 							document.querySelector('#replyContent').style.display = "none";
