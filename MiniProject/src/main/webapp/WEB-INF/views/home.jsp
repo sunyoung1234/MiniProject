@@ -113,7 +113,7 @@ font-bold {
 	height: 500px; /* 카드 높이에 맞게 조정 */
 	position: relative; /* 자식 요소의 절대 위치를 위한 기준 설정 */
 	overflow: hidden; /* 자식 요소가 범위를 벗어날 경우 숨기기 */
-	transition: opacity 0.5s ease-in-out; /* opacity 전환 설정 */
+	transition: opacity 0.3s ease-in-out; /* opacity 전환 설정 */
 	background-color: transparent; /* 각 캐러셀 아이템의 배경을 투명으로 설정 */
 	opacity: 0; /* 처음에 투명하게 설정 */
 }
@@ -133,7 +133,7 @@ font-bold {
 	top: 20%;
 	left: 45%;
 	transform: translate(-50%, -50%);
-	color: black;
+	color: white;
 	font-size: 30px; /* 텍스트 크기 조정 */
 	font-weight: bold;
 }
@@ -231,15 +231,14 @@ font-bold {
 	</video>
 	<!-- 비디오 위에 텍스트 영역 -->
 	<div class="overlay-text">
-		<h2 class="fade-in" style="font-size: 40px; margin-bottom: 10px">지속 가능한 건축을 위한 혁신</h2>
-		<h2 class="fade-in" style="font-size: 60px; margin-bottom: 10px">GreenSolution</h2>
-		<p class="fade-in" style="font-size: 20px; margin-bottom: 10px">우리는 건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
-		<p class="fade-in" style="font-size: 20px; margin-bottom: 10px">기술과 지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
+		<h2 class="fade-in" style="font-size: 40px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3; ">지속 가능한 건축을 위한 혁신</h2>
+		<h2 class="fade-in" style="font-size: 60px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">GreenSolution</h2>
+		<p class="fade-in" style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">우리는 건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
+		<p class="fade-in" style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">기술과 지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
 	</div>
 </header>
-
 <!-- 메인 문구 타이틀 -->
-<div class="solution-content solution-title">
+<div class="solution-content solution-title" style="margin-bottom: 50px">
 	<h2>Our Enterprise</h2>
 </div>
 
@@ -259,36 +258,35 @@ font-bold {
 </div>
 
 <!-- 캐러셀 메인 -->
-<div id="carouselExampleIndicators" class="carousel slide" style="margin-bottom: 200px" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide" style="margin-bottom: 150px" data-bs-ride="carousel">
 	<div class="carousel-indicators">
 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 	</div>
 	<div class="carousel-inner">
-		<div class="carousel-item active">
+		<div class="carousel-item active" style="background-color: white;">
 			<div class="position-relative text-center">
-				<img src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지1.jpg" class="custom-carousel-image" alt="자연 건축">
-				<div class="carousel-overlay-text solution-content"
-					style="color: white; font-size: 26px;/*  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
+				<img src="${pageContext.request.contextPath}/resources/image/1녹색건축물.png" class="custom-carousel-image" alt="자연 건축">
+				<div class="carousel-overlay-text"
+					style="text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">
 					자연을 품은 건축,<br> 우리의 미래를 설계합니다.
 				</div>
 			</div>
 		</div>
 		<div class="carousel-item">
-			<div class="position-relative text-center">
+			<div class="position-relative text-center" style="background-color: white;">
 				<img src="${pageContext.request.contextPath}/resources/image/jpg캐러셀이미지2.jpg" class="custom-carousel-image" alt="환경 건축">
-				<div class="carousel-overlay-text solution-content"
-					style="color: white; /* text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
+				<div class="carousel-overlay-text">
 					환경을 생각하는 설계,<br> GreenSolution의 약속입니다.
 				</div>
 			</div>
 		</div> 
 		<div class="carousel-item">
-			<div class="position-relative text-center">
+			<div class="position-relative text-center" style="background-color: white;">
 				<img src="${pageContext.request.contextPath}/resources/image/캘셀3.jpg" class="custom-carousel-image" alt="탄소 절감">
-				<div class="carousel-overlay-text solution-content"
-					style="color: white;/*  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; */">
+				<div class="carousel-overlay-text" 
+				     style="text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">
 					탄소 중립을 향한 작은 실천,<br> 큰 변화를 이룹니다.
 				</div>
 				
