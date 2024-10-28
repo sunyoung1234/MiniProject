@@ -176,6 +176,8 @@ public class BoardController {
 			List<SaveSubcalDTO> saveSubList = saveSubService.findBySscId(replyCalcId);
 			model.addAttribute("saveSubList",saveSubList);
 			
+			System.out.println("세이브서브리스트"  + saveSubList);
+			
 			for(SaveSubcalDTO ss : saveSubList) {
 				int matNo = ss.getMatNo();
 				noList.add(matNo); 
@@ -186,6 +188,10 @@ public class BoardController {
 				imgList.add(subImg);
 				nameList.add(subName);
 			}
+			
+			System.out.println("ss :"  + saveSubList);
+			
+			
 			
 			HashMap<Integer, Integer> countMap = new HashMap<>();
 

@@ -92,7 +92,18 @@ button:hover {
 	border-bottom: none;
 }
 
-.cal-var, .cal-var-input {
+.cal-var{
+	width:300px;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+}
+
+
+.cal-var-input {
 	padding: 10px;
 	margin-bottom: 10px;
 	display: flex;
