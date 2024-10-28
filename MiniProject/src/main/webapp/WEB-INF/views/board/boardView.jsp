@@ -131,7 +131,7 @@
 													
 													<c:if test="${pageSearch.pageNo > 1}">
 														<a class="page-link"
-															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo - 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo - 1}'/>"
 															aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 														</a>
 													</c:if> <c:if test="${pageSearch.pageNo == 1}">
@@ -143,7 +143,7 @@
 												<!-- 페이지 번호 링크 -->
 												<c:if test="${pageSearch.pageNo == 0}">
 													<li class="page-item"><a class="page-link"
-															href="<c:url value='/boardView?pageNo=1&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
+															href="<c:url value='/boardView?pageNo=1'/>">
 																1 </a></li>
 												</c:if>
 												
@@ -151,7 +151,7 @@
 													end="${pageSearch.lastPage}" var="page">
 													<c:if test="${page != pageSearch.pageNo}">
 														<li class="page-item"><a class="page-link"
-															href="<c:url value='/boardView?pageNo=${page }&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>">
+															href="<c:url value='/boardView?pageNo=${page }'/>">
 																${page} </a></li>
 													</c:if>
 													<c:if test="${page == pageSearch.pageNo}">
@@ -164,7 +164,7 @@
 												<li class="page-item"><c:if
 														test="${pageSearch.pageNo < pageSearch.finalPage}">
 														<a class="page-link"
-															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo + 1}&searchOption=${pageSearch.searchOption}&searchWord=${pageSearch.searchWord }'/>"
+															href="<c:url value='/boardView?pageNo=${pageSearch.pageNo + 1}'/>"
 															aria-label="Next"> <span aria-hidden="true">&gt;</span>
 														</a>
 													</c:if> <c:if test="${pageSearch.pageNo >= pageSearch.finalPage}">

@@ -107,7 +107,6 @@
 								<div class="d-grid">
 									<button class="btn btn-success btn-lg" id="registBtn">회원가입</button>
 								</div>
-								<a class="cur-poi" style="color: black;">아이디/비밀번호 찾기</a>
 							</form>
 						</div>
 					</div>
