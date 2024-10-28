@@ -22,5 +22,6 @@ public interface IReplyDAO {
 	double getReplyResultAll();
 	
 	ReplyDTO getReplyByBoardId(int boardNo);
+	
 }
  

@@ -155,6 +155,7 @@ public class BoardController {
 		ReplyDTO reply = replyService.getReplyByBoardId(orderNo);
 		System.out.println(reply);
 		
+		model.addAttribute("replyContent",reply);
 		
 		if(reply != null) {
 			
