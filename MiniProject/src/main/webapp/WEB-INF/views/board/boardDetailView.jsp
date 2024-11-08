@@ -308,6 +308,10 @@ select {
 	padding-right: 20px;
 }
 
+#repContent{
+	margin-left: 250px; 
+}
+
 .material-img:hover {
 	transform: scale(2);
 }
@@ -628,7 +632,7 @@ select {
 												<th scope="row" class="text-center"><img
 													class="reply-mat-img" src="${scv.materialImg}"></th>
 												<td class="text-center reply-mat-name">${scv.materialName}</td>
-												<td class="text-center reply-mat-vol">${scv.materialVolume}kg</td>
+												<td class="text-center reply-mat-vol scv-vol">${scv.materialVolume}kg</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -648,6 +652,7 @@ select {
 
 						<c:if test="${sessionScope.login.getMemId() == 'admin' && board.getFeedbackYn() == 'N' }">
 							<div id="overlay"></div>
+							<div id="repContent"></div>
 							<div  style="width:80%;"id="replyCal">
 								<c:forEach var="scv" items="${scVolList }">
 									<div class="reply-line">
@@ -710,6 +715,7 @@ select {
 						</c:if>
 						
 						<c:if test="${board.getFeedbackYn() == 'Y' }">
+						<div id="repContent">${content }</div>
 							<div  style="width:80%;"id="replyResultCal">
 								<c:forEach var="scv" items="${scVolList }">
 									<div class="reply-line">
@@ -741,7 +747,7 @@ select {
 								
 								<c:if test="${sessionScope.login.getMemId() == 'admin' }">
 									<button id="goBackBtn">뒤로가기</button>
-								</c:if>
+								</c:if> 
 							</div>
 						</c:if>
 						
@@ -775,6 +781,7 @@ select {
 			let orderNo = ${board.orderNo};
 			let after_total = 0; 
 			let reply_result = "";
+			let v_scvVol = document.querySelectorAll('.scv-vol');
 			 
 			console.log(sscId); 
 			
@@ -1047,8 +1054,13 @@ select {
 			let v_replyCal2 = document.querySelector('#replyCal');
 			let resultResult = document.querySelector('#resultResult');
 			
-			console.log(v_replyLine[0]) 
-			console.log(v_replyLine[1]) 
+			
+			console.log(v_scvVol);
+			
+			v_scvVol.forEach(sc=>{
+				console.log(sc.innerHTML);
+			})
+			
 			
 			v_registBtn.addEventListener('click',()=>{
 				
@@ -1066,7 +1078,7 @@ select {
 					data: JSON.stringify({
 						b_id : orderNo + "",
 						id : sscId + "", 
-						map : strMap  
+						map : strMap
 					}), 
 					success: function(response){
 						console.log(response)
@@ -1075,6 +1087,7 @@ select {
 						
 						let matEa = response['eaList'].length;;
 						let idx = 0;
+						v_mcr = document.querySelectorAll('.mat-cal-result');
 						
 						for(let i=0; i < matEa; i++){
 							
@@ -1082,6 +1095,13 @@ select {
 							if(response['eaList'][i] != 0){
 								for(let j=0; j< response['eaList'][i]; j++){
 									after_total += response['sscList'][idx].subVol * response['subList'][idx].gasKg;
+									
+									
+									if(response['sscList'][idx].subVol == 0){
+										console.log(v_scvVol[idx]);
+										after_total += v_scvVol[idx].innerHTML * response['subList'][idx];
+										console.log("Abcd");
+									}
 									v_beta += '<div class="sub-name"><div>' + response['subList'][idx].subName + '</div>'
 									v_beta += '<img class="sub-img" src="' + response['subList'][idx].subImg + '">'
 									v_beta += '<div class="sub-vol">' + response['sscList'][idx].subVol + ' &nbsp; CO₂/kg</div></div>'
@@ -1091,6 +1111,7 @@ select {
 								v_replyLine[i].innerHTML = v_beta;
 							}else{
 								v_replyLine[i].innerHTML = '<span> 변경사항 없음</span>';
+								after_total += parseFloat(v_mcr[i].innerHTML);  // 
 							}
 						}
 						
@@ -1138,6 +1159,7 @@ select {
 						}), 
 						success: function(response){
 							console.log(response);
+							document.querySelector('#repContent').innerHTML = rContent.value;
 							document.querySelector('#modalBtn').style.display = "none";
 							document.querySelector('#replyContent').style.display = "none";
 							document.querySelector('#replyWriteBtn').style.display = "none";

@@ -146,6 +146,7 @@ public class BoardController {
 		
 		
 		
+		
 		// 회원이 올린 자재
 		List<SavecalMatDTO> scmList = scService.getScmList(calcId);
 		
@@ -158,9 +159,12 @@ public class BoardController {
 		
 		if(reply != null) {
 			
+			String content = reply.getReplyContent();
+			
 			double current =  reply.getAfterCalcResult();
 			double differ = reply.getReplyCalcResult(); // 아낀양
 			
+			model.addAttribute("content",content);
 			model.addAttribute("current", current);
 			model.addAttribute("differ", differ);
 			

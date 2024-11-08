@@ -127,6 +127,9 @@ body {
             <a class="navbar-brand" href="${pageContext.request.contextPath}/">
                 <i class="fas fa-leaf"></i> Green Solution
             </a>
+             <a class="navbar-brand" href="${pageContext.request.contextPath}/mapView">
+                <i class="fas fa-leaf"></i> MapView
+            </a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-3 mb-lg-0 ml-2">

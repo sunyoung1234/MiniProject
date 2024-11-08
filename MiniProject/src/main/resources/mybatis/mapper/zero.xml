@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.proj.zero.dao.IZeroDAO">
+
+	<select id="allZero" resultType="com.team.proj.zero.dto.ZeroDTO">
+		SELECT * FROM ZERO_BUILDING
+	</select>
+
+
+</mapper>

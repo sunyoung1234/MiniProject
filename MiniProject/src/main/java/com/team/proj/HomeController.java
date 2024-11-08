@@ -1,16 +1,8 @@
 package com.team.proj;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.proj.board.dto.BoardDTO;
@@ -35,8 +26,9 @@ import com.team.proj.point.dto.PointDTO;
 import com.team.proj.point.service.PointService;
 import com.team.proj.region.dto.RegionDTO;
 import com.team.proj.region.service.RegionService;
-import com.team.proj.reply.dto.ReplyDTO;
 import com.team.proj.reply.service.ReplyService;
+import com.team.proj.zero.dto.ZeroDTO;
+import com.team.proj.zero.service.ZeroService;
 
 /**
  * Handles requests for the application home page.
@@ -62,12 +54,27 @@ public class HomeController {
 	@Autowired
 	ReplyService replyService;
 	
+	@Autowired
+	ZeroService zs;
+	
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * @throws Exception 
 	 */
+	
+	@RequestMapping("/mapView")
+	public String mapView(Model model) {
+		
+		List<ZeroDTO> zeroList = zs.allZero();
+		
+		model.addAttribute("zeroList", zeroList);
+		
+		return "map/mapView";
+	}
 	
 	@RequestMapping("/")
 	public String home(Model model, String regionCategory) {

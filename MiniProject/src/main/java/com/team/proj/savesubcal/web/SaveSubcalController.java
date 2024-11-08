@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.proj.board.dto.BoardDTO;
 import com.team.proj.board.service.BoardService;
+import com.team.proj.materials.dto.MaterialsDTO;
+import com.team.proj.materials.service.MaterialsService;
 import com.team.proj.member.dto.MemberDTO;
 import com.team.proj.savesubcal.dto.SaveSubcalDTO;
 import com.team.proj.savesubcal.service.SaveSubcalService;
@@ -38,9 +40,14 @@ public class SaveSubcalController {
 	@Autowired
 	SubService subService;
 	
+	@Autowired
+	MaterialsService mService;
+	
 	@ResponseBody
 	@RequestMapping("/saveSub")
 	public Map<String, Object> saveSub(@RequestBody Map<String, Object> data, HttpSession session) {
+		
+		
 		String sscId = (String) data.get("id");
 		MemberDTO login = (MemberDTO)session.getAttribute("login");
 		sscId = sscId + login.getMemId();
@@ -141,16 +148,20 @@ public class SaveSubcalController {
 		// sscId ·Î ²¨³»¿À±â
 		List<SaveSubcalDTO> sscList = ssc.findBySscId(sscId);
 		List<SubstituteDTO> subList = new ArrayList<>();
+		List<MaterialsDTO> matList = new ArrayList<>();
 		
 		for(SaveSubcalDTO ssc : sscList) {
 			int sub_no = ssc.getSubNo();
+			int mat_no = ssc.getMatNo();
+			MaterialsDTO m = mService.getByMatNo(mat_no);
 			SubstituteDTO s = subService.getSubByNo(sub_no);
 			subList.add(s);
+			matList.add(m);
 		}
 		
 		
 		
-		
+		response.put("matList", matList);
 		response.put("sscList", sscList);
 		response.put("subList", subList);
 		
